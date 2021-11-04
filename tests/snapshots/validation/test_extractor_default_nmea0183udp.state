@@ -1,0 +1,26 @@
+{
+    "_extractor": "default",
+    "_extractor_options": {},
+    "malicious": null,
+    "state": {
+        "HDM0": 238,
+        "HDM1": "M"
+    },
+    "timestamp": 1612450298.864367
+}
+{
+    "malicious": null,
+    "state": {
+        "HDM0": 238,
+        "HDM1": "M"
+    },
+    "timestamp": 1612450299.81138
+}
+{
+    "malicious": null,
+    "state": {
+        "HDM0": 238,
+        "HDM1": "M"
+    },
+    "timestamp": 1612450300.494011
+}

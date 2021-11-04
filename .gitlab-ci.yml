@@ -1,0 +1,27 @@
+default:
+  image: "asaillard/alpine-tshark:latest"
+
+  before_script:
+    - pip3 install -r requirements.txt
+    - pip3 install -r requirements-dev.txt
+    - python3 --version
+    - tshark -v
+
+stages:
+  - Static Analysis
+  - Test
+
+black:
+  stage: Static Analysis
+  script:
+  - black --check --config pyproject.toml .
+
+flake8:
+  stage: Static Analysis
+  script:
+  - flake8
+
+pytest:
+  stage: Test
+  script:
+  - python3 -m pytest -v

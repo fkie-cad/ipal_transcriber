@@ -1,0 +1,315 @@
+{
+    "_transcriber-config": {
+        "compresslevel": 9,
+        "crc": "and",
+        "ipalout": "-",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "malicious": null,
+        "maliciousdefault": null,
+        "protocols": [
+            "iec450"
+        ],
+        "pyshark_options": [
+            "-o",
+            "udp.check_checksum:TRUE",
+            "-o",
+            "tcp.check_checksum:TRUE",
+            "-o",
+            "mbtcp.tcp.port:502"
+        ],
+        "rules": "misc/rules/nmea.py",
+        "source": "misc/pcaps/iec450-nmea.pcap",
+        "timeout": 1.0
+    },
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "RMC1": "A",
+        "RMC10": "E",
+        "RMC11": "A",
+        "RMC6": 37.8,
+        "RMC7": 255.6,
+        "RMC8": 210918,
+        "RMC9": 3.1,
+        "UTC": 120658.284,
+        "latitude": 5412.51144,
+        "longitude": 1203.87679
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 0,
+    "length": 104,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.2:10232:GP",
+    "timestamp": 1612192061.795489,
+    "type": "RMC"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "GSV0": 3,
+        "GSV1": 1,
+        "GSV10": 47,
+        "GSV11": 1,
+        "GSV12": 64,
+        "GSV13": 287,
+        "GSV14": 48,
+        "GSV15": 22,
+        "GSV16": 51,
+        "GSV17": 233,
+        "GSV18": 46,
+        "GSV2": 12,
+        "GSV3": 18,
+        "GSV4": 84,
+        "GSV5": 141,
+        "GSV6": 47,
+        "GSV7": 11,
+        "GSV8": 74,
+        "GSV9": 245
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 1,
+    "length": 94,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.2:10232:GP",
+    "timestamp": 1612192061.79567,
+    "type": "GSV"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "GSV0": 3,
+        "GSV1": 2,
+        "GSV10": 47,
+        "GSV11": 8,
+        "GSV12": 36,
+        "GSV13": 181,
+        "GSV14": 46,
+        "GSV15": 3,
+        "GSV16": 27,
+        "GSV17": 235,
+        "GSV18": 46,
+        "GSV2": 12,
+        "GSV3": 32,
+        "GSV4": 44,
+        "GSV5": 77,
+        "GSV6": 47,
+        "GSV7": 14,
+        "GSV8": 46,
+        "GSV9": 111
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 2,
+    "length": 94,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.2:10232:GP",
+    "timestamp": 1612192061.795743,
+    "type": "GSV"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "GSV0": 3,
+        "GSV1": 3,
+        "GSV10": 46,
+        "GSV11": 17,
+        "GSV12": 13,
+        "GSV13": 320,
+        "GSV14": 46,
+        "GSV15": 27,
+        "GSV16": 9,
+        "GSV17": 163,
+        "GSV18": 45,
+        "GSV2": 12,
+        "GSV3": 28,
+        "GSV4": 24,
+        "GSV5": 287,
+        "GSV6": 45,
+        "GSV7": 10,
+        "GSV8": 18,
+        "GSV9": 63
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 3,
+    "length": 94,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.2:10232:GP",
+    "timestamp": 1612192061.795809,
+    "type": "GSV"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "GSA0": "A",
+        "GSA1": "3",
+        "GSA14": 2.7,
+        "GSA15": 2.27,
+        "GSA16": 1.47,
+        "GSA2": 18,
+        "GSA3": 11,
+        "GSA4": 1,
+        "GSA5": 22
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 4,
+    "length": 74,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.2:10232:GP",
+    "timestamp": 1612192061.795874,
+    "type": "GSA"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "GGA0": 120658.284,
+        "GGA11": "M",
+        "GGA5": 1,
+        "GGA6": 12,
+        "GGA7": 2.27,
+        "GGA8": 0.0,
+        "GGA9": "M",
+        "latitude": 5412.51144,
+        "longitude": 1203.87679
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 5,
+    "length": 94,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.2:10232:GP",
+    "timestamp": 1612192061.795962,
+    "type": "GGA"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "GLL0": 5412.51144,
+        "GLL1": "N",
+        "GLL2": 1203.87679,
+        "GLL3": "E",
+        "GLL4": 120658.284,
+        "GLL5": "A",
+        "GLL6": "A"
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 6,
+    "length": 77,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.2:10232:GP",
+    "timestamp": 1612192061.796028,
+    "type": "GLL"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "VTG0": 255.6,
+        "VTG1": "T",
+        "VTG2": 258.7,
+        "VTG3": "M",
+        "VTG4": 37.8,
+        "VTG5": "N",
+        "VTG6": 70.0,
+        "VTG7": "K",
+        "VTG8": "A"
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 7,
+    "length": 69,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.2:10232:GP",
+    "timestamp": 1612192061.796087,
+    "type": "VTG"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "DPT0": 67.0,
+        "DPT1": 0.0
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 8,
+    "length": 45,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.4:10234:SD",
+    "timestamp": 1612192061.796265,
+    "type": "DPT"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "DBT1": "f",
+        "DBT2": 67.0,
+        "DBT3": "M",
+        "DBT5": "F"
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 9,
+    "length": 48,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.4:10234:SD",
+    "timestamp": 1612192061.796427,
+    "type": "DBT"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "HDM0": 256,
+        "HDM1": "M"
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 10,
+    "length": 41,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.6:10236:HC",
+    "timestamp": 1612192061.7979,
+    "type": "HDM"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "HDM0": 0.0,
+        "HDM1": "00.00"
+    },
+    "dest": "192.168.149.255:1027",
+    "id": 11,
+    "length": 47,
+    "malicious": null,
+    "protocol": "iec450",
+    "responds to": [],
+    "src": "192.168.149.7:10237:HC",
+    "timestamp": 1612192061.798202,
+    "type": "HDM"
+}

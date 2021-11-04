@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+from transcriber import state_extractor
+
+if __name__ == "__main__":
+    state_extractor.main()

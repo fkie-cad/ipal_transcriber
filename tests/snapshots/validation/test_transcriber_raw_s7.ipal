@@ -1,0 +1,66 @@
+{
+    "_transcriber-config": {
+        "compresslevel": 9,
+        "crc": "and",
+        "ipalout": "-",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "malicious": null,
+        "maliciousdefault": null,
+        "protocols": [
+            "s7"
+        ],
+        "pyshark_options": [
+            "-o",
+            "udp.check_checksum:TRUE",
+            "-o",
+            "tcp.check_checksum:TRUE",
+            "-o",
+            "mbtcp.tcp.port:502"
+        ],
+        "rules": null,
+        "source": "misc/pcaps/s7.pcap",
+        "timeout": 1.0
+    },
+    "activity": "interrogate",
+    "crc": true,
+    "data": {
+        "16": null,
+        "17": null,
+        "18": null,
+        "19": null,
+        "20": null
+    },
+    "dest": "10.10.10.10:102",
+    "id": 0,
+    "length": 82,
+    "malicious": null,
+    "protocol": "s7",
+    "responds to": [],
+    "src": "10.10.10.20:49156",
+    "timestamp": 1445465436.995232,
+    "type": 1
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0
+    },
+    "dest": "10.10.10.20:49156",
+    "id": 1,
+    "length": 31,
+    "malicious": null,
+    "protocol": "s7",
+    "responds to": [
+        0
+    ],
+    "src": "10.10.10.10:102",
+    "timestamp": 1445465437.00792,
+    "type": 3
+}

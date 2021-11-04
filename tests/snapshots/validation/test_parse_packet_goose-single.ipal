@@ -1,0 +1,29 @@
+{
+    "activity": "inform",
+    "crc": null,
+    "data": {
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-000": 243.1600341796875,
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-001": "0000000000000",
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-002": 251.3159942626953,
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-003": "0000000000000",
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-004": 249.79202270507812,
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-005": "0000000000000",
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-006": 0.0,
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-007": "0000000000000",
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-008": 0.0,
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-009": "0000000000000",
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-010": 0.0,
+        "IED_0VI3p1_OperationalValues/LLN0$IED0_DS_MV-011": "0000000000000",
+        "sqNum": 1,
+        "stNum": 1102
+    },
+    "dest": "010ccd010000",
+    "id": 0,
+    "length": 273,
+    "malicious": null,
+    "protocol": "goose",
+    "responds to": [],
+    "src": "b4b15a0e843b",
+    "timestamp": 1614175365.256688,
+    "type": null
+}

@@ -1,0 +1,364 @@
+{
+    "_transcriber-config": {
+        "compresslevel": 9,
+        "crc": "and",
+        "ipalout": "-",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "malicious": null,
+        "maliciousdefault": null,
+        "protocols": [
+            "cip"
+        ],
+        "pyshark_options": [
+            "-o",
+            "udp.check_checksum:TRUE",
+            "-o",
+            "tcp.check_checksum:TRUE",
+            "-o",
+            "mbtcp.tcp.port:502"
+        ],
+        "rules": null,
+        "source": "misc/pcaps/cip.pcapng",
+        "timeout": 1.0
+    },
+    "activity": "interrogate",
+    "crc": false,
+    "data": {
+        "FIT201": null
+    },
+    "dest": "192.168.1.20:44818",
+    "id": 0,
+    "length": 44,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [],
+    "src": "192.168.1.10:40526",
+    "timestamp": 1627644422.265025,
+    "type": 76
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "FIT201": "cdcc1c40"
+    },
+    "dest": "192.168.1.10:40526",
+    "id": 1,
+    "length": 26,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [
+        0
+    ],
+    "src": "192.168.1.20:44818",
+    "timestamp": 1627644422.277662,
+    "type": 76
+}
+{
+    "activity": "interrogate",
+    "crc": false,
+    "data": {
+        "LIT101": null
+    },
+    "dest": "192.168.1.10:44818",
+    "id": 2,
+    "length": 44,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [],
+    "src": "192.168.1.30:54470",
+    "timestamp": 1627644422.430384,
+    "type": 76
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "LIT101": "47023e3f"
+    },
+    "dest": "192.168.1.30:54470",
+    "id": 3,
+    "length": 26,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [
+        2
+    ],
+    "src": "192.168.1.10:44818",
+    "timestamp": 1627644422.465876,
+    "type": 76
+}
+{
+    "activity": "interrogate",
+    "crc": false,
+    "data": {
+        "MV101": null
+    },
+    "dest": "192.168.1.10:44818",
+    "id": 4,
+    "length": 44,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [],
+    "src": "192.168.1.30:54474",
+    "timestamp": 1627644422.755863,
+    "type": 76
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "MV101": "0100"
+    },
+    "dest": "192.168.1.30:54474",
+    "id": 5,
+    "length": 24,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [
+        4
+    ],
+    "src": "192.168.1.10:44818",
+    "timestamp": 1627644422.787919,
+    "type": 76
+}
+{
+    "activity": "interrogate",
+    "crc": false,
+    "data": {
+        "LIT301": null
+    },
+    "dest": "192.168.1.30:44818",
+    "id": 6,
+    "length": 44,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [],
+    "src": "192.168.1.10:59874",
+    "timestamp": 1627644422.936532,
+    "type": 76
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "LIT301": "0000003f"
+    },
+    "dest": "192.168.1.10:59874",
+    "id": 7,
+    "length": 26,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [
+        6
+    ],
+    "src": "192.168.1.30:44818",
+    "timestamp": 1627644422.94726,
+    "type": 76
+}
+{
+    "activity": "interrogate",
+    "crc": false,
+    "data": {
+        "P101": null
+    },
+    "dest": "192.168.1.10:44818",
+    "id": 8,
+    "length": 42,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [],
+    "src": "192.168.1.30:54480",
+    "timestamp": 1627644423.121846,
+    "type": 76
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "P101": "0100"
+    },
+    "dest": "192.168.1.30:54480",
+    "id": 9,
+    "length": 24,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [
+        8
+    ],
+    "src": "192.168.1.10:44818",
+    "timestamp": 1627644423.145482,
+    "type": 76
+}
+{
+    "activity": "interrogate",
+    "crc": false,
+    "data": {
+        "LIT101": null
+    },
+    "dest": "192.168.1.10:44818",
+    "id": 10,
+    "length": 44,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [],
+    "src": "192.168.1.30:54494",
+    "timestamp": 1627644424.053072,
+    "type": 76
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "LIT101": "47023e3f"
+    },
+    "dest": "192.168.1.30:54494",
+    "id": 11,
+    "length": 26,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [
+        10
+    ],
+    "src": "192.168.1.10:44818",
+    "timestamp": 1627644424.074308,
+    "type": 76
+}
+{
+    "activity": "interrogate",
+    "crc": false,
+    "data": {
+        "MV101": null
+    },
+    "dest": "192.168.1.10:44818",
+    "id": 12,
+    "length": 44,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [],
+    "src": "192.168.1.30:54498",
+    "timestamp": 1627644424.314957,
+    "type": 76
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "MV101": "0100"
+    },
+    "dest": "192.168.1.30:54498",
+    "id": 13,
+    "length": 24,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [
+        12
+    ],
+    "src": "192.168.1.10:44818",
+    "timestamp": 1627644424.329734,
+    "type": 76
+}
+{
+    "activity": "interrogate",
+    "crc": false,
+    "data": {
+        "FIT201": null
+    },
+    "dest": "192.168.1.20:44818",
+    "id": 14,
+    "length": 44,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [],
+    "src": "192.168.1.10:40558",
+    "timestamp": 1627644424.48673,
+    "type": 76
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "FIT201": "cdcc1c40"
+    },
+    "dest": "192.168.1.10:40558",
+    "id": 15,
+    "length": 26,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [
+        14
+    ],
+    "src": "192.168.1.20:44818",
+    "timestamp": 1627644424.499393,
+    "type": 76
+}
+{
+    "activity": "interrogate",
+    "crc": false,
+    "data": {
+        "P101": null
+    },
+    "dest": "192.168.1.10:44818",
+    "id": 16,
+    "length": 42,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [],
+    "src": "192.168.1.30:54502",
+    "timestamp": 1627644424.570555,
+    "type": 76
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "P101": "0100"
+    },
+    "dest": "192.168.1.30:54502",
+    "id": 17,
+    "length": 24,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [
+        16
+    ],
+    "src": "192.168.1.10:44818",
+    "timestamp": 1627644424.595899,
+    "type": 76
+}
+{
+    "activity": "interrogate",
+    "crc": false,
+    "data": {
+        "LIT301": null
+    },
+    "dest": "192.168.1.30:44818",
+    "id": 18,
+    "length": 44,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [],
+    "src": "192.168.1.10:59904",
+    "timestamp": 1627644424.994915,
+    "type": 76
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "LIT301": "0000003f"
+    },
+    "dest": "192.168.1.10:59904",
+    "id": 19,
+    "length": 26,
+    "malicious": null,
+    "protocol": "cip",
+    "responds to": [
+        18
+    ],
+    "src": "192.168.1.30:44818",
+    "timestamp": 1627644425.006152,
+    "type": 76
+}

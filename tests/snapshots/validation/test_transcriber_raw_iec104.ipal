@@ -1,0 +1,1752 @@
+{
+    "_transcriber-config": {
+        "compresslevel": 9,
+        "crc": "and",
+        "ipalout": "-",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "malicious": null,
+        "maliciousdefault": null,
+        "protocols": [
+            "iec104"
+        ],
+        "pyshark_options": [
+            "-o",
+            "udp.check_checksum:TRUE",
+            "-o",
+            "tcp.check_checksum:TRUE",
+            "-o",
+            "mbtcp.tcp.port:502"
+        ],
+        "rules": null,
+        "source": "misc/pcaps/iec104.pcap",
+        "timeout": 1.0
+    },
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "test": 1
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 0,
+    "length": 6,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372918997.053303,
+    "type": "U"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "test": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 1,
+    "length": 6,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        0
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.053845,
+    "type": "U"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "start data transfer": true
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 2,
+    "length": 6,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372918997.306461,
+    "type": "U"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "start data transfer": true
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 3,
+    "length": 6,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        2
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.307014,
+    "type": "U"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {},
+    "dest": "10.20.100.108:2404",
+    "id": 4,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372918997.321659,
+    "type": "I-100"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {},
+    "dest": "10.20.102.1:46413",
+    "id": 5,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        4
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.323589,
+    "type": "I-70"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {},
+    "dest": "10.20.100.108:2404",
+    "id": 6,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372918997.331734,
+    "type": "I-100"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {},
+    "dest": "10.20.102.1:46413",
+    "id": 7,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        6
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.33371,
+    "type": "I-100"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 8,
+    "length": 28,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.33371,
+    "type": "I-1"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 9,
+    "length": 28,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.33371,
+    "type": "I-3"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 10,
+    "length": 32,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.528631,
+    "type": "I-5"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 11,
+    "length": 44,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.528631,
+    "type": "I-7"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 12,
+    "length": 36,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.528631,
+    "type": "I-9"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 13,
+    "length": 36,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.528631,
+    "type": "I-11"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0.0,
+        "10.2": 0.0,
+        "10.3": 0.0,
+        "10.4": 0.0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 14,
+    "length": 44,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.528631,
+    "type": "I-13"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 15,
+    "length": 56,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.528631,
+    "type": "I-30"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 16,
+    "length": 56,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.528631,
+    "type": "I-31"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 17,
+    "length": 60,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.528631,
+    "type": "I-32"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 18,
+    "length": 72,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.528631,
+    "type": "I-33"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 19,
+    "length": 64,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-34"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 20,
+    "length": 64,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-35"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0.0,
+        "10.12": 0.0,
+        "10.13": 0.0,
+        "10.14": 0.0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 21,
+    "length": 72,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-36"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {},
+    "dest": "10.20.102.1:46413",
+    "id": 22,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-100"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {},
+    "dest": "10.20.102.1:46413",
+    "id": 23,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-100"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 24,
+    "length": 28,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-1"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 25,
+    "length": 28,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-3"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 26,
+    "length": 32,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-5"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 27,
+    "length": 44,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-7"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 28,
+    "length": 36,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-9"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0,
+        "10.2": 0,
+        "10.3": 0,
+        "10.4": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 29,
+    "length": 36,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-11"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 0.0,
+        "10.2": 0.0,
+        "10.3": 0.0,
+        "10.4": 0.0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 30,
+    "length": 44,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918997.79676,
+    "type": "I-13"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 31,
+    "length": 56,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918998.047674,
+    "type": "I-30"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 32,
+    "length": 56,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918998.047674,
+    "type": "I-31"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 33,
+    "length": 60,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918998.047674,
+    "type": "I-32"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 34,
+    "length": 72,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918998.047674,
+    "type": "I-33"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 35,
+    "length": 64,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918998.047674,
+    "type": "I-34"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0,
+        "10.12": 0,
+        "10.13": 0,
+        "10.14": 0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 36,
+    "length": 64,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918998.047674,
+    "type": "I-35"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.11": 0.0,
+        "10.12": 0.0,
+        "10.13": 0.0,
+        "10.14": 0.0
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 37,
+    "length": 72,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918998.047674,
+    "type": "I-36"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {},
+    "dest": "10.20.102.1:46413",
+    "id": 38,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372918998.047674,
+    "type": "I-100"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.2": 1
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 39,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919001.09227,
+    "type": "I-45"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.2": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 40,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        39
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919001.302967,
+    "type": "I-45"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.2": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 41,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919001.302967,
+    "type": "I-45"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.2": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 42,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919001.302967,
+    "type": "I-1"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.13": 1
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 43,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919003.932828,
+    "type": "I-45"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.13": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 44,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        43
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919004.060537,
+    "type": "I-45"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.13": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 45,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919004.060537,
+    "type": "I-45"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.13": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 46,
+    "length": 23,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919004.060537,
+    "type": "I-30"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.1": 1
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 47,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919008.79209,
+    "type": "I-46"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.1": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 48,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        47
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919008.818913,
+    "type": "I-46"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.1": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 49,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919009.013208,
+    "type": "I-46"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 50,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919009.013208,
+    "type": "I-3"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.14": 2
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 51,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919011.11161,
+    "type": "I-46"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.14": 2
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 52,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        51
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919011.323197,
+    "type": "I-46"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.14": 2
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 53,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919011.323197,
+    "type": "I-46"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.14": 2
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 54,
+    "length": 23,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919011.323197,
+    "type": "I-31"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.1": 2
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 55,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919015.167537,
+    "type": "I-47"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.1": 2
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 56,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        55
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919015.332997,
+    "type": "I-47"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.1": 2
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 57,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919015.332997,
+    "type": "I-47"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 58,
+    "length": 17,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919015.332997,
+    "type": "I-5"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.12": 1
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 59,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919016.632747,
+    "type": "I-47"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.12": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 60,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        59
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919016.834066,
+    "type": "I-47"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.12": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 61,
+    "length": 16,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919016.834066,
+    "type": "I-47"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.12": 127
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 62,
+    "length": 24,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919016.834066,
+    "type": "I-32"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.3": 33554432
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 63,
+    "length": 19,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919022.83993,
+    "type": "I-51"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.3": 33554432
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 64,
+    "length": 19,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        63
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919022.845805,
+    "type": "I-51"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.3": 33554432
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 65,
+    "length": 19,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919023.042862,
+    "type": "I-51"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.3": 33554432
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 66,
+    "length": 20,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919023.042862,
+    "type": "I-7"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.14": 67108864
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 67,
+    "length": 19,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919024.448401,
+    "type": "I-51"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.14": 67108864
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 68,
+    "length": 19,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        67
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919024.60048,
+    "type": "I-51"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.14": 67108864
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 69,
+    "length": 19,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919024.60048,
+    "type": "I-51"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.14": 67108864
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 70,
+    "length": 27,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919024.60048,
+    "type": "I-33"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.1": 1024
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 71,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919028.569348,
+    "type": "I-48"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.1": 1024
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 72,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        71
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919028.611195,
+    "type": "I-48"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.1": 1024
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 73,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919028.805182,
+    "type": "I-48"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 1024
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 74,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919028.805182,
+    "type": "I-9"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.12": 8192
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 75,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919031.874501,
+    "type": "I-48"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.12": 8192
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 76,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        75
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919032.122391,
+    "type": "I-48"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.12": 8192
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 77,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919032.122391,
+    "type": "I-48"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.12": 8192
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 78,
+    "length": 25,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919032.122391,
+    "type": "I-34"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.3": 123
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 79,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919042.885118,
+    "type": "I-49"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.3": 123
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 80,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        79
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919042.901047,
+    "type": "I-49"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.3": 123
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 81,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919043.091987,
+    "type": "I-49"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.3": 123
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 82,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919043.091987,
+    "type": "I-11"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.14": 456
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 83,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919044.586223,
+    "type": "I-49"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.14": 456
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 84,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        83
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919044.654122,
+    "type": "I-49"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.14": 456
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 85,
+    "length": 18,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919044.654122,
+    "type": "I-49"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.14": 456
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 86,
+    "length": 25,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919044.654122,
+    "type": "I-35"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.1": 3.140000104904175
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 87,
+    "length": 20,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919048.111429,
+    "type": "I-50"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.1": 3.140000104904175
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 88,
+    "length": 20,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        87
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919048.163469,
+    "type": "I-50"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.1": 3.140000104904175
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 89,
+    "length": 20,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919048.163469,
+    "type": "I-50"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.1": 3.140000104904175
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 90,
+    "length": 20,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919048.163469,
+    "type": "I-13"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "10.12": 9.869999885559082
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 91,
+    "length": 20,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919054.150743,
+    "type": "I-50"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.12": 9.869999885559082
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 92,
+    "length": 20,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        91
+    ],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919054.175577,
+    "type": "I-50"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "10.12": 9.869999885559082
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 93,
+    "length": 20,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919054.37364,
+    "type": "I-50"
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "10.12": 9.869999885559082
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 94,
+    "length": 27,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919054.37364,
+    "type": "I-36"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "test": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 95,
+    "length": 6,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919082.745773,
+    "type": "U"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "test": 1
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 96,
+    "length": 6,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        95
+    ],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919082.763505,
+    "type": "U"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "test": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 97,
+    "length": 6,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919102.796929,
+    "type": "U"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "test": 1
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 98,
+    "length": 6,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        97
+    ],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919102.808588,
+    "type": "U"
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "test": 1
+    },
+    "dest": "10.20.102.1:46413",
+    "id": 99,
+    "length": 6,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [],
+    "src": "10.20.100.108:2404",
+    "timestamp": 1372919122.846639,
+    "type": "U"
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "test": 1
+    },
+    "dest": "10.20.100.108:2404",
+    "id": 100,
+    "length": 6,
+    "malicious": null,
+    "protocol": "iec104",
+    "responds to": [
+        99
+    ],
+    "src": "10.20.102.1:46413",
+    "timestamp": 1372919122.854787,
+    "type": "U"
+}

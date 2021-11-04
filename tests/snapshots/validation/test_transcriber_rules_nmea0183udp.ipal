@@ -1,0 +1,88 @@
+{
+    "_transcriber-config": {
+        "compresslevel": 9,
+        "crc": "and",
+        "ipalout": "-",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "malicious": null,
+        "maliciousdefault": null,
+        "protocols": [
+            "nmea0183udp"
+        ],
+        "pyshark_options": [
+            "-o",
+            "udp.check_checksum:TRUE",
+            "-o",
+            "tcp.check_checksum:TRUE",
+            "-o",
+            "mbtcp.tcp.port:502"
+        ],
+        "rules": "misc/rules/nmea.py",
+        "source": "misc/pcaps/nmea0183udp.pcapng",
+        "timeout": 1.0
+    },
+    "activity": "interrogate",
+    "crc": false,
+    "data": {},
+    "dest": "127.0.0.1:8000:HC",
+    "id": 0,
+    "length": 12,
+    "malicious": null,
+    "protocol": "nmea0183udp",
+    "responds to": [],
+    "src": "GNSS",
+    "timestamp": 1612450296.050632,
+    "type": "HDM"
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "HDM0": 238,
+        "HDM1": "M"
+    },
+    "dest": "127.0.0.1:8000",
+    "id": 1,
+    "length": 14,
+    "malicious": null,
+    "protocol": "nmea0183udp",
+    "responds to": [],
+    "src": "127.0.0.1:57565:HC",
+    "timestamp": 1612450298.864367,
+    "type": "HDM"
+}
+{
+    "activity": "interrogate",
+    "crc": false,
+    "data": {},
+    "dest": "127.0.0.1:8000:HC",
+    "id": 2,
+    "length": 12,
+    "malicious": null,
+    "protocol": "nmea0183udp",
+    "responds to": [],
+    "src": "GNSS",
+    "timestamp": 1612450299.81138,
+    "type": "HDM"
+}
+{
+    "activity": "inform",
+    "crc": false,
+    "data": {
+        "HDM0": 238,
+        "HDM1": "M"
+    },
+    "dest": "127.0.0.1:8000",
+    "id": 3,
+    "length": 14,
+    "malicious": null,
+    "protocol": "nmea0183udp",
+    "responds to": [
+        2
+    ],
+    "src": "127.0.0.1:58670:HC",
+    "timestamp": 1612450300.494011,
+    "type": "HDM"
+}

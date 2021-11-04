@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+from transcriber import transcriber
+
+if __name__ == "__main__":
+    transcriber.main()

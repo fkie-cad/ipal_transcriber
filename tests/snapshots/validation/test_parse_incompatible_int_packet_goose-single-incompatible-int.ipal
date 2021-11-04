@@ -1,0 +1,22 @@
+{
+    "activity": "inform",
+    "crc": null,
+    "data": {
+        "LIED10PROT/LLN0$Alarm-000": "00",
+        "LIED10PROT/LLN0$Alarm-001": 1,
+        "LIED10PROT/LLN0$Alarm-002": "00",
+        "LIED10PROT/LLN0$Alarm-003": "00",
+        "LIED10PROT/LLN0$Alarm-004": "00",
+        "sqNum": 0,
+        "stNum": 1
+    },
+    "dest": "010ccd010001",
+    "id": 0,
+    "length": 128,
+    "malicious": null,
+    "protocol": "goose",
+    "responds to": [],
+    "src": "00098e217333",
+    "timestamp": 1565847340.069516,
+    "type": null
+}
