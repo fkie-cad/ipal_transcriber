@@ -1,0 +1,473 @@
+{
+    "_transcriber-config": {
+        "compresslevel": 9,
+        "crc": "and",
+        "ipalout": "-",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "malicious": null,
+        "maliciousdefault": null,
+        "protocols": [
+            "dnp3"
+        ],
+        "pyshark_options": [
+            "-o",
+            "udp.check_checksum:TRUE",
+            "-o",
+            "tcp.check_checksum:TRUE",
+            "-o",
+            "mbtcp.tcp.port:502"
+        ],
+        "rules": null,
+        "source": "misc/pcaps/dnp3.pcap",
+        "timeout": 1.0
+    },
+    "activity": "unknown",
+    "crc": true,
+    "data": {
+        "SEQ": 1
+    },
+    "dest": "192.168.10.221:55593",
+    "id": 0,
+    "length": 17,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1472247658.211397,
+    "type": 129
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "1:2:1:0": [
+            1,
+            0,
+            1,
+            0
+        ],
+        "1:2:1:1": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            0
+        ],
+        "SEQ": 2
+    },
+    "dest": "192.168.10.221:55593",
+    "id": 1,
+    "length": 41,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1472247658.211397,
+    "type": 130
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "1:1:2:0": 0,
+        "1:1:2:1": 0,
+        "1:1:2:2": 1,
+        "1:20:2:1": 189,
+        "1:20:2:2": 114,
+        "1:20:2:3": 140,
+        "1:20:2:4": 229,
+        "1:20:2:5": 31,
+        "1:20:2:6": 134,
+        "1:2:1:0": [
+            0
+        ],
+        "SEQ": 8
+    },
+    "dest": "192.168.10.221:55640",
+    "id": 2,
+    "length": 54,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1472346399.418063,
+    "type": 129
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "1:2:1:0": [
+            1
+        ],
+        "1:2:1:10": [
+            0
+        ],
+        "SEQ": 14
+    },
+    "dest": "192.168.10.221:56533",
+    "id": 3,
+    "length": 25,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1474627124.72074,
+    "type": 130
+}
+{
+    "activity": "interrogate",
+    "crc": true,
+    "data": {
+        "SEQ": 4,
+        "Signal Target": [
+            "1:60:2"
+        ]
+    },
+    "dest": "192.168.10.222:20000",
+    "id": 4,
+    "length": 18,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.221:58002",
+    "timestamp": 1476085326.066572,
+    "type": 1
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "SEQ": 4
+    },
+    "dest": "192.168.10.221:58002",
+    "id": 5,
+    "length": 17,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [
+        4
+    ],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1476085326.074408,
+    "type": 129
+}
+{
+    "activity": "interrogate",
+    "crc": true,
+    "data": {
+        "SEQ": 5,
+        "Signal Target": [
+            "1:60:2",
+            "1:60:3",
+            "1:60:4",
+            "1:60:1"
+        ]
+    },
+    "dest": "192.168.10.222:20000",
+    "id": 6,
+    "length": 27,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.221:58002",
+    "timestamp": 1476085327.07027,
+    "type": 1
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "1:1:2:0": 0,
+        "1:1:2:1": 0,
+        "1:1:2:2": 1,
+        "1:20:2:1": 0,
+        "SEQ": 5
+    },
+    "dest": "192.168.10.221:58002",
+    "id": 7,
+    "length": 33,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [
+        6
+    ],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1476085327.079475,
+    "type": 129
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "1:2:1:0": [
+            1
+        ],
+        "SEQ": 14
+    },
+    "dest": "192.168.10.221:58002",
+    "id": 8,
+    "length": 23,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1476085335.265726,
+    "type": 130
+}
+{
+    "activity": "confirmation",
+    "crc": true,
+    "data": {
+        "SEQ": 14,
+        "Signal Target": "1:14"
+    },
+    "dest": "192.168.10.222:20000",
+    "id": 9,
+    "length": 15,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [
+        8
+    ],
+    "src": "192.168.10.221:58002",
+    "timestamp": 1476085335.273748,
+    "type": 0
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "SEQ": 12,
+        "Signal Target": [
+            "1:20"
+        ]
+    },
+    "dest": "192.168.10.222:20000",
+    "id": 10,
+    "length": 18,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.66:42056",
+    "timestamp": 1476087199.043167,
+    "type": 7
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "SEQ": 12
+    },
+    "dest": "192.168.10.66:42056",
+    "id": 11,
+    "length": 17,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [
+        10
+    ],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1476087199.04798,
+    "type": 129
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "SEQ": 3
+    },
+    "dest": "192.168.10.222:20000",
+    "id": 12,
+    "length": 15,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.221:58005",
+    "timestamp": 1476091911.586839,
+    "type": 14
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "1:52:2:1": "5.0",
+        "SEQ": 3
+    },
+    "dest": "192.168.10.221:58005",
+    "id": 13,
+    "length": 23,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [
+        12
+    ],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1476091911.589586,
+    "type": 129
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "SEQ": 11,
+        "Signal Target": [
+            "1:20"
+        ]
+    },
+    "dest": "192.168.10.222:20000",
+    "id": 14,
+    "length": 18,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.221:58008",
+    "timestamp": 1476095522.068453,
+    "type": 8
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "SEQ": 4,
+        "Signal Target": [
+            "1:60:2",
+            "1:60:3",
+            "1:60:4"
+        ]
+    },
+    "dest": "192.168.10.222:20000",
+    "id": 15,
+    "length": 24,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.221:58010",
+    "timestamp": 1476096919.342853,
+    "type": 20
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "SEQ": 4
+    },
+    "dest": "192.168.10.221:58010",
+    "id": 16,
+    "length": 17,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [
+        15
+    ],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1476096919.350328,
+    "type": 129
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "SEQ": 1
+    },
+    "dest": "192.168.10.222:20000",
+    "id": 17,
+    "length": 15,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.221:58013",
+    "timestamp": 1476099908.368395,
+    "type": 24
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "SEQ": 1
+    },
+    "dest": "192.168.10.221:58013",
+    "id": 18,
+    "length": 17,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [
+        17
+    ],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1476099908.373977,
+    "type": 129
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "1:50:3:1": "1476171909.419",
+        "SEQ": 2
+    },
+    "dest": "192.168.10.222:20000",
+    "id": 19,
+    "length": 25,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.221:58013",
+    "timestamp": 1476099908.378415,
+    "type": 2
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "SEQ": 2
+    },
+    "dest": "192.168.10.221:58013",
+    "id": 20,
+    "length": 17,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [
+        19
+    ],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1476099908.386113,
+    "type": 129
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {
+        "SEQ": 4
+    },
+    "dest": "192.168.10.222:20000",
+    "id": 21,
+    "length": 15,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [],
+    "src": "192.168.10.221:58025",
+    "timestamp": 1476118215.852461,
+    "type": 13
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {
+        "1:52:2:1": "5.0",
+        "SEQ": 4
+    },
+    "dest": "192.168.10.221:58025",
+    "id": 22,
+    "length": 23,
+    "malicious": null,
+    "protocol": "dnp3",
+    "responds to": [
+        21
+    ],
+    "src": "192.168.10.222:20000",
+    "timestamp": 1476118215.857207,
+    "type": 129
+}

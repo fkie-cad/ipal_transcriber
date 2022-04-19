@@ -16,15 +16,16 @@ This software (`ipal-transcriber`) implements the automatic translation of indus
 | --------------------- | ----------- | ------------------------------------------------------------ |
 | CIP                   | Rudimentary | Code: 76, 77                                                 |
 | Goose                 | Moderate    |                                                              |
-| IEC 60870-5-104       | Moderate    | U_Format, I_Format: 1-40, 45-51, 70, 100-106                 |
+| IEC 60870-5-104       | Well    | U\_Format <br /> I\_Format: 1-21, 30-40, 45-51, 58-64, 70, 100-106                 |
 | IEC 61162-450         | Moderate    | UdPbC, no tags                                               |
-| Modbus TCP            | Moderate    | Function Codes: 1, 2, 3, 4, 5, 6, 15, 16                     |
-| NMEA0183              | Well        | DBT, DPT, GGA, GLL, GNS, GSA, GSV, HDM, HDT, RMC, ROT, RPM, TLL, TTM, VBW, VHW, VLW, VTG, ZDA, Q |
+| Modbus TCP            | Moderate    | Function Codes: 1, 2, 3, 4, 5, 6, 8, 15, 16, 43                     |
+| NMEA0183              | Well        | DBT, DPT, GGA, GLL, GNS, GSA, GSV, HDM, HDT, RMC, ROT, RPM, TLL, TTM, VBW, VHW, VLW, VTG, ZDA, RMB, APB, RSA, DTM, Q, AIVDM |
 | S7                    | Rudimentary | Job: 1, 3<br />Function Code: 4, 5                           |
+| DNP3                  | Rudimentary | Function Code: 0-2, 7,8, 13,14, 20, 24, 129, 130<br /> objects (group-id:var): 1:2, 2:1, 20:{0,2}, 50:3, 52:2, 60:{1-4}, 80:1 |
 
 ###### Publications
 
-- Konrad Wolsing, Eric Wagner, and Martin Henze. "Facilitating Protocol-independent Industrial Intrusion Detection Systems." *Proceedings of the 2020 ACM SIGSAC Conference on Computer and Communications Security*. 2020 (https://doi.org/10.1145/3372297.3420019)
+- Konrad Wolsing, Eric Wagner, and Martin Henze. "Poster: Facilitating Protocol-independent Industrial Intrusion Detection Systems." *Proceedings of the 2020 ACM SIGSAC Conference on Computer and Communications Security*. 2020 (https://doi.org/10.1145/3372297.3420019)
 - Konrad Wolsing, Eric Wagner, Antoine Saillard, and Martin Henze. "IPAL: Breaking up Silos of Protocol-dependent and Domain-specific Industrial Intrusion Detection Systems." *Under Review*. 2021 (ArXiv: https://arxiv.org/abs/2111.03438)
 
 ## Getting Started
@@ -33,16 +34,24 @@ This software (`ipal-transcriber`) implements the automatic translation of indus
 
 `ipal-trascriber` requires `tshark` to be installed. See [https://tshark.dev/setup/install/](https://tshark.dev/setup/install/) for installation instructions for your operating system.
 
-###### Installation
+###### Installation (pip)
 
-Use `pip install .`  to install system-wide, or install locally with `misc/install.sh` :
+Use `pip install .`  to install system-wide.
 
-```bash
+###### Installation (venv)
+
+Install it locally with `misc/install.sh` or manually with:
+
+```bas****h
 python3 -m venv venv
 source venv/bin/activate
 
 pip3 install -r requirements.txt
 ```
+
+###### Installation (docker)
+
+Use `docker build -t ipal-transcriber:latest .` to build a Docker image.
 
 #### Using the Transcriber
 
@@ -65,8 +74,8 @@ optional arguments:
                         traffic input interface (Use either this or --pcap)
   --pcap FILE           path to pcap file (Use either this or --interface)
   --protocols STR [STR ...]
-                        specify a subset of the available transcribers ['cip', 'goose', 'iec104',
-                        'iec450', 'modbus', 'nmea0183udp', 's7']. (Default: all)
+                        specify a subset of the available transcribers ['cip', 'dnp3', 'goose',
+                        'iec104', 'iec450', 'modbus', 'nmea0183udp', 's7']. (Default: all)
   --rules FILE          file containing rules to transform transcribed messages.
   --timeout INT         number of milliseconds a packet can be responded to. Used for response
                         matching (Default: 250ms)
@@ -105,6 +114,7 @@ The transcriber parses each industrial protocol packet and writes one JSON line 
 - Inform: Response to requested data or unsolicited message
 - Command: Sets new values or command an action
 - Action: Responds to command or (unsolicited) performed action
+- Confirmation: a packet solely designed as Layer-5 confirmation of prior msg - not restricted to Commands or Interrogations
 
 The field 'data' contains a dictionary of all transmitted industrial process value names and values. Values are set to 'null', e.g., if this value is requested.
 
@@ -238,6 +248,25 @@ The state format represents the entire state, the values of all sensors and actu
   },
   "malicious": null,
 }
+```
+
+#### Minimizing IPAL messages
+
+The `ipal-minimize` tool clears the process information (`data` and `state`) from IPAL messages or state files. This may be used to safe disk space in case the actual process data is not required.
+
+```bash
+./ipal-minimize -h
+usage: ipal-minimize [-h] [--jobs INT] [--log STR] [--logfile FILE] FILE [FILE ...]
+
+positional arguments:
+  FILE            files to minimize ('*.gz' compressed).
+
+optional arguments:
+  -h, --help      show this help message and exit
+  --jobs INT      Number of parallel workers (Default: 4).
+  --log STR       define logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL). Default is
+                  WARNING.
+  --logfile FILE  File to log to. Default is stderr.
 ```
 
 ## Development

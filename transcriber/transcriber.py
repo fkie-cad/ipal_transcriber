@@ -67,7 +67,7 @@ def parse_malicious_file(path):
     settings.maliciousin = path
 
     # Load josn file
-    with open_file(path, "r") as fin:
+    with open_file(settings.maliciousin, "r") as fin:
         attacks = json.load(fin)
 
     # Pre-parse attacks for faster lookups

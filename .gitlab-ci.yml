@@ -1,11 +1,16 @@
 default:
-  image: "asaillard/alpine-tshark:latest"
+  image: "ubuntu:22.04"
 
-  before_script:
-    - pip3 install -r requirements.txt
-    - pip3 install -r requirements-dev.txt
-    - python3 --version
-    - tshark -v
+before_script:
+  - apt-get update
+  - apt-get -y install software-properties-common sudo g++
+  - apt-get -y install pip vim
+  - DEBIAN_FRONTEND=noninteractive apt-get install -y tshark
+  - python3 --version
+  - pip3 install -r requirements.txt
+  - pip3 install -r requirements-dev.txt
+  - python3 --version
+  - tshark -v
 
 stages:
   - Static Analysis

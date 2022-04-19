@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+from transcriber.tools import minimize
+
+if __name__ == "__main__":
+    minimize.main()

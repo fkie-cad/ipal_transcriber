@@ -1,6 +1,7 @@
 import threading
 
 from transcribers.cip import CIPTranscriber
+from transcribers.dnp3 import DNP3Transcriber
 from transcribers.goose import GooseTranscriber
 from transcribers.iec104 import IEC104Transcriber
 from transcribers.iec450 import IEC450Transcriber
@@ -27,6 +28,7 @@ class IpalIdCounter:
 # Keep list up-to-date with all implemented transcribers!
 all_transcribers = [
     CIPTranscriber,
+    DNP3Transcriber,
     GooseTranscriber,
     IEC104Transcriber,
     IEC450Transcriber,

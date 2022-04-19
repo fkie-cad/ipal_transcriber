@@ -164,7 +164,7 @@ class GooseTranscriber(Transcriber):
     def parse_utc_time(data: bytes) -> float:
         seconds = struct.unpack("!i", data[:4])[0]
         nanoseconds = struct.unpack("!i", b"\x00" + data[4:7])[0]
-        return seconds + (nanoseconds / (2 ** 24))
+        return seconds + (nanoseconds / (2**24))
 
     @staticmethod
     def parse_utc_time_quality(data: bytes) -> TimeQuality:

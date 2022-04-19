@@ -26,6 +26,7 @@ RAW_FILES = [
         "goose",
     ),
     ("misc/pcaps/cip.pcapng", "cip.ipal", "cip"),
+    ("misc/pcaps/dnp3.pcap", "dnp3.ipal", "dnp3"),
 ]
 
 

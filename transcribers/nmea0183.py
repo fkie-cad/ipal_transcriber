@@ -2,6 +2,7 @@ from enum import Enum, auto
 
 from transcriber.messages import IpalMessage, Activity
 from transcribers.transcriber import Transcriber
+from transcribers.ais import decode_ais
 import transcriber.settings as settings
 
 
@@ -207,6 +208,54 @@ class NMEA0183(Transcriber):
             VariableType.NUMBER,
             VariableType.NUMBER,
         ],
+        "RMB": [
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.NUMBER,
+            VariableType.NUMBER,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.NUMBER,
+            VariableType.NUMBER,
+            VariableType.STRING,
+            VariableType.STRING,
+        ],
+        "APB": [
+            VariableType.STRING,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.STRING,
+            VariableType.STRING,
+            VariableType.STRING,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.NUMBER,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.STRING,
+        ],
+        "RSA": [
+            VariableType.NUMBER,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.STRING,
+        ],
+        "DTM": [
+            VariableType.STRING,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.STRING,
+            VariableType.NUMBER,
+            VariableType.STRING,
+        ],
     }
 
     def checksum(self, msg):
@@ -222,7 +271,7 @@ class NMEA0183(Transcriber):
 
     def parse_sentence(self, msg, res):
 
-        if msg[0] == "!":
+        if msg[0] == "!" and not msg.startswith("!AIVDM"):
             settings.logger.warning("Unsupported NMEA type '{}'".format(msg[0]))
             return None
 
@@ -255,6 +304,27 @@ class NMEA0183(Transcriber):
 
             res._add_to_request_queue = True
             res._flow = (res.dest.split(":")[0], request)
+
+        elif hdr == "AIVDM":
+            talkerID = hdr[:2]
+            sentenceID = hdr[2:]
+
+            res.src += ":" + talkerID
+            res.type = sentenceID
+
+            # AIS can be fragmented
+            fragments = int(tokens[0])
+
+            if fragments == 1:
+                res.data = decode_ais([tokens[3:]])
+
+            else:
+                message_id = int(tokens[2])
+                res._flow = (res.src.split(":")[0], sentenceID, message_id)
+
+                res._add_to_request_queue = True
+                res._match_to_requests = True
+                res._ais = tokens
 
         else:  # Regular sentence
             talkerID = hdr[:2]
@@ -312,8 +382,33 @@ class NMEA0183(Transcriber):
         return res
 
     def match_response(self, requests, response):
-        response.responds_to = [r.id for r in requests]
-        return requests
+
+        if response.type == "VDM":  # match fragmented AIS sentences
+            assert (
+                len(set([msg._ais[0] for msg in requests])) == 1
+            )  # only one fragment size
+            assert (
+                len(set([msg._ais[2] for msg in requests])) == 1
+            )  # the same message id
+
+            fragments = int(requests[0]._ais[0])
+            if len(requests) < fragments:
+                return []  # not all fragments collected yet
+
+            # Assemble fragments
+            ais = [None] * fragments
+            for msg in requests:
+                ais[int(msg._ais[1]) - 1] = msg._ais[3:]
+
+            # Adapt response
+            response.data = decode_ais(ais)
+            response.responds_to = [r.id for r in requests if r.id != response.id]
+
+            return requests  # Delete messages  from queue
+
+        else:  # match NMEA-0183 requests
+            response.responds_to = [r.id for r in requests]
+            return requests
 
 
 class NMEA0183UDPTranscriber(NMEA0183):

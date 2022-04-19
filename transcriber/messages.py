@@ -1,4 +1,5 @@
 import json
+import sys
 from enum import Enum, auto
 
 
@@ -7,6 +8,7 @@ class Activity(Enum):
     INFORM = 1  # Requested/unsolicited data
     COMMAND = 2  # Change values or system/call method
     ACTION = 3  # Response to commands or (unsolicited) performed actions
+    CONFIRMATION = 4  # for a msg specifically only acknowledging a prior msg.
     UNKNOWN = 99
 
     def __str__(self):
@@ -18,6 +20,8 @@ class Activity(Enum):
             return "inform"
         elif self == Activity.ACTION:
             return "action"
+        elif self == Activity.CONFIRMATION:
+            return "confirmation"
         elif self == Activity.UNKNOWN:
             return "unknown"
         else:
@@ -33,6 +37,8 @@ class Activity(Enum):
             return Activity.INFORM
         elif label == "action":
             return Activity.ACTION
+        elif label == "confirmation":
+            return Activity.CONFIRMATION
         elif label == "unknown":
             return Activity.UNKNOWN
         else:

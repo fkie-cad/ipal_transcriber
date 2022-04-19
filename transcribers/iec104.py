@@ -74,18 +74,31 @@ class IEC104Transcriber(Transcriber):
         for i in range(len(iec104_layers)):
 
             iec104 = iec104_layers[i]
-            type = int(iec104.type, 16)
+            # type = int(iec104.type, 16)
 
-            if type == 0x03:  # Type: U(0x11)
+            # Temporary fix to determine the packet type until MR is accepted
+            # https://gitlab.com/wireshark/wireshark/-/merge_requests/6414
+
+            # if type == 0x03:  # Type: U(0x11)
+            if "iec60870_104.utype" in iec104._all_fields:
                 msgs += self.parse_U_format(src, dest, timestamp, pkt, i)
 
-            elif type == 0x00:  # Type: I(0x00)
+            # elif type == 0x00:  # Type: I(0x00)
+            elif (
+                "iec60870_104.tx" in iec104._all_fields
+                and "iec60870_104.rx" in iec104._all_fields
+            ):
                 msgs += self.parse_I_format(src, dest, timestamp, pkt, i)
 
-            elif type == 0x01:  # Type: S(0x01)
+            # elif type == 0x01:  # Type: S(0x01)
+            elif (
+                "iec60870_104.tx" not in iec104._all_fields
+                and "iec60870_104.rx" in iec104._all_fields
+            ):
                 msgs += self.parse_S_format(src, dest, timestamp, pkt, i)
 
             else:
+                print(iec104._all_fields)
                 settings.logger.warning("Unknown IEC-104 type")
 
         return msgs
@@ -130,26 +143,23 @@ class IEC104Transcriber(Transcriber):
 
         return [m]
 
-    def parse_S_format(self, src, dest, timestamp, iec104, pkt_index):
-        settings.logger.info(
-            "[IEC-104] S format not parsed as it transfers acknowlegments."
-        )
-        return []
+    def parse_S_format(self, src, dest, timestamp, pkt, pkt_index):
 
-        # iec104 = pkt.get_multiple_layers("IEC60870_104")[pkt_index]
-        # flow = (?, ?) # how to determine the flow direction?
-        # m = IpalMessage(
-        #    id=self._id_counter.get_next_id(),
-        #    src=src,
-        #    dest=dest,
-        #    timestamp=timestamp,
-        #    protocol=self._name,
-        #    activity=Activity.INFORM,
-        #    flow=flow,
-        #    length=int(iec104.apdulen) + 2,
-        #    type="S"
-        # )
-        # return [m]
+        iec104 = pkt.get_multiple_layers("IEC60870_104")[pkt_index]
+
+        m = IpalMessage(
+            id=self._id_counter.get_next_id(),
+            src=src,
+            dest=dest,
+            timestamp=timestamp,
+            protocol=self._name,
+            activity=Activity.CONFIRMATION,
+            flow=(src, dest),
+            length=int(iec104.apdulen) + 2,
+            type="S",
+        )
+
+        return [m]
 
     def _cot_to_activity(self, cot, src, dest):
         add_to_request_queue = False
