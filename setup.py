@@ -4,7 +4,12 @@ setup(
     name="ipal-transcriber",
     version="1.1.0",
     packages=find_packages(exclude="tests"),
-    scripts=["ipal-transcriber", "ipal-state-extractor", "ipal-minimize"],
+    scripts=[
+        "ipal-transcriber",
+        "ipal-state-extractor",
+        "ipal-minimize",
+        "ipal-combine",
+    ],
     package_data={"": ["*.ipal", "*.pcapng"]},
     install_requires=["pyshark", "python-dateutil"],
     tests_require=["pytest"],

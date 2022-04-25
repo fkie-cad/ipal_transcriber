@@ -269,6 +269,25 @@ optional arguments:
   --logfile FILE  File to log to. Default is stderr.
 ```
 
+#### Combining IPAL messages
+
+The `ipal-combine` tool can be used to merge different IPAL dataset files from different IIDSs. Currently, the IDS outputs are ORed.
+
+```bash
+ipal-combine -h
+usage: ipal-combine [-h] --dataset FILE --output FILE [--log STR] [--logfile FILE] FILE [FILE ...]
+
+positional arguments:
+  FILE            files to combine ('*.gz' compressed).
+
+optional arguments:
+  -h, --help      show this help message and exit
+  --dataset FILE  original dataset ('*.gz' compressed).
+  --output FILE   path to store combined output to ('*.gz' compressed).
+  --log STR       define logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL). Default is WARNING.
+  --logfile FILE  File to log to. Default is stderr.
+```
+
 ## Development
 
 ##### Tooling
