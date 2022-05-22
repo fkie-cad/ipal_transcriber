@@ -87,9 +87,9 @@ class MQTTTranscriber(Transcriber):
 
     @classmethod
     def state_identifier(cls, msg, key):
-        if msg.activity in [cls.INTERROGATE, cls.COMMAND]:
+        if msg.activity in [str(Activity.INTERROGATE), str(Activity.COMMAND)]:
             return "{}:{}".format(msg.dest, key)
-        elif msg.activity in [cls.INFORM, cls.ACTION]:
+        elif msg.activity in [str(Activity.INFORM), str(Activity.ACTION)]:
             return "{}:{}".format(msg.src, key)
         else:
             settings.logger.critical("Unknown activity {}".format(msg.activity))
