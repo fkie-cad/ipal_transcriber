@@ -16,9 +16,10 @@ This software (`ipal-transcriber`) implements the automatic translation of indus
 | --------------------- | ----------- | ------------------------------------------------------------ |
 | CIP                   | Rudimentary | Code: 76, 77                                                 |
 | Goose                 | Moderate    |                                                              |
-| IEC 60870-5-104       | Well    | U\_Format <br /> I\_Format: 1-21, 30-40, 45-51, 58-64, 70, 100-106                 |
+| IEC 60870-5-104       | Well    | U\_Format <br /> I\_Format: 1-21, 30-40, 45-51, 58-64, 70, 100-106 |
 | IEC 61162-450         | Moderate    | UdPbC, no tags                                               |
-| Modbus TCP            | Moderate    | Function Codes: 1, 2, 3, 4, 5, 6, 8, 15, 16, 43                     |
+| Modbus TCP            | Moderate    | Function Codes: 1, 2, 3, 4, 5, 6, 8, 15, 16, 43              |
+| MQTT                  | Rudimentary | Basic MQTT 3.1                                               |
 | NMEA0183              | Well        | DBT, DPT, GGA, GLL, GNS, GSA, GSV, HDM, HDT, RMC, ROT, RPM, TLL, TTM, VBW, VHW, VLW, VTG, ZDA, RMB, APB, RSA, DTM, Q, AIVDM |
 | S7                    | Rudimentary | Job: 1, 3<br />Function Code: 4, 5                           |
 | DNP3                  | Rudimentary | Function Code: 0-2, 7,8, 13,14, 20, 24, 129, 130<br /> objects (group-id:var): 1:2, 2:1, 20:{0,2}, 50:3, 52:2, 60:{1-4}, 80:1 |
