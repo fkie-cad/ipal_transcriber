@@ -3,6 +3,7 @@ from transcriber.messages import IpalMessage, Activity
 from transcribers.transcriber import Transcriber
 import transcriber.settings as settings
 
+
 class MQTTProtocol:
 
     CONNECT = 1
@@ -19,16 +20,14 @@ class MQTTProtocol:
     PINGREQ = 12
     PINGRESP = 13
     DISCONNECT = 14
-   
+
     def __init__(self):
         self._msgid_topics = dict()
-        
 
     def save_state(self, request):
         type = self.msgtype(request)
         if type == self.SUBSCRIBE and request.get_field("msgid") and request.get_field("topic"):
             self._msgid_topics[request.get_field("msgid")] = request.get_field("topic")
-
 
     def resolve_state(self, request):
         type = self.msgtype(request)
@@ -38,12 +37,12 @@ class MQTTProtocol:
             state[topic] = None
         return state
 
-
     def data(self, request):
         type = self.msgtype(request)
         if type in [self.PUBLISH, self.SUBSCRIBE]:
-            try: 
-                value = "".join([chr(int(c, 16)) for c in str(request.get_field("msg")).split(":")])
+            try:
+                value = "".join([chr(int(c, 16))
+                                for c in str(request.get_field("msg")).split(":")])
             except:
                 value = None
             return {
@@ -54,7 +53,6 @@ class MQTTProtocol:
             return _data
         else:
             return {}
-
 
     @classmethod
     def activity(cls, message_type):
@@ -75,14 +73,13 @@ class MQTTProtocol:
             cls.DISCONNECT: Activity.COMMAND
         }.get(message_type, Activity.UNKNOWN)
 
-
     @classmethod
     def msgtype(cls, request):
         return int(request.get_field("msgtype"))
 
 
 class MQTTTranscriber(Transcriber):
-    _name = "mqtt" # currently only 3.1
+    _name = "mqtt"  # currently only 3.1
     mqtt_state = MQTTProtocol()
 
     @classmethod
@@ -104,7 +101,7 @@ class MQTTTranscriber(Transcriber):
 
         for request in mqtt_layer:
             requests.append(self._mqtt_to_ipal(request, pkt))
-            
+
         return requests
 
     def _mqtt_to_ipal(self, request, pkt):
