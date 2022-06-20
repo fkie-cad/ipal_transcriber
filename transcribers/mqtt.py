@@ -176,8 +176,4 @@ class MQTTTranscriber(Transcriber):
                         response.responds_to.append(request.id)
                         remove_from_queue.append(request)
 
-                elif request.type in MQTTProtocol.PUBLISH_COMMANDS and (request.src, request.dst) == (response.src, response.dst) and request.keys() == response.keys():
-                    response.responds_to.append(request.id)
-                    remove_from_queue.append(request)
-
         return remove_from_queue
