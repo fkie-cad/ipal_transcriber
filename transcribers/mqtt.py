@@ -111,7 +111,7 @@ class MQTTTranscriber(Transcriber):
         src = "{}:{}".format(pkt["IP"].src, pkt["TCP"].srcport)
         dest = "{}:{}".format(pkt["IP"].dst, pkt["TCP"].dstport)
         type = MQTTProtocol.msgtype(request)
-        length = request.len
+        length = 2 + request.len # 2 Byte MQTT Headers
         activity = MQTTProtocol.activity(type)
 
         data = MQTTProtocol.data(request)
