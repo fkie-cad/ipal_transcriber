@@ -1,4 +1,3 @@
-from time import time
 from transcriber.messages import IpalMessage, Activity
 from transcribers.transcriber import Transcriber
 import transcriber.settings as settings
@@ -20,6 +19,9 @@ class MQTTProtocol:
     PINGREQ = 12
     PINGRESP = 13
     DISCONNECT = 14
+
+    PUBLISH_COMMANDS = {PUBLISH, PUBACK, PUBREC, PUBREL, PUBCOMP}
+    TOPIC_COMMANDS = {SUBSCRIBE, SUBACK, UNSUBSCRIBE, UNSUBACK}
 
     def __init__(self):
         self._msgid_topics = dict()
@@ -77,6 +79,26 @@ class MQTTProtocol:
     def msgtype(cls, request):
         return int(request.get_field("msgtype"))
 
+    @classmethod
+    def command_response(cls, request):
+        # empty set means initiate
+        return {
+            cls.CONNECT: set(),
+            cls.CONNACK: {cls.CONNECT},
+            cls.PUBLISH: set(),
+            cls.PUBACK: {cls.PUBLISH},
+            cls.PUBREC: {cls.PUBLISH},
+            cls.PUBREL: {cls.PUBLISH},
+            cls.PUBCOMP: {cls.PUBLISH},
+            cls.SUBSCRIBE: set(),
+            cls.SUBACK: {cls.SUBSCRIBE},
+            cls.UNSUBSCRIBE: set(),
+            cls.UNSUBACK: {cls.UNSUBSCRIBE},
+            cls.PINGREQ: set(),
+            cls.PINGRESP: {cls.PINGRESP},
+            cls.DISCONNECT: set()
+        }.get(request.type, set())
+
 
 class MQTTTranscriber(Transcriber):
     _name = "mqtt"  # currently only 3.1
@@ -133,3 +155,27 @@ class MQTTTranscriber(Transcriber):
             responds_to=responds,
             data=data
         )
+
+    def match_response(self, requests, response):
+        remove_from_queue = []
+
+        match_types = MQTTProtocol.command_response(response)
+        if len(match_types) == 0:
+            return []
+
+        for request in requests:
+            if request.type in match_types:
+                if (request.src, request.dest) == (response.dest, response.src):
+                    if request.type in {MQTTProtocol.CONNECT, MQTTProtocol.PINGREQ}:
+                        response.responds_to.append(request.id)
+                        remove_from_queue.append(request)
+
+                    elif request.type in MQTTProtocol.TOPIC_COMMANDS | MQTTProtocol.PUBLISH_COMMANDS and request.keys() == response.keys():
+                        response.responds_to.append(request.id)
+                        remove_from_queue.append(request)
+
+                elif request.type in MQTTProtocol.PUBLISH_COMMANDS and (request.src, request.dst) == (response.src, response.dst) and request.keys() == response.keys():
+                    response.responds_to.append(request.id)
+                    remove_from_queue.append(request)
+
+        return remove_from_queue
