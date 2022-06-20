@@ -23,25 +23,10 @@ class MQTTProtocol:
     PUBLISH_COMMANDS = {PUBLISH, PUBACK, PUBREC, PUBREL, PUBCOMP}
     TOPIC_COMMANDS = {SUBSCRIBE, SUBACK, UNSUBSCRIBE, UNSUBACK}
 
-    def __init__(self):
-        self._msgid_topics = dict()
-
-    def save_state(self, request):
-        type = self.msgtype(request)
-        if type == self.SUBSCRIBE and request.get_field("msgid") and request.get_field("topic"):
-            self._msgid_topics[request.get_field("msgid")] = request.get_field("topic")
-
-    def resolve_state(self, request):
-        type = self.msgtype(request)
-        state = {}
-        if type == self.SUBACK:
-            topic = self._msgid_topics[request.get_field("msgid")]
-            state[topic] = None
-        return state
-
-    def data(self, request):
-        type = self.msgtype(request)
-        if type in [self.PUBLISH, self.SUBSCRIBE]:
+    @classmethod
+    def data(cls, request):
+        type = cls.msgtype(request)
+        if type in [cls.PUBLISH, cls.SUBSCRIBE]:
             try:
                 value = "".join([chr(int(c, 16))
                                 for c in str(request.get_field("msg")).split(":")])
@@ -50,9 +35,6 @@ class MQTTProtocol:
             return {
                 request.get_field("topic"): value
             }
-        elif type == self.SUBACK:
-            _data = self.resolve_state(request)
-            return _data
         else:
             return {}
 
@@ -102,7 +84,6 @@ class MQTTProtocol:
 
 class MQTTTranscriber(Transcriber):
     _name = "mqtt"  # currently only 3.1
-    mqtt_state = MQTTProtocol()
 
     @classmethod
     def state_identifier(cls, msg, key):
@@ -127,19 +108,13 @@ class MQTTTranscriber(Transcriber):
         return requests
 
     def _mqtt_to_ipal(self, request, pkt):
-        self.mqtt_state.save_state(request)
         src = "{}:{}".format(pkt["IP"].src, pkt["TCP"].srcport)
         dest = "{}:{}".format(pkt["IP"].dst, pkt["TCP"].dstport)
         type = MQTTProtocol.msgtype(request)
         length = request.len
         activity = MQTTProtocol.activity(type)
-        try:
-            responds = [int(pkt["TCP"].get_field("analysis_acks_frame"))]
-        except:
-            responds = []
 
-        # Usually this is static, but state may need transition (like SUBACK->topic)
-        data = self.mqtt_state.data(request)
+        data = MQTTProtocol.data(request)
 
         return IpalMessage(
             id=self._id_counter.get_next_id(),
@@ -152,7 +127,7 @@ class MQTTTranscriber(Transcriber):
             crc=None,
             type=type,
             activity=str(activity),
-            responds_to=responds,
+            responds_to=None, # added in match_response
             data=data
         )
 
