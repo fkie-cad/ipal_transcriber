@@ -13,6 +13,9 @@ RAW_FILES = [
         "nmea0183udp",
     ),
     ("misc/pcaps/s7.pcap", "s7.state", "s7"),
+    ("misc/pcaps/cip.pcapng", "cip.state", "cip"),
+    ("misc/pcaps/dnp3.pcap", "dnp3.state", "dnp3"),
+    ("misc/pcaps/mqtt.pcap", "mqtt.state", "mqtt"),
 ]
 
 

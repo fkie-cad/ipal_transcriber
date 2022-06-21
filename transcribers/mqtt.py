@@ -28,13 +28,12 @@ class MQTTProtocol:
         type = cls.msgtype(request)
         if type in [cls.PUBLISH, cls.SUBSCRIBE]:
             try:
-                value = "".join([chr(int(c, 16))
-                                for c in str(request.get_field("msg")).split(":")])
-            except:
+                value = "".join(
+                    [chr(int(c, 16)) for c in str(request.get_field("msg")).split(":")]
+                )
+            except:  # noqa: E722
                 value = None
-            return {
-                request.get_field("topic"): value
-            }
+            return {request.get_field("topic"): value}
         else:
             return {}
 
@@ -54,7 +53,7 @@ class MQTTProtocol:
             cls.UNSUBACK: Activity.ACTION,
             cls.PINGREQ: Activity.INTERROGATE,
             cls.PINGRESP: Activity.INFORM,
-            cls.DISCONNECT: Activity.COMMAND
+            cls.DISCONNECT: Activity.COMMAND,
         }.get(message_type, Activity.UNKNOWN)
 
     @classmethod
@@ -78,7 +77,7 @@ class MQTTProtocol:
             cls.UNSUBACK: {cls.UNSUBSCRIBE},
             cls.PINGREQ: set(),
             cls.PINGRESP: {cls.PINGRESP},
-            cls.DISCONNECT: set()
+            cls.DISCONNECT: set(),
         }.get(request.type, set())
 
 
@@ -87,9 +86,10 @@ class MQTTTranscriber(Transcriber):
 
     @classmethod
     def state_identifier(cls, msg, key):
-        if msg.activity in [str(Activity.INTERROGATE), str(Activity.COMMAND)]:
+
+        if msg.activity in [Activity.INTERROGATE, Activity.COMMAND]:
             return "{}:{}".format(msg.dest, key)
-        elif msg.activity in [str(Activity.INFORM), str(Activity.ACTION)]:
+        elif msg.activity in [Activity.INFORM, Activity.ACTION]:
             return "{}:{}".format(msg.src, key)
         else:
             settings.logger.critical("Unknown activity {}".format(msg.activity))
@@ -111,7 +111,7 @@ class MQTTTranscriber(Transcriber):
         src = "{}:{}".format(pkt["IP"].src, pkt["TCP"].srcport)
         dest = "{}:{}".format(pkt["IP"].dst, pkt["TCP"].dstport)
         type = MQTTProtocol.msgtype(request)
-        length = 2 + request.len # 2 Byte MQTT Headers
+        length = 2 + int(request.len)  # 2 Byte MQTT Headers
         activity = MQTTProtocol.activity(type)
 
         data = MQTTProtocol.data(request)
@@ -126,9 +126,9 @@ class MQTTTranscriber(Transcriber):
             length=length,
             crc=None,
             type=type,
-            activity=str(activity),
-            responds_to=None, # added in match_response
-            data=data
+            activity=activity,
+            responds_to=None,  # added in match_response
+            data=data,
         )
 
     def match_response(self, requests, response):
@@ -147,7 +147,11 @@ class MQTTTranscriber(Transcriber):
                         response.responds_to.append(request.id)
                         remove_from_queue.append(request)
 
-                    elif request.type in MQTTProtocol.TOPIC_COMMANDS | MQTTProtocol.PUBLISH_COMMANDS and request.keys() == response.keys():
+                    elif (
+                        request.type
+                        in MQTTProtocol.TOPIC_COMMANDS | MQTTProtocol.PUBLISH_COMMANDS
+                        and request.keys() == response.keys()
+                    ):
                         response.responds_to.append(request.id)
                         remove_from_queue.append(request)
 
