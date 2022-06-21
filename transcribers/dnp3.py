@@ -97,7 +97,7 @@ class DNP3Transcriber(Transcriber):
         elif msg.activity in [Activity.INFORM, Activity.ACTION]:
             return "{}:{}".format(msg.src, key)
         else:
-            settings.logger.critical("Unknown activity {}".format(msg.activity))
+            # settings.logger.critical("Unknown activity {}".format(msg.activity))
             return "{}:{}".format(msg.src, key)
 
     @staticmethod

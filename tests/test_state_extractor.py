@@ -16,6 +16,9 @@ RAW_FILES = [
     ("misc/ipal/modbus.ipal", "modbus.state"),
     ("misc/ipal/nmea0183udp.ipal", "nmea0183udp.state"),
     ("misc/ipal/s7.ipal", "s7.state"),
+    ("misc/ipal/cip.ipal", "cip.state"),
+    ("misc/ipal/dnp3.ipal", "dnp3.state"),
+    ("misc/ipal/mqtt.ipal", "mqtt.state"),
 ]
 
 

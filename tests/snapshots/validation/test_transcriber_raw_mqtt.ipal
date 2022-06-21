@@ -1,0 +1,312 @@
+{
+    "_transcriber-config": {
+        "compresslevel": 9,
+        "crc": "and",
+        "ipalout": "-",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "malicious": null,
+        "maliciousdefault": null,
+        "protocols": [
+            "mqtt"
+        ],
+        "pyshark_options": [
+            "-o",
+            "udp.check_checksum:TRUE",
+            "-o",
+            "tcp.check_checksum:TRUE",
+            "-o",
+            "mbtcp.tcp.port:502"
+        ],
+        "rules": null,
+        "source": "misc/pcaps/mqtt.pcap",
+        "timeout": 1.0
+    },
+    "activity": "command",
+    "crc": true,
+    "data": {},
+    "dest": "198.41.30.241:1883",
+    "id": 0,
+    "length": 39,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "10.0.1.4:49327",
+    "timestamp": 1461170590.509491,
+    "type": 1
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {},
+    "dest": "10.0.1.4:49327",
+    "id": 1,
+    "length": 4,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "198.41.30.241:1883",
+    "timestamp": 1461170590.745143,
+    "type": 2
+}
+{
+    "activity": "interrogate",
+    "crc": true,
+    "data": {
+        "SampleTopic": null
+    },
+    "dest": "198.41.30.241:1883",
+    "id": 2,
+    "length": 18,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "10.0.1.4:49327",
+    "timestamp": 1461170590.745647,
+    "type": 8
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {},
+    "dest": "10.0.1.4:49327",
+    "id": 3,
+    "length": 5,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "198.41.30.241:1883",
+    "timestamp": 1461170590.985197,
+    "type": 9
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "SampleTopic": "Hello from the Paho blocking client"
+    },
+    "dest": "10.0.1.4:49327",
+    "id": 4,
+    "length": 50,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "198.41.30.241:1883",
+    "timestamp": 1461170591.219981,
+    "type": 3
+}
+{
+    "activity": "interrogate",
+    "crc": true,
+    "data": {},
+    "dest": "198.41.30.241:1883",
+    "id": 5,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "10.0.1.4:49327",
+    "timestamp": 1461170596.22336,
+    "type": 12
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {},
+    "dest": "10.0.1.4:49327",
+    "id": 6,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "198.41.30.241:1883",
+    "timestamp": 1461170596.653508,
+    "type": 13
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {},
+    "dest": "198.41.30.241:1883",
+    "id": 7,
+    "length": 39,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "10.0.1.4:49330",
+    "timestamp": 1461170596.653525,
+    "type": 1
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "SampleTopic": "Hello MQTT"
+    },
+    "dest": "198.41.30.241:1883",
+    "id": 8,
+    "length": 25,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "10.0.1.4:49330",
+    "timestamp": 1461170596.653674,
+    "type": 3
+}
+{
+    "activity": "command",
+    "crc": true,
+    "data": {},
+    "dest": "198.41.30.241:1883",
+    "id": 9,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "10.0.1.4:49330",
+    "timestamp": 1461170596.653674,
+    "type": 14
+}
+{
+    "activity": "action",
+    "crc": true,
+    "data": {},
+    "dest": "10.0.1.4:49330",
+    "id": 10,
+    "length": 4,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "198.41.30.241:1883",
+    "timestamp": 1461170596.882353,
+    "type": 2
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {
+        "SampleTopic": "Hello MQTT"
+    },
+    "dest": "10.0.1.4:49327",
+    "id": 11,
+    "length": 25,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "198.41.30.241:1883",
+    "timestamp": 1461170596.891281,
+    "type": 3
+}
+{
+    "activity": "interrogate",
+    "crc": true,
+    "data": {},
+    "dest": "198.41.30.241:1883",
+    "id": 12,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "10.0.1.4:49327",
+    "timestamp": 1461170601.896374,
+    "type": 12
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {},
+    "dest": "10.0.1.4:49327",
+    "id": 13,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "198.41.30.241:1883",
+    "timestamp": 1461170602.182767,
+    "type": 13
+}
+{
+    "activity": "interrogate",
+    "crc": true,
+    "data": {},
+    "dest": "198.41.30.241:1883",
+    "id": 14,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "10.0.1.4:49327",
+    "timestamp": 1461170607.186613,
+    "type": 12
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {},
+    "dest": "10.0.1.4:49327",
+    "id": 15,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "198.41.30.241:1883",
+    "timestamp": 1461170607.568551,
+    "type": 13
+}
+{
+    "activity": "interrogate",
+    "crc": true,
+    "data": {},
+    "dest": "198.41.30.241:1883",
+    "id": 16,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "10.0.1.4:49327",
+    "timestamp": 1461170612.57248,
+    "type": 12
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {},
+    "dest": "10.0.1.4:49327",
+    "id": 17,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "198.41.30.241:1883",
+    "timestamp": 1461170612.909854,
+    "type": 13
+}
+{
+    "activity": "interrogate",
+    "crc": true,
+    "data": {},
+    "dest": "198.41.30.241:1883",
+    "id": 18,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "10.0.1.4:49327",
+    "timestamp": 1461170617.912894,
+    "type": 12
+}
+{
+    "activity": "inform",
+    "crc": true,
+    "data": {},
+    "dest": "10.0.1.4:49327",
+    "id": 19,
+    "length": 2,
+    "malicious": null,
+    "protocol": "mqtt",
+    "responds to": [],
+    "src": "198.41.30.241:1883",
+    "timestamp": 1461170618.150093,
+    "type": 13
+}
