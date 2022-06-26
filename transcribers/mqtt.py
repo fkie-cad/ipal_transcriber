@@ -22,6 +22,8 @@ class MQTTProtocol:
 
     PUBLISH_COMMANDS = {PUBLISH, PUBACK, PUBREC, PUBREL, PUBCOMP}
     TOPIC_COMMANDS = {SUBSCRIBE, SUBACK, UNSUBSCRIBE, UNSUBACK}
+    REQUEST_COMMANDS = {CONNECT, PUBLISH, PUBREL, SUBSCRIBE, UNSUBSCRIBE, PINGREQ}
+    RESPONSE_COMMANDS = {CONNACK, PUBACK, PUBREC, PUBCOMP, SUBACK, UNSUBACK, PINGRESP}
 
     @classmethod
     def data(cls, request):
@@ -116,7 +118,7 @@ class MQTTTranscriber(Transcriber):
 
         data = MQTTProtocol.data(request)
 
-        return IpalMessage(
+        ipal_message = IpalMessage(
             id=self._id_counter.get_next_id(),
             timestamp=float(pkt.sniff_time.timestamp()),
             protocol=self._name,
@@ -131,28 +133,53 @@ class MQTTTranscriber(Transcriber):
             data=data,
         )
 
+        # depending on the message type, add the message to the request queue or match it to a request in the queue
+        ipal_message._add_to_request_queue = (type in MQTTProtocol.REQUEST_COMMANDS)
+        ipal_message._match_to_requests = (type in MQTTProtocol.RESPONSE_COMMANDS)
+
+        return ipal_message
+
     def match_response(self, requests, response):
         remove_from_queue = []
 
-        # preemptively reduce the amount of checks we need to do
-        match_types = MQTTProtocol.command_response(response)
-        if len(match_types) == 0:
-            return []
-
-        # then only check relevant types
         for request in requests:
-            if request.type in match_types:
-                if (request.src, request.dest) == (response.dest, response.src):
-                    if request.type in {MQTTProtocol.CONNECT, MQTTProtocol.PINGREQ}:
-                        response.responds_to.append(request.id)
-                        remove_from_queue.append(request)
+            if response.type == MQTTProtocol.PUBACK:
+                if request.type == MQTTProtocol.PUBLISH and request.src == response.dest:
+                    response.responds_to.append(request.id)
+                    remove_from_queue.append(request)
+                    break
 
-                    elif (
-                        request.type
-                        in MQTTProtocol.TOPIC_COMMANDS | MQTTProtocol.PUBLISH_COMMANDS
-                        and request.keys() == response.keys()
-                    ):
-                        response.responds_to.append(request.id)
-                        remove_from_queue.append(request)
+            elif response.type == MQTTProtocol.PUBREC:  # PubREC
+                if request.type == MQTTProtocol.PUBLISH and request.src == response.dest:
+                    response.responds_to.append(request.id)
+                    # do not remove request from queue because PUBCOMP is part of the 4-way exchange MQTT with in QoS 2
+
+            elif response.type == MQTTProtocol.PUBCOMP:  # PubCOMP
+                # completes the 4 way exchange of QoS 2 MQTT
+                # includes two requests: PUBLISH and PUBREL
+                if request.type == MQTTProtocol.PUBLISH and request.src == response.dest:
+                    response.responds_to.append(request.id)
+                    remove_from_queue.append(request)
+                elif request.type == MQTTProtocol.PUBREL and request.src == response.dest:
+                    response.responds_to.append(request.id)
+                    remove_from_queue.append(request)
+
+            elif response.type == MQTTProtocol.SUBACK:
+                # check for matching topics
+                req_topics = list(request.data.keys())
+                res_topics = list(response.data.keys())
+                if set(res_topics).issubset(req_topics):
+                    print(set(res_topics), set(req_topics))
+                    response.responds_to.append(request.id)
+                    remove_from_queue.append(request)
+
+            # all other message types are matched by source and destination and by the following message types:
+            # Connect 1 -> ConnACK 2
+            # Unsubscribe 10 -> UnsubACK 11
+            # PingREQ 12 -> PingRESP 13
+            elif request.type in [MQTTProtocol.CONNECT, MQTTProtocol.UNSUBSCRIBE, MQTTProtocol.PINGREQ] and \
+                    request.type + 1 == response.type and request.src == response.dest:
+                response.responds_to.append(request.id)
+                remove_from_queue.append(request)
 
         return remove_from_queue
