@@ -30,7 +30,7 @@ def test_transcriber_combined(pcap, filename, protocol):
         "default",
     ]
     errno, stdout, stderr = transcriber(args)
-    assert stderr == b""
+    assert stderr == b"" or b"WARNING:asyncio:Unknown child process" in stderr
     assert errno == 0
     check_with_validation_file(
         filename, stdout.decode("utf-8"), test_transcriber_combined.__name__

@@ -1,6 +1,18 @@
 {
-    "_extractor": "default",
-    "_extractor_options": {},
+    "_state_extractor-config": {
+        "completeonly": false,
+        "compresslevel": 9,
+        "filter": null,
+        "ipalin": null,
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "options": {},
+        "state_extractor": "default",
+        "stateinmessage": false,
+        "stateout": "-",
+###IGNORE-LINE###
+    },
     "malicious": null,
     "state": {
         "10.10.10.10:102:16": 0,

@@ -9,7 +9,7 @@ def test_transcriber_empty():
     assert errno == 1
     assert (
         stderr
-        == b"ERROR:Transcriber:Use either --pcap or --interface to indicate source of transcribed traffic\n"
+        == b"ERROR:ipal-transcriber:Use either --pcap or --interface to indicate source of transcribed traffic\n"
     )
 
 
@@ -46,7 +46,7 @@ def test_transcriber_raw(pcap, filename, protocol):
         "1000",
     ]
     errno, stdout, stderr = transcriber(args)
-    assert stderr == b""
+    assert stderr == b"" or b"WARNING:asyncio:Unknown child process" in stderr
     assert errno == 0
     check_with_validation_file(
         filename, stdout.decode("utf-8"), test_transcriber_raw.__name__

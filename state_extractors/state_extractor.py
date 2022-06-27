@@ -50,8 +50,10 @@ class StateExtractor:
             }
 
         if self._first:
-            output["_extractor"] = self._name
-            output["_extractor_options"] = self._options
+            output[
+                "_state_extractor-config"
+            ] = settings.state_extractor_settings_to_dict()
+            output["_state_extractor-config"]["options"] = self._options
             self._first = False
 
         settings.stateoutfd.write(json.dumps(output) + "\n")

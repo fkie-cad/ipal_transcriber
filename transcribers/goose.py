@@ -92,6 +92,8 @@ class GooseTranscriber(Transcriber):
             return self.parse_float(data.binary_value)
         if data.showname_value == "boolean (3)":
             return self.parse_bool(data.binary_value)
+        if data.showname_value == "visible-string (10)":
+            return data.binary_value.decode()
         if data.showname_value == "utc-time (17)":
             return self.parse_utc_time(data.binary_value)
         raise UnknownValueTypeException(data.showname_value)

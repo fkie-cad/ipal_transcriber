@@ -1,5 +1,7 @@
 import logging
 
+version = "v1.1.0"
+
 # Gzip options
 compresslevel = 9  # 0 no compress, 1 large/fast, 9 small/slow
 
@@ -37,7 +39,7 @@ evalout = None
 evaloutfd = None
 
 # Logging settings
-logger = logging.getLogger("Transcriber")
+logger = logging.getLogger("ipal-transcriber")
 log = logging.WARNING
 logformat = "%(levelname)s:%(name)s:%(message)s"
 logfile = None
@@ -53,7 +55,7 @@ completeonly = False
 stateinmessage = False
 
 
-def settings_to_dict():
+def transcriber_settings_to_dict():
     return {
         "compresslevel": compresslevel,
         "pyshark_options": pyshark_options,
@@ -65,6 +67,22 @@ def settings_to_dict():
         "maliciousdefault": maliciousdefault,
         "malicious": maliciousin,
         "ipalout": ipalout,
+        "log": log,
+        "logformat": logformat,
+        "logfile": logfile,
+    }
+
+
+def state_extractor_settings_to_dict():
+    return {
+        "version": version,
+        "compresslevel": compresslevel,
+        "ipalin": ipalin,
+        "state_extractor": state_extractor._name,
+        "stateout": stateout,
+        "filter": filter,
+        "completeonly": completeonly,
+        "stateinmessage": stateinmessage,
         "log": log,
         "logformat": logformat,
         "logfile": logfile,

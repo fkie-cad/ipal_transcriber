@@ -213,8 +213,8 @@ class DNP3Transcriber(Transcriber):
 
         m = IpalMessage(
             id=self._id_counter.get_next_id(),
-            src=src,
-            dest=dest,
+            src=src,  # add outstation_addr or dnp3_l2_src?
+            dest=dest,  # add outstation_addr or dnp3_l2_dst?
             timestamp=timestamp,
             protocol=self._name,
             activity=activity,

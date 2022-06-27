@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from itertools import product
 from multiprocessing import Pool
 import argparse
 import gzip
@@ -10,6 +11,19 @@ import random
 import transcriber.settings as settings
 
 WORKER = 4
+
+# Keys to keep
+RETAIN = [
+    "id",
+    "timestamp",
+    "malicious",
+    "ids",
+    "metrics",
+    "_transcriber-config",
+    "_state_extractor-config",
+    "_iids-config",
+    "_evaluation-config",
+]
 
 
 # Wrapper for hiding .gz files
@@ -26,7 +40,9 @@ def initialize_logger(args):
         settings.log = getattr(logging, args.log.upper(), None)
 
         if not isinstance(settings.log, int):
-            logging.getLogger("Minimize").error("Option '--log' parameter not found")
+            logging.getLogger("ipal-minimize").error(
+                "Option '--log' parameter not found"
+            )
             exit(1)
 
     if args.logfile:
@@ -37,7 +53,7 @@ def initialize_logger(args):
     else:
         logging.basicConfig(level=settings.log, format=settings.logformat)
 
-    settings.logger = logging.getLogger("Minimize")
+    settings.logger = logging.getLogger("ipal-minimize")
 
 
 def prepare_arg_parser(parser):
@@ -48,7 +64,6 @@ def prepare_arg_parser(parser):
         help="files to minimize ('*.gz' compressed).",
         nargs="+",
     )
-
     parser.add_argument(
         "--jobs",
         dest="jobs",
@@ -56,6 +71,12 @@ def prepare_arg_parser(parser):
         help="Number of parallel workers (Default: {}).".format(WORKER),
         default=4,
         required=False,
+    )
+    parser.add_argument(
+        "--all",
+        dest="all",
+        help="Removes all data except those required for evaluation.",
+        action="store_true",
     )
 
     # Logging
@@ -76,7 +97,9 @@ def prepare_arg_parser(parser):
     )
 
 
-def minimize(input):
+def minimize(args):
+    input, min_everything = args
+
     # Generate temprary filename
     tmp = "{}.tmp-{}".format(input, random.randint(1000, 9999))
 
@@ -91,6 +114,10 @@ def minimize(input):
                     js["state"] = {}
                 if "data" in js:
                     js["data"] = {}
+
+                if min_everything:
+                    for rm in [key for key in js if key not in RETAIN]:
+                        del js[rm]
 
                 ftmp.write(json.dumps(js) + "\n")
 
@@ -107,6 +134,7 @@ def main():
     args = parser.parse_args()
     initialize_logger(args)
 
+    # Parse arguments
     if args.jobs:
         WORKER = int(args.jobs)
 
@@ -116,7 +144,7 @@ def main():
 
     # Run workers
     with Pool(WORKER) as p:
-        p.map(minimize, args.files)
+        p.map(minimize, product(args.files, [args.all]))
 
 
 if __name__ == "__main__":

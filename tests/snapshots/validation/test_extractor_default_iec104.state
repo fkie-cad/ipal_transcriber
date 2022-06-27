@@ -1,6 +1,18 @@
 {
-    "_extractor": "default",
-    "_extractor_options": {},
+    "_state_extractor-config": {
+        "completeonly": false,
+        "compresslevel": 9,
+        "filter": null,
+        "ipalin": "misc/ipal/iec104.ipal",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "options": {},
+        "state_extractor": "default",
+        "stateinmessage": false,
+        "stateout": "-",
+###IGNORE-LINE###
+    },
     "malicious": null,
     "state": {
         "10.20.102.1:46413:test": 1

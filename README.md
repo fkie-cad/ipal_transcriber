@@ -61,11 +61,9 @@ An optional rule file (```--rule```) allows modifying the output by renaming, re
 
 ```bash
 ./ipal-transcriber -h
-usage: ipal-transcriber [-h] [--interface INTERFACE] [--pcap FILE] [--protocols STR [STR ...]]
-                        [--rules FILE] [--timeout INT] [--malicious FILE]
-                        [--malicious.default BOOL] [--crc STR] [--ipal.output FILE] [--log STR]
-                        [--logfile FILE] [--compresslevel INT] [--state.output FILE]
-                        [--filter LIST] [--complete-only BOOL] [--state-in-message BOOL]
+usage: ipal-transcriber [-h] [--interface INTERFACE] [--pcap FILE] [--protocols STR [STR ...]] [--rules FILE] [--timeout INT] [--malicious FILE]
+                        [--malicious.default BOOL] [--crc STR] [--ipal.output FILE] [--log STR] [--logfile FILE] [--compresslevel INT]
+                        [--state.output FILE] [--filter LIST] [--complete-only BOOL] [--state-in-message BOOL]
                         {default,timeslice} ...
 
 optional arguments:
@@ -74,34 +72,27 @@ optional arguments:
                         traffic input interface (Use either this or --pcap)
   --pcap FILE           path to pcap file (Use either this or --interface)
   --protocols STR [STR ...]
-                        specify a subset of the available transcribers ['cip', 'dnp3', 'goose',
-                        'iec104', 'iec450', 'modbus', 'nmea0183udp', 's7']. (Default: all)
+                        specify a subset of the available transcribers ['cip', 'dnp3', 'goose', 'iec104', 'iec450', 'modbus', 'nmea0183udp', 's7'].
+                        (Default: all)
   --rules FILE          file containing rules to transform transcribed messages.
-  --timeout INT         number of milliseconds a packet can be responded to. Used for response
-                        matching (Default: 250ms)
-  --malicious FILE      Attack json file for labeling the packets according to the attacks in a
-                        dataset.
+  --timeout INT         number of milliseconds a packet can be responded to. Used for response matching (Default: 250ms)
+  --malicious FILE      Attack json file for labeling the packets according to the attacks in a dataset.
   --malicious.default BOOL
-                        set this option to 'true' or 'false' to define default malicious
-                        annotation. (Default: None). Can be used in combination with --malicious
-  --crc STR             options for CRC calculations are at 'transport', 'application', combined
-                        with 'or', or 'and'. (Default: and)
+                        set this option to 'true' or 'false' to define default malicious annotation. (Default: None). Can be used in combination with
+                        --malicious
+  --crc STR             options for CRC calculations are at 'transport', 'application', combined with 'or', or 'and'. (Default: and)
   --ipal.output FILE    output location for ipal messages ('-' stdout, '*.gz' compress).
-  --log STR             define logging level as one of DEBUG, INFO, WARNING, ERROR, or CRITICAL.
-                        (Default: WARNING)
+  --log STR             define logging level as one of DEBUG, INFO, WARNING, ERROR, or CRITICAL. (Default: WARNING)
   --logfile FILE        define file to log to. (Default: stderr)
-  --compresslevel INT   set the gzip compress level. 0 no compress, 1 fast/large, ..., 9
-                        slow/tiny. (Default: 9)
+  --compresslevel INT   set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 9)
   --state.output FILE   output location for state information. ('-' stdout, '*.gz' copress)
-  --filter LIST         semicolon separated list of state names to filter for. (Default: no
-                        filter)
+  --filter LIST         semicolon separated list of state names to filter for. (Default: no filter)
   --complete-only BOOL  output complete states after filterinig only. (Default: True)
   --state-in-message BOOL
                         embed state inside the messages. (Default: False)
 
 State Extractors:
-  {default,timeslice}   These are available state extractor methods. Use -h for further options on
-                        each method.
+  {default,timeslice}   These are available state extractor methods. Use -h for further options on each method.
     default             Simple last value buffer of all variables
     timeslice           Outputs complete state in regular time slices.
 ```
@@ -196,29 +187,24 @@ The `rename` key-value pair `".*:GG": "GNSS"` specifies that all destination and
 
 ```bash
 ./ipal-state-extractor -h
-usage: ipal-state-extractor [-h] [--ipal.input FILE] [--state.output FILE] [--filter LIST]
-                            [--complete-only BOOL] [--state-in-message BOOL] [--compresslevel INT]
-                            [--log STR] [--logfile FILE]
+usage: ipal-state-extractor [-h] [--ipal.input FILE] [--state.output FILE] [--filter LIST] [--complete-only BOOL] [--state-in-message BOOL]
+                            [--compresslevel INT] [--log STR] [--logfile FILE]
                             {default,timeslice} ...
 
 optional arguments:
   -h, --help            show this help message and exit
   --ipal.input FILE     input location for message information. ('-' stdin, '*gz' compressed)
   --state.output FILE   output location for state information. ('-' stdout, '*.gz' copress)
-  --filter LIST         semicolon separated list of state names to filter for. (Default: no
-                        filter)
+  --filter LIST         semicolon separated list of state names to filter for. (Default: no filter)
   --complete-only BOOL  output complete states after filterinig only. (Default: True)
   --state-in-message BOOL
                         embed state inside the messages. (Default: False)
-  --compresslevel INT   set the gzip compress level. 0 no compress, 1 fast/large, ..., 9
-                        slow/tiny. (Default: 9)
-  --log STR             define logging level as one of DEBUG, INFO, WARNING, ERROR, or CRITICAL.
-                        (Default: WARNING)
+  --compresslevel INT   set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 9)
+  --log STR             define logging level as one of DEBUG, INFO, WARNING, ERROR, or CRITICAL. (Default: WARNING)
   --logfile FILE        define file to log to. (Default: stderr)
 
 State Extractors:
-  {default,timeslice}   These are available state extractor methods. Use -h for further options on
-                        each method.
+  {default,timeslice}   These are available state extractor methods. Use -h for further options on each method.
     default             Simple last value buffer of all variables
     timeslice           Outputs complete state in regular time slices.
 ```
@@ -255,8 +241,8 @@ The state format represents the entire state, the values of all sensors and actu
 The `ipal-minimize` tool clears the process information (`data` and `state`) from IPAL messages or state files. This may be used to safe disk space in case the actual process data is not required.
 
 ```bash
-./ipal-minimize -h
-usage: ipal-minimize [-h] [--jobs INT] [--log STR] [--logfile FILE] FILE [FILE ...]
+ipal-minimize -h
+usage: ipal-minimize [-h] [--jobs INT] [--all] [--log STR] [--logfile FILE] FILE [FILE ...]
 
 positional arguments:
   FILE            files to minimize ('*.gz' compressed).
@@ -264,8 +250,8 @@ positional arguments:
 optional arguments:
   -h, --help      show this help message and exit
   --jobs INT      Number of parallel workers (Default: 4).
-  --log STR       define logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL). Default is
-                  WARNING.
+  --all           Removes all data except those required for evaluation.
+  --log STR       define logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL). Default is WARNING.
   --logfile FILE  File to log to. Default is stderr.
 ```
 

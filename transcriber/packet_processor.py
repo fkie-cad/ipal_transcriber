@@ -149,7 +149,7 @@ class PacketProcessor:
         output = msg.export_json()
 
         if self._first:
-            output["_transcriber-config"] = settings.settings_to_dict()
+            output["_transcriber-config"] = settings.transcriber_settings_to_dict()
             self._first = False
 
         settings.ipaloutfd.write(json.dumps(output) + "\n")

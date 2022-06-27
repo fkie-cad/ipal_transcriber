@@ -104,6 +104,7 @@ def parse_arguments(args):
 
     # Lookup and initilize selected state-extractor
     if args.state_extractor:
+        settings.state_extractor = args.state_extractor
         return args.state_extractor(args)
     else:
         return None
@@ -176,7 +177,7 @@ def parse_main_arguments():
         )
     else:
         logging.basicConfig(level=settings.log, format=settings.logformat)
-    settings.logger = logging.getLogger("State extractor")
+    settings.logger = logging.getLogger("ipal-state-extractor")
 
     # Gzip compress level
     if args.compresslevel:

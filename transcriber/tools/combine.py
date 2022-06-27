@@ -23,7 +23,9 @@ def initialize_logger(args):
         settings.log = getattr(logging, args.log.upper(), None)
 
         if not isinstance(settings.log, int):
-            logging.getLogger("Minimize").error("Option '--log' parameter not found")
+            logging.getLogger("ipal-combine").error(
+                "Option '--log' parameter not found"
+            )
             exit(1)
 
     if args.logfile:
@@ -34,7 +36,7 @@ def initialize_logger(args):
     else:
         logging.basicConfig(level=settings.log, format=settings.logformat)
 
-    settings.logger = logging.getLogger("Minimize")
+    settings.logger = logging.getLogger("ipal-combine")
 
 
 def prepare_arg_parser(parser):
