@@ -84,7 +84,7 @@ class MQTTProtocol:
             cls.UNSUBSCRIBE: set(),
             cls.UNSUBACK: {cls.UNSUBSCRIBE},
             cls.PINGREQ: set(),
-            cls.PINGRESP: {cls.PINGRESP},
+            cls.PINGRESP: {cls.PINGREQ},
             cls.DISCONNECT: set(),
         }.get(request.type, set())
 
@@ -148,6 +148,7 @@ class MQTTTranscriber(Transcriber):
     def match_response(self, requests, response):
         remove_from_queue = []
         match_types = MQTTProtocol.command_response(response)
+
         if len(match_types) == 0:
             return []
 
