@@ -45,7 +45,9 @@
     "length": 4,
     "malicious": null,
     "protocol": "mqtt",
-    "responds to": [],
+    "responds to": [
+        0
+    ],
     "src": "198.41.30.241:1883",
     "timestamp": 1461170590.745143,
     "type": 2
@@ -75,7 +77,9 @@
     "length": 5,
     "malicious": null,
     "protocol": "mqtt",
-    "responds to": [],
+    "responds to": [
+        2
+    ],
     "src": "198.41.30.241:1883",
     "timestamp": 1461170590.985197,
     "type": 9
@@ -119,7 +123,9 @@
     "length": 2,
     "malicious": null,
     "protocol": "mqtt",
-    "responds to": [],
+    "responds to": [
+        5
+    ],
     "src": "198.41.30.241:1883",
     "timestamp": 1461170596.653508,
     "type": 13
@@ -177,7 +183,9 @@
     "length": 4,
     "malicious": null,
     "protocol": "mqtt",
-    "responds to": [],
+    "responds to": [
+        7
+    ],
     "src": "198.41.30.241:1883",
     "timestamp": 1461170596.882353,
     "type": 2
@@ -221,7 +229,9 @@
     "length": 2,
     "malicious": null,
     "protocol": "mqtt",
-    "responds to": [],
+    "responds to": [
+        12
+    ],
     "src": "198.41.30.241:1883",
     "timestamp": 1461170602.182767,
     "type": 13
@@ -249,7 +259,9 @@
     "length": 2,
     "malicious": null,
     "protocol": "mqtt",
-    "responds to": [],
+    "responds to": [
+        14
+    ],
     "src": "198.41.30.241:1883",
     "timestamp": 1461170607.568551,
     "type": 13
@@ -277,7 +289,9 @@
     "length": 2,
     "malicious": null,
     "protocol": "mqtt",
-    "responds to": [],
+    "responds to": [
+        16
+    ],
     "src": "198.41.30.241:1883",
     "timestamp": 1461170612.909854,
     "type": 13
@@ -305,7 +319,9 @@
     "length": 2,
     "malicious": null,
     "protocol": "mqtt",
-    "responds to": [],
+    "responds to": [
+        18
+    ],
     "src": "198.41.30.241:1883",
     "timestamp": 1461170618.150093,
     "type": 13
