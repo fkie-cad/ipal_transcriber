@@ -143,6 +143,8 @@ class MQTTTranscriber(Transcriber):
     def match_response(self, requests, response):
         remove_from_queue = []
         match_types = MQTTProtocol.command_response(response)
+        if len(match_types) == 0:
+            return []
 
         for request in requests:
             if (
