@@ -25,8 +25,8 @@ This software (`ipal-transcriber`) implements the automatic translation of indus
 
 ###### Publications
 
-- Konrad Wolsing, Eric Wagner, and Martin Henze. "Poster: Facilitating Protocol-independent Industrial Intrusion Detection Systems." *Proceedings of the 2020 ACM SIGSAC Conference on Computer and Communications Security*. 2020 (https://doi.org/10.1145/3372297.3420019)
-- Konrad Wolsing, Eric Wagner, Antoine Saillard, and Martin Henze. "IPAL: Breaking up Silos of Protocol-dependent and Domain-specific Industrial Intrusion Detection Systems." *Under Review*. 2021 (ArXiv: https://arxiv.org/abs/2111.03438)
+- Konrad Wolsing, Eric Wagner, Antoine Saillard, and Martin Henze. 2022. IPAL: Breaking up Silos of Protocol-dependent and Domain-specific In- dustrial Intrusion Detection Systems. In 25th International Symposium on Research in Attacks, Intrusions and Defenses (RAID 2022), October 26–28, 2022, Limassol, Cyprus. ACM, New York, NY, USA, 17 pages. [https://doi.org/10.1145/3545948.3545968 ](https://doi.org/10.1145/3545948.3545968)
+- Wolsing, Konrad, Eric Wagner, and Martin Henze. "Poster: Facilitating Protocol-independent Industrial Intrusion Detection Systems." *Proceedings of the 2020 ACM SIGSAC Conference on Computer and Communications Security*. 2020 [https://doi.org/10.1145/3372297.3420019](https://doi.org/10.1145/3372297.3420019)
 
 ## Getting Started
 
@@ -341,6 +341,17 @@ Note that upon adding a new test, a validation `IPAL` file will be created under
 ###### Adding Transcriber Tests
 
 To ensure that a transcriber's protocol implementation stays compliant, a transcriber test module can be added in `tests/transcribers/`. It may contain methods testing individual features and properties of the added transcriber. Note that for it to be collected by pytest, the module and test methods must be prefixed by `test_` and test methods contain an `assert`. See [the pytest docs](https://docs.pytest.org/en/6.2.x/contents.html#toc) for more information.
+
+## Contributors
+
+- Antoine Saillard (RWTH Aachen University & Fraunhofer FKIE)
+- Eric Wagner (Fraunhofer FKIE & RWTH Aachen University)
+- Konrad Wolsing (Fraunhofer FKIE & RWTH Aachen University)
+- Leonardo Pompe (RWTH Aachen University)
+- Olav Lamberts (RWTH Aachen University)
+- Stefan Lenz (RWTH Aachen University)
+- Sven Zemanek (Fraunhofer FKIE)
+- Tim Nebel (RWTH Aachen University)
 
 ## License
 
