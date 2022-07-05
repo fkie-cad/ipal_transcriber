@@ -1,0 +1,126 @@
+{
+    "_extractor": "default",
+    "_extractor_options": {},
+    "malicious": null,
+    "state": {
+        "198.41.30.241:1883:SampleTopic": "Hello from the Paho blocking client"
+    },
+    "timestamp": 1461170591.219981
+}
+{
+    "malicious": null,
+    "state": {
+        "198.41.30.241:1883:SampleTopic": "Hello from the Paho blocking client"
+    },
+    "timestamp": 1461170596.22336
+}
+{
+    "malicious": null,
+    "state": {
+        "198.41.30.241:1883:SampleTopic": "Hello from the Paho blocking client"
+    },
+    "timestamp": 1461170596.653508
+}
+{
+    "malicious": null,
+    "state": {
+        "198.41.30.241:1883:SampleTopic": "Hello from the Paho blocking client"
+    },
+    "timestamp": 1461170596.653525
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello from the Paho blocking client"
+    },
+    "timestamp": 1461170596.653674
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello from the Paho blocking client"
+    },
+    "timestamp": 1461170596.653674
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello from the Paho blocking client"
+    },
+    "timestamp": 1461170596.882353
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello MQTT"
+    },
+    "timestamp": 1461170596.891281
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello MQTT"
+    },
+    "timestamp": 1461170601.896374
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello MQTT"
+    },
+    "timestamp": 1461170602.182767
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello MQTT"
+    },
+    "timestamp": 1461170607.186613
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello MQTT"
+    },
+    "timestamp": 1461170607.568551
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello MQTT"
+    },
+    "timestamp": 1461170612.57248
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello MQTT"
+    },
+    "timestamp": 1461170612.909854
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello MQTT"
+    },
+    "timestamp": 1461170617.912894
+}
+{
+    "malicious": null,
+    "state": {
+        "10.0.1.4:49330:SampleTopic": "Hello MQTT",
+        "198.41.30.241:1883:SampleTopic": "Hello MQTT"
+    },
+    "timestamp": 1461170618.150093
+}
