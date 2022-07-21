@@ -16,7 +16,7 @@ class EtherCatTranscriber(Transcriber):
 
     def parse_packet(self, pkt):
         res = []
-
+        data = {}
         src = pkt["eth"].src
         dest = pkt["eth"].dst
 
@@ -40,13 +40,27 @@ class EtherCatTranscriber(Transcriber):
             sub_data = list(filter(lambda x: "data" in x, sub_frs))
             print()
 
-            print(sub_cmds)
-            print(sub_idx)
-            print(sub_adp)
-            print(sub_ado)
-            print(sub_lad)
-            print(sub_cnt)
-            print(sub_data)
+            sub_names = filter(lambda x: "sub" in x, ecat.field_names)
+
+            #print(sub_cmds)
+            #print(sub_idx)
+            #print(sub_adp)
+            #print(sub_ado)
+            #print(sub_lad)
+            #print(sub_cnt)
+            #print(sub_data)
+
+          
+            for item in sub_data:
+                data[item] = ecat.get(item)
+                   
+                
+                
+            
+           
+
+            
+
 
             m = IpalMessage(
                 id=self._id_counter.get_next_id(),
@@ -56,10 +70,13 @@ class EtherCatTranscriber(Transcriber):
                 protocol=self._name,
                 #flow=flow,
                 length=msg_length,
+                data=data,
                 type=cmd,
             )
             res.append(m)
-
+            
+            
+        
         return res
 
     def match_response(self, requests, response):
