@@ -42,20 +42,55 @@ class EtherCatTranscriber(Transcriber):
 
             sub_names = filter(lambda x: "sub" in x, ecat.field_names)
 
-            #print(sub_cmds)
+            print(sub_cmds)
             #print(sub_idx)
             #print(sub_adp)
             #print(sub_ado)
             #print(sub_lad)
             #print(sub_cnt)
             #print(sub_data)
+            
+            #Address To Data Matching
+            all_addresses = []
+            for i,item in enumerate(sub_cmds):
+                temp = "sub"
+                match int(ecat.get(item),16):
+                    case 4: #FPRD                        
+                        ado = ecat.get(temp + str(i +1) + "_ado")                       
+                        adp = ecat.get(temp + str(i +1) + "_adp" )
+                        current_address = "Ado: " + str(ado) + " Adp: " + str(adp)
+                        all_addresses.append(current_address)
 
-          
-            for item in sub_data:
-                data[item] = ecat.get(item)
+                    case 7: # BRD                                 
+                        ado = ecat.get(temp + str(i +1) + "_ado")                        
+                        adp = ecat.get(temp + str(i +1) + "_adp" )
+                        current_address = "Ado: " + str(ado) + " Adp: " + str(adp)
+                        all_addresses.append(current_address)
+                        
+                    case 8: #BWR                   
+                        ado = ecat.get(temp + str(i +1) + "_ado")                
+                        adp = ecat.get(temp + str(i +1) + "_adp" )
+                        current_address = "Ado: " + str(ado) + " Adp: " + str(adp)                       
+                        all_addresses.append(current_address)
+                        
+                    case 10: #LRD                                       
+                        current_address = str(ecat.get(temp + str(i +1) + "_lad"))
+                        all_addresses.append(current_address)
+                       
+                    case 11: #LWR                                      
+                        current_address = str(ecat.get(temp + str(i +1) + "_lad"))
+                        all_addresses.append(current_address)
+                        
+                    case 12: #LRW                 
+                        current_address = str(ecat.get(temp + str(i +1) + "_lad"))
+                        all_addresses.append(current_address)
+                      
+            for i,sdata in enumerate(sub_data):
+                
+                data[all_addresses[i]] = ecat.get(sdata)
                    
                 
-                
+            
             
            
 
@@ -73,7 +108,9 @@ class EtherCatTranscriber(Transcriber):
                 data=data,
                 type=cmd,
             )
+            print(all_addresses)
             res.append(m)
+            
             
             
         
