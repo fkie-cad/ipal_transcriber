@@ -38,11 +38,11 @@ class EtherCatTranscriber(Transcriber):
             sub_lad = list(filter(lambda x: "lad" in x, sub_frs))
             sub_cnt = list(filter(lambda x: "cnt" in x, sub_frs))
             sub_data = list(filter(lambda x: "data" in x, sub_frs))
-            print()
+            #print()
 
             sub_names = filter(lambda x: "sub" in x, ecat.field_names)
 
-            print(sub_cmds)
+            #print(sub_cmds)
             #print(sub_idx)
             #print(sub_adp)
             #print(sub_ado)
@@ -86,15 +86,8 @@ class EtherCatTranscriber(Transcriber):
                         all_addresses.append(current_address)
                       
             for i,sdata in enumerate(sub_data):
-                
                 data[all_addresses[i]] = ecat.get(sdata)
                    
-                
-            
-            
-           
-
-            
 
 
             m = IpalMessage(
@@ -108,7 +101,6 @@ class EtherCatTranscriber(Transcriber):
                 data=data,
                 type=cmd,
             )
-            print(all_addresses)
             res.append(m)
             
             
