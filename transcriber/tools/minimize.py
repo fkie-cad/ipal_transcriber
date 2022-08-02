@@ -98,7 +98,8 @@ def prepare_arg_parser(parser):
 
 
 def minimize(args):
-    input, min_everything = args
+    input, arguments = args
+    initialize_logger(arguments)
 
     # Generate temprary filename
     tmp = "{}.tmp-{}".format(input, random.randint(1000, 9999))
@@ -115,7 +116,7 @@ def minimize(args):
                 if "data" in js:
                     js["data"] = {}
 
-                if min_everything:
+                if arguments.all:
                     for rm in [key for key in js if key not in RETAIN]:
                         del js[rm]
 
@@ -144,7 +145,7 @@ def main():
 
     # Run workers
     with Pool(WORKER) as p:
-        p.map(minimize, product(args.files, [args.all]))
+        p.map(minimize, product(args.files, [args]))
 
 
 if __name__ == "__main__":
