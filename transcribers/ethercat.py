@@ -14,21 +14,22 @@ class EtherCatTranscriber(Transcriber):
     def matches_protocol(self, pkt):
         return "ECAT" in pkt
 
-
+    
 
     def parse_packet(self, pkt):
         res = []
         data = {}
         src = pkt["eth"].src
         dest = pkt["eth"].dst
-
+        
         ecatf_layers = pkt.get_multiple_layers("ecatf")
         ecat_layers = pkt.get_multiple_layers("ecat")
+        print(pkt)
 
         for i in range(len(ecatf_layers)):
             ecatf = ecatf_layers[i]
             ecat = ecat_layers[i]
-
+            
 
             cmd = ecat.cmd
             msg_length = int(ecatf.length, 16) - 2
@@ -52,33 +53,36 @@ class EtherCatTranscriber(Transcriber):
             #print(sub_lad)
             #print(sub_cnt)
             #print(sub_data)
-
+            
             #Address To Data Matching
             all_addresses = []
             for i,item in enumerate(sub_cmds):
                 temp = "sub"
                 match int(ecat.get(item),16):
-                    case 4: #FPRD
+                    case 4: #FPRD                        
                         all_addresses.append(self.get_ado_adp_address(i, ecat))
 
-                    case 7: # BRD
+                    case 7: # BRD                                 
                         all_addresses.append(self.get_ado_adp_address(i, ecat))
-
-                    case 8: #BWR
+                        
+                    case 8: #BWR                                     
                         all_addresses.append(self.get_ado_adp_address(i, ecat))
-
+                        
                     case 10: #LRD
+                        s = f"{temp}{i+1}_lad"   
+                        print(s)
+                        print(temp + str(i +1) + "_lad")                                    
                         all_addresses.append(str(ecat.get(temp + str(i +1) + "_lad")))
-
-                    case 11: #LWR
+                       
+                    case 11: #LWR                                      
                         all_addresses.append(str(ecat.get(temp + str(i +1) + "_lad")))
-
-                    case 12: #LRW
+                        
+                    case 12: #LRW                 
                         all_addresses.append(str(ecat.get(temp + str(i +1) + "_lad")))
-
+                      
             for i,sdata in enumerate(sub_data):
                 data[all_addresses[i]] = ecat.get(sdata)
-
+                   
 
 
             m = IpalMessage(
@@ -93,9 +97,10 @@ class EtherCatTranscriber(Transcriber):
                 type=cmd,
             )
             res.append(m)
-
-
-
+            
+            
+            
+        
         return res
 
     def match_response(self, requests, response):
@@ -103,7 +108,8 @@ class EtherCatTranscriber(Transcriber):
         return remove_from_queue
 
     def get_ado_adp_address(self, i, ecat):
-        ado = ecat.get("sub" + str(i +1) + "_ado")
+        ado = ecat.get("sub" + str(i +1) + "_ado")                       
         adp = ecat.get("sub" + str(i +1) + "_adp" )
         current_address = "Ado: " + str(ado) + " Adp: " + str(adp)
         return current_address
+
