@@ -24,7 +24,7 @@ class EtherCatTranscriber(Transcriber):
         
         ecatf_layers = pkt.get_multiple_layers("ecatf")
         ecat_layers = pkt.get_multiple_layers("ecat")
-        print(pkt)
+        
 
         for i in range(len(ecatf_layers)):
             ecatf = ecatf_layers[i]
@@ -42,7 +42,6 @@ class EtherCatTranscriber(Transcriber):
             sub_lad = list(filter(lambda x: "lad" in x, sub_frs))
             sub_cnt = list(filter(lambda x: "cnt" in x, sub_frs))
             sub_data = list(filter(lambda x: "data" in x, sub_frs))
-            #print()
 
             sub_names = filter(lambda x: "sub" in x, ecat.field_names)
 
@@ -52,6 +51,7 @@ class EtherCatTranscriber(Transcriber):
             #print(sub_ado)
             #print(sub_lad)
             #print(sub_cnt)
+
             #print(sub_data)
             
             #Address To Data Matching
@@ -69,9 +69,7 @@ class EtherCatTranscriber(Transcriber):
                         all_addresses.append(self.get_ado_adp_address(i, ecat))
                         
                     case 10: #LRD
-                        s = f"{temp}{i+1}_lad"   
-                        print(s)
-                        print(temp + str(i +1) + "_lad")                                    
+                        s = f"{temp}{i+1}_lad"                                 
                         all_addresses.append(str(ecat.get(temp + str(i +1) + "_lad")))
                        
                     case 11: #LWR                                      
@@ -83,22 +81,23 @@ class EtherCatTranscriber(Transcriber):
             for i,sdata in enumerate(sub_data):
                 data[all_addresses[i]] = ecat.get(sdata)
                    
-
-
-            m = IpalMessage(
+            
+            
+            #Address Mapping needs fixing
+            for i,item in enumerate(data):
+                m = IpalMessage(
                 id=self._id_counter.get_next_id(),
                 src=src,
-                dest=dest,
+                dest=item,
                 timestamp=float(pkt.sniff_time.timestamp()),
                 protocol=self._name,
                 #flow=flow,
                 length=msg_length,
-                data=data,
-                type=cmd,
-            )
-            res.append(m)
-            
-            
+                data=data[item],
+                type=int(ecat.get(sub_cmds[i]),16),
+                )
+                res.append(m)
+                
             
         
         return res
