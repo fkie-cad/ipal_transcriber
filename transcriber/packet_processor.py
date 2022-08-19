@@ -1,5 +1,6 @@
 import json
 import time
+from scapy.packet import Packet as ScapyPacket
 
 import transcriber.settings as settings
 from transcriber.request_queue import RequestQueue
@@ -39,11 +40,27 @@ class PacketProcessor:
         # 1st pipeline step: Transform packets request/response packets into an abstract form
 
         # check if the current packet can be handled by any of the selected transcribers and ignore it otherwise
-        for protocol in settings.protocols:
-            if self.transcribers[protocol].matches_protocol(pkt):
-                break
+        if isinstance(pkt, ScapyPacket) and "ethercat" in settings.protocols and self.transcribers["ethercat"].matches_protocol(pkt):
+            protocol = "ethercat"
+        elif isinstance(pkt, ScapyPacket) and "ethercat" in settings.protocols:
+            settings.logger.debug("Fount non-EtherCat scapy packet. Scapy packets are only supported by EtherCat transcriber.")
+            return
+        elif isinstance(pkt, ScapyPacket):
+            settings.logger.debug("Fount scapy packet, but EtherCat transcriber is disabled. Scapy packets are only supported by EtherCat transcriber.")
+            return
+
+        elif isinstance(pkt, pyshark.packet.packet.Packet):
+            for protocol in settings.protocols:
+                if protocol == "ethercat":
+                    continue
+                if self.transcribers[protocol].matches_protocol(pkt):
+                    break
+            else:
+                settings.logger.debug("No parser for package: {}".format(pkt))
+                return
+
         else:
-            settings.logger.debug("No parser for package: {}".format(pkt))
+            settings.logger.debug("Found unsupported packet type.")
             return
 
         # now we can parse the packet

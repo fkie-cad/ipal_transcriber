@@ -53,7 +53,7 @@ class EtherCatTranscriber(Transcriber):
         pass
 
     def matches_protocol(self, pkt):
-        return "ECAT" in pkt
+        return "ECAT" in pkt or "EtherCat" in pkt
 
 
     def parse_packet(self, pkt):
