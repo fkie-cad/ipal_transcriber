@@ -1,3 +1,6 @@
+from pyshark.packet.packet import Packet as PysharkPacket
+from scapy.packet import Packet as ScapyPacket
+
 from transcriber.messages import IpalMessage, Activity
 from transcribers.transcriber import Transcriber
 import transcriber.settings as settings
@@ -55,8 +58,16 @@ class EtherCatTranscriber(Transcriber):
     def matches_protocol(self, pkt):
         return "ECAT" in pkt or "EtherCat" in pkt
 
-
     def parse_packet(self, pkt):
+        if isinstance(pkt, PysharkPacket):
+            return self.parse_packet_pyshark(pkt)
+        elif isinstance(pkt, ScapyPacket):
+            return self.parse_packet_scapy(pkt)
+        else:
+            print("Packet with unexpected type.")
+            return []
+
+    def parse_packet_pyshark(self, pkt):
         res = []
 
         src = pkt["eth"].src
@@ -216,6 +227,128 @@ class EtherCatTranscriber(Transcriber):
             )
             res.append(m)
 
+
+        return res
+
+
+    def parse_packet_scapy(self, pkt):
+        res = []
+
+        src = pkt.src
+        dest = pkt.dst
+
+        # Not good error handling, but these assumptions should hold for our pcaps:
+        assert pkt.type == 0x88a4
+        assert pkt["EtherCat"].type == 1
+
+        #
+        # Iterate over PDUs
+        #
+
+        current_pdu = pkt["EtherCat"].payload
+        while True:
+            command_value = current_pdu._cmd
+
+            # Calculate value of msg.length
+            assert hasattr(current_pdu, "len")
+            assert hasattr(current_pdu, "data")
+            pdu_length = 12 + current_pdu.len
+
+            #
+            # Parse data
+            #
+
+            # We first parse the data to the following format:
+            # parsed_data is a dict, that maps slave_addr to another dict D.
+            # D maps memory addresses of this slave to their new values.
+            # slave_addr is either a auto-increment address of the form
+            # (AUTO_INCR_ADDR, <value>) or a physical address of the form
+            # (PHYS_ADDR, <value>). <value> should be a hex string.
+            # The memory addresses should be given as integers.
+            parsed_data = {}
+
+            match command_value:
+                # For NOP or reading PDUs we store no data:
+                case 0x00 | 0x01 | 0x04 | 0x07 | 0x0a: # NOP, APRD, FPRD, BRD, LRD
+                    pass
+                # Data should be set in the same way for WR and RW. We only look
+                # at writes anyway.
+                case 0x02 | 0x03: # APWR, APRW
+                    memory_map = {}
+                    offset = current_pdu.ado
+                    for i in range(current_pdu.len):
+                        memory_map[offset + i] = current_pdu.data[i]
+                    parsed_data[(AUTO_INCR_ADDR, "{0:#06x}".format(current_pdu.adp))] = memory_map
+
+                case 0x05 | 0x06: # FPWR, FPRW
+                    pass
+                case 0x08 | 0x09: # BWR, BRW
+                    memory_map = {}
+                    offset = current_pdu.ado
+                    for i in range(current_pdu.len):
+                        memory_map[offset + i] = current_pdu.data[i]
+                    parsed_data[(AUTO_INCR_ADDR, "*")] = memory_map
+
+                case 0x0b | 0x0c: # LWR, LRW
+                    pass
+                case 0x0d: # ARMW
+                    assert False, "Do we even have these in our Pcaps?"
+                case 0x0e: # FRMW
+                    assert False, "Do we even have these in our Pcaps?"
+
+            #
+            # Update the address maps
+            #
+            for slave, mem_update in parsed_data.items():
+                assert (0x10 in mem_update and 0x11 in mem_update) or (not 0x10 in mem_update and not 0x11 in mem_update)
+                if 0x10 in mem_update:
+                    new_addr = mem_update[0x10] + (mem_update[0x11] << 8)
+                    if slave[0] == AUTO_INCR_ADDR:
+                        self._physical_addr_map[new_addr] = slave[1]
+                    elif slave[0] == PHYS_ADDR:
+                        self._physical_addr_map[new_addr] = self._physical_addr_map[slave[1]]
+                        # Maybe we should also remove the old mapping in this case
+                    else:
+                        raise AssertionError
+                        # We have an unexpected address type
+
+
+            #
+            # Construct the data attribute of the IPAL message from parsed_data
+            #
+            data = {}
+            for slave, mem_update in parsed_data.items():
+                for mem_addr_int, value in mem_update.items():
+                    # Convert int to hex str:
+                    mem_addr_str = "{0:#06x}".format(mem_addr_int)
+
+                    if slave[0] == AUTO_INCR_ADDR:
+                        slave_mem_addr = "aic_" + slave[1] + "/" + mem_addr_str
+                    elif slave[0] == PHYS_ADDR:
+                        if slave[1] in self._physical_addr_map:
+                            slave_mem_addr = "aic_" + self._physical_addr_map[slave[1]] + "/" + mem_addr_str
+                        else:
+                            slave_mem_addr = "phy_" + slave[1] + "/" + mem_addr_str
+                    data[slave_mem_addr] = value
+
+
+            m = IpalMessage(
+                id=self._id_counter.get_next_id(),
+                src=src,
+                dest=dest,
+                timestamp=float(pkt.time),
+                protocol=self._name,
+                length=pdu_length,
+                type=command_value,
+                activity=self._activity_map[command_value],
+                data=data,
+            )
+            res.append(m)
+
+            if current_pdu.next == 0:
+                break
+            else:
+                current_pdu = current_pdu.payload
 
         return res
 
