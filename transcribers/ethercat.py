@@ -95,8 +95,7 @@ class EtherCatTranscriber(Transcriber):
 
     @classmethod
     def state_identifier(cls, msg, key):
-        # TODO: add state_identifier
-        pass
+        return key
 
     def matches_protocol(self, pkt):
         return "ECAT" in pkt or "EtherCat" in pkt

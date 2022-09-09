@@ -9,7 +9,7 @@ import pyshark
 import sys
 
 from scapy.main import init_session as scapy_init
-from scapy.utils import rdpcap
+from scapy.utils import rdpcap, PcapNgReader
 try:
     from scapy.contrib.ethercat import EtherCatNOP
 except ImportError:
@@ -315,8 +315,12 @@ def main():
         if args.pcap:
             settings.source = args.pcap
             scapy_init(None)
-            capture = rdpcap(args.pcap)
-            for pkt in capture:
+            reader = PcapNgReader(args.pcap)
+            while True:
+                try:
+                    pkt = reader.read_packet()  # type: Packet
+                except EOFError:
+                    break
                 pkt_processor.process_packet(pkt)
 
         elif args.interface:
