@@ -1,2 +1,3 @@
 pyshark
 python-dateutil
+prometheus-client
