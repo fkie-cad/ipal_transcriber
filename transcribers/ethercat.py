@@ -125,9 +125,11 @@ class EtherCatTranscriber(Transcriber):
             adr = None
             adp = None
             ado = None
-            match command_value:
-                case 0x0b | 0x0c:
-                    adr = int(pdu_layer.get_field(pdu_prefix + "lad"), 16)
+            if command_value in [0x0a, 0x0b, 0x0c]:
+                adr = int(pdu_layer.get_field(pdu_prefix + "lad"), 16)
+            else:
+                adp = int(pdu_layer.get_field(pdu_prefix + "adp"), 16)
+                ado = int(pdu_layer.get_field(pdu_prefix + "ado"), 16)
 
             #
             # Get or reconstruct data fields:
