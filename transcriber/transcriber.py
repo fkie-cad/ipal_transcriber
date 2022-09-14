@@ -8,15 +8,6 @@ import os
 import pyshark
 import sys
 
-from scapy.main import init_session as scapy_init
-from scapy.utils import rdpcap, PcapNgReader
-try:
-    from scapy.contrib.ethercat import EtherCatNOP
-except ImportError:
-    print("You need to install scapy from https://github.com/plustik/scapy")
-    print("Running 'pip install git+https://github.com/plustik/scapy.git' should work.")
-    exit(1)
-
 import transcriber.settings as settings
 import transcriber.packet_processor as packet_processor
 import transcriber.state_extractor as state_extractor
@@ -314,14 +305,13 @@ def main():
     try:
         if args.pcap:
             settings.source = args.pcap
-            scapy_init(None)
-            reader = PcapNgReader(args.pcap)
-            while True:
-                try:
-                    pkt = reader.read_packet()  # type: Packet
-                except EOFError:
-                    break
-                pkt_processor.process_packet(pkt)
+            capture = pyshark.FileCapture(
+                input_file=args.pcap,
+                keep_packets=False,
+                custom_parameters=settings.pyshark_options,
+                decode_as=settings.pyshark_decode_as,
+            )
+            capture.apply_on_packets(pkt_processor.process_packet)
 
         elif args.interface:
             settings.source = args.interface

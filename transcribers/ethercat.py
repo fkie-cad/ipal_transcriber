@@ -1,5 +1,4 @@
 from pyshark.packet.packet import Packet as PysharkPacket
-from scapy.packet import Packet as ScapyPacket
 
 from transcriber.messages import IpalMessage, Activity
 from transcribers.transcriber import Transcriber
@@ -100,201 +99,47 @@ class EtherCatTranscriber(Transcriber):
     def matches_protocol(self, pkt):
         return "ECAT" in pkt or "EtherCat" in pkt
 
-    def parse_packet(self, pkt):
-        if isinstance(pkt, PysharkPacket):
-            return self.parse_packet_pyshark(pkt)
-        elif isinstance(pkt, ScapyPacket):
-            return self.parse_packet_scapy(pkt)
-        else:
-            print("Packet with unexpected type.")
-            return []
 
-    def parse_packet_pyshark(self, pkt):
+    def parse_packet(self, pkt):
         res = []
 
         src = pkt["eth"].src
         dest = pkt["eth"].dst
 
         # Not good error handling, but these assumptions should hold for our pcaps:
-        assert len(pkt.get_multiple_layers("ecatf")) == 1
+        assert pkt.get_multiple_layers("eth")[0].type == "0x88a4"
+        assert pkt["ecatf"].type == "0x0001"
+
+        #
+        # Iterate over PDUs
+        #
+
         assert len(pkt.get_multiple_layers("ecat")) == 1
-        assert int(pkt.get_multiple_layers("ecatf")[0].type, 16) == 0x0001
+        pdu_layer = pkt.get_multiple_layers("ecat")[0]
+        pdu_count = 1
+        while hasattr(pdu_layer, "sub" + str(pdu_count) + "_cmd"):
+            pdu_prefix = "sub" + str(pdu_count) + "_"
+            command_value = int(pdu_layer.get_field(pdu_prefix + "cmd"), 16)
 
-        ecat_layer = pkt.get_multiple_layers("ecat")[0]
+            # Parse addresses
+            adr = None
+            adp = None
+            ado = None
+            match command_value:
+                case 0x0b | 0x0c:
+                    adr = int(pdu_layer.get_field(pdu_prefix + "lad"), 16)
 
-        #
-        # Iterate over PDUs
-        #
-
-        total_length = int(pkt.get_multiple_layers("ecatf")[0].length, 16) # Length of all PDUs combined
-        offset = 0
-        pdu_count = 0
-        #while offset < total_length:
-        while f"sub{pdu_count + 1}_cmd" in ecat_layer.field_names:
-            pdu_count += 1
-
-            command_value = int(ecat_layer.get_field(f"sub{pdu_count}_cmd"), 16)
+            #
+            # Get or reconstruct data fields:
+            #
+            if ado == 0x130:
+                pass # First address of "special" PDUs
+            else:
+                data_str = pdu_layer.get_field(pdu_prefix + "data")
+                data_array = self.data_string_to_bytes(data_str)
 
             # Calculate value of msg.length
-            # TODO: This is obviously still false. The correct value depends on the command and length field (length of data field)
-            match command_value:
-                case 0x00: # NOP
-                    pdu_length = 12 + len(self.data_string_to_bytes(ecat_layer.get_field(f"sub{pdu_count}_data")))
-                case 0x01: # APRD
-                    pdu_length = 0
-                    #pdu_length = 12 + data_length
-                case 0x02: # APWR
-                    pdu_length = 0
-                    #pdu_length = 12 + data_length
-                case 0x03: # APRW
-                    pdu_length = 0
-                case 0x04: # FPRD
-                    pdu_length = 0
-                    #pdu_length = 12 + data_length
-                case 0x05: # FPWR
-                    pdu_length = 0
-                case 0x06: # FPRW
-                    pdu_length = 0
-                case 0x07: # BRD
-                    pdu_length = 0
-                    #pdu_length = 12 + data_length
-                case 0x08: # BWR
-                    pdu_length = 0
-                    #pdu_length = 12 + data_length
-                case 0x09: # BRW
-                    pdu_length = 0
-                case 0x0a: # LRD
-                    pdu_length = 0
-                    #pdu_length = 12 + data_length
-                case 0x0b: # LWR
-                    pdu_length = 0
-                case 0x0c: # LRW
-                    pdu_length = 0
-                case 0x0d: # ARMW
-                    pdu_length = 0
-                case 0x0e: # FRMW
-                    pdu_length = 0
-
-            #
-            # Parse data
-            #
-
-            # We first parse the data to the following format:
-            # parsed_data is a dict, that maps slave_addr to another dict D.
-            # D maps memory addresses of this slave to their new values.
-            # slave_addr is either a auto-increment address of the form
-            # (AUTO_INCR_ADDR, <value>) or a configured address of the form
-            # (CONFIG_ADDR, <value>). <value> should be a hex string.
-            # The memory addresses should be given as integers.
-            parsed_data = {}
-
-            match command_value:
-                case 0x00: # NOP
-                    pass
-                case 0x01: # APRD
-                    pass
-                case 0x02: # APWR
-                    pass
-                case 0x03: # APRW
-                    pass
-                case 0x04: # FPRD
-                    pass
-                case 0x05: # FPWR
-                    pass
-                case 0x06: # FPRW
-                    pass
-                case 0x07: # BRD
-                    pass
-                case 0x08: # BWR
-                    pass
-                case 0x09: # BRW
-                    pass
-                case 0x0a: # LRD
-                    pass
-                case 0x0b: # LWR
-                    pass
-                case 0x0c: # LRW
-                    pass
-                case 0x0d: # ARMW
-                    pass
-                case 0x0e: # FRMW
-                    pass
-
-            #
-            # Update the address maps
-            #
-            for slave, mem_update in parsed_data:
-                assert (0x10 in mem_update and 0x11 in mem_update) or (not 0x10 in mem_update and not 0x11 in mem_update)
-                if 0x10 in mem_update:
-                    new_addr = mem_update[0x10] + (mem_update[0x11] << 8)
-                    if slave[0] == AUTO_INCR_ADDR:
-                        self._config_addr_map[new_addr] = slave[1]
-                    elif slave[0] == CONFIG_ADDR:
-                        self._config_addr_map[new_addr] = self._config_addr_map[slave[1]]
-                        # Maybe we should also remove the old mapping in this case
-                    else:
-                        raise AssertionError
-                        # We have an unexpected address type
-
-
-            #
-            # Construct the data attribute of the IPAL message from parsed_data
-            #
-            data = {}
-            for slave, mem_update in parsed_data:
-                for mem_addr_int, value in mem_update:
-                    # Convert int to hex str:
-                    mem_addr_str = "{0:#06x}".format(mem_addr_int)
-
-                    if slave[0] == AUTO_INCR_ADDR:
-                        slave_mem_addr = "aic_" + slave[1] + "/" + mem_addr_str
-                    elif slave[0] == CONFIG_ADDR:
-                        if slave[1] in self._config_addr_map:
-                            slave_mem_addr = "aic_" + self._config_addr_map[slave[1]] + "/" + mem_addr_str
-                        else:
-                            slave_mem_addr = "phy_" + slave[1] + "/" + mem_addr_str
-                    data[slave_mem_addr] = value
-
-
-            m = IpalMessage(
-                id=self._id_counter.get_next_id(),
-                src=src,
-                dest=dest,
-                timestamp=float(pkt.sniff_time.timestamp()),
-                protocol=self._name,
-                length=pdu_length,
-                type=command_value,
-                activity=self._activity_map[command_value],
-                data=data,
-            )
-            res.append(m)
-
-
-        return res
-
-
-    def parse_packet_scapy(self, pkt):
-        res = []
-
-        src = pkt.src
-        dest = pkt.dst
-
-        # Not good error handling, but these assumptions should hold for our pcaps:
-        assert pkt.type == 0x88a4
-        assert pkt["EtherCat"].type == 1
-
-        #
-        # Iterate over PDUs
-        #
-
-        current_pdu = pkt["EtherCat"].payload
-        while True:
-            command_value = current_pdu._cmd
-
-            # Calculate value of msg.length
-            assert hasattr(current_pdu, "len")
-            assert hasattr(current_pdu, "data")
-            pdu_length = 12 + current_pdu.len
+            pdu_length = 12 + len(data_array)
 
             #
             # Parse data
@@ -321,35 +166,35 @@ class EtherCatTranscriber(Transcriber):
                 # at writes anyway.
                 case 0x02 | 0x03: # APWR, APRW
                     memory_map = {}
-                    offset = current_pdu.ado
-                    for i in range(current_pdu.len):
-                        memory_map[offset + i] = current_pdu.data[i]
-                    parsed_data[(AUTO_INCR_ADDR, "{0:#06x}".format(current_pdu.adp))] = memory_map
+                    offset = ado
+                    for i in range(len(data_array)):
+                        memory_map[offset + i] = data_array[i]
+                    parsed_data[(AUTO_INCR_ADDR, "{0:#06x}".format(adp))] = memory_map
 
                 case 0x05 | 0x06: # FPWR, FPRW
                     memory_map = {}
-                    offset = current_pdu.ado
-                    for i in range(current_pdu.len):
-                        memory_map[offset + i] = current_pdu.data[i]
-                    parsed_data[(CONFIG_ADDR, "{0:#06x}".format(current_pdu.adp))] = memory_map
+                    offset = ado
+                    for i in range(len(data_array)):
+                        memory_map[offset + i] = data_array[i]
+                    parsed_data[(CONFIG_ADDR, "{0:#06x}".format(adp))] = memory_map
 
                 case 0x08 | 0x09: # BWR, BRW
                     memory_map = {}
-                    offset = current_pdu.ado
-                    for i in range(current_pdu.len):
-                        memory_map[offset + i] = current_pdu.data[i]
+                    offset = ado
+                    for i in range(len(data_array)):
+                        memory_map[offset + i] = data_array[i]
                     parsed_data[(BROADCAST_ADDR, "*")] = memory_map
 
                 case 0x0b | 0x0c: # LWR, LRW
                     i = 0
-                    while i < current_pdu.len:
-                        addr = self.match_logic_addr(current_pdu.adr + i)
+                    while i < len(data_array):
+                        addr = self.match_logic_addr(adr + i)
                         if addr == None:
-                            parsed_data[(LOGICAL_ADDR, "{0:#010x}".format(current_pdu.adr))] = current_pdu.data[i]
+                            parsed_data[(LOGICAL_ADDR, "{0:#010x}".format(adr))] = data_array[i]
                         else:
                             if not addr[0] in parsed_data:
                                 parsed_data[addr[0]] = {}
-                            parsed_data[addr[0]][addr[1]] = current_pdu.data[i]
+                            parsed_data[addr[0]][addr[1]] = data_array[i]
                         i += 1
 
 
@@ -407,7 +252,7 @@ class EtherCatTranscriber(Transcriber):
                 id=self._id_counter.get_next_id(),
                 src=src,
                 dest=dest,
-                timestamp=float(pkt.time),
+                timestamp=float(pkt.sniff_time.timestamp()),
                 protocol=self._name,
                 length=pdu_length,
                 type=command_value,
@@ -416,10 +261,7 @@ class EtherCatTranscriber(Transcriber):
             )
             res.append(m)
 
-            if current_pdu.next == 0:
-                break
-            else:
-                current_pdu = current_pdu.payload
+            pdu_count += 1
 
         return res
 
