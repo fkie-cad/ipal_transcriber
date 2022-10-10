@@ -2,6 +2,7 @@ import threading
 
 from transcribers.cip import CIPTranscriber
 from transcribers.dnp3 import DNP3Transcriber
+from transcribers.ethercat import EtherCatTranscriber
 from transcribers.goose import GooseTranscriber
 from transcribers.iec104 import IEC104Transcriber
 from transcribers.iec450 import IEC450Transcriber
@@ -37,6 +38,7 @@ all_transcribers = [
     MQTTTranscriber,
     NMEA0183UDPTranscriber,
     S7Transcriber,
+    EtherCatTranscriber
 ]
 
 
