@@ -11,7 +11,7 @@
         "state_extractor": "default",
         "stateinmessage": false,
         "stateout": "-",
-        "version": "v1.3.0"
+###IGNORE-LINE###
     },
     "malicious": null,
     "state": {
