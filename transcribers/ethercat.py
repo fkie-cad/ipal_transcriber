@@ -92,6 +92,10 @@ class EtherCatTranscriber(Transcriber):
     _fmmu_entities_map = {}
 
 
+    # Used for debugging output:
+    _pkt_count = 0
+
+
     @classmethod
     def state_identifier(cls, msg, key):
         return key
@@ -101,6 +105,7 @@ class EtherCatTranscriber(Transcriber):
 
 
     def parse_packet(self, pkt):
+        self._pkt_count += 1
         res = []
 
         src = pkt["eth"].src
@@ -117,6 +122,7 @@ class EtherCatTranscriber(Transcriber):
         assert len(pkt.get_multiple_layers("ecat")) == 1
         pdu_layer = pkt.get_multiple_layers("ecat")[0]
         pdu_count = 1
+        data_field_indices = {} # Stores the index for the next PDU with a field of a given name.
         while hasattr(pdu_layer, "sub" + str(pdu_count) + "_cmd"):
             pdu_prefix = "sub" + str(pdu_count) + "_"
             command_value = int(pdu_layer.get_field(pdu_prefix + "cmd"), 16)
@@ -134,11 +140,105 @@ class EtherCatTranscriber(Transcriber):
             #
             # Get or reconstruct data fields:
             #
-            if ado == 0x130:
+            if command_value in [0x00, 0x01, 0x04, 0x07, 0x0a]:
+                # For read PDUs we don't need the data.
+                data_array = []
+            elif ado == 0x130:
                 pass # First address of "special" PDUs
+                # TODO: fix special case
+                data_array = []
+
+            elif ado == 0x101:
+                if pdu_count > 1 or pdu_layer.get_field("sub2_cmd") != None:
+                    # DEBUG
+                    print("Multiple special PDUs for case ado == 0x101 in packet " + str(self._pkt_count) + "! Better implementation needed.")
+                    # TODO: We should do this the same way as we did for
+                    # reg_physaddr, because that supports multiple PDUs of same
+                    # type in one packet.
+                data_array = [int(pdu_layer._all_fields["ecat.reg.dlcrtl2"], 16)]
+
+            elif ado == 0x130:
+                if pdu_count > 1 or pdu_layer.get_field("sub2_cmd") != None:
+                    # DEBUG
+                    print("Multiple special PDUs for case ado == 0x130 in packet " + str(self._pkt_count) + "! Better implementation needed.")
+                    # TODO: We should do this the same way as we did for
+                    # reg_physaddr, because that supports multiple PDUs of same
+                    # type in one packet.
+                alstatus_data = pdu_layer._all_fields["ecat.get.alstatus"]
+                assert (alstatus_data) == 6
+                data_array = [int(alstatus_data[4:6], 16), int(alstatus_data[2:4], 16)]
+
+            elif ado != None and ado >= 0x300 and ado <= 0x307:
+                data_array = []
+                reg_offset = ado - 0x300
+                if reg_offset % 2 == 1:
+                    field_name = "ecat.reg.crc" + str((reg_offset - 1) / 2) + ".rx"
+                    if not field_name in data_field_indices:
+                        data_field_indices[field_name] = 0
+                    data_array.append(int(pdu_layer.get_field(field_name).fields[data_field_indices[field_name]].raw_value, 16))
+                    data_field_indices[field_name] += 1
+                    port = (reg_offset + 1) / 2
+                else:
+                    port = reg_offset / 2
+                while port < 4 and "ecat.reg.crc" + str(port) in pdu_layer._all_fields:
+                    field_name = "ecat.reg.crc" + str(port) + ".frame"
+                    if not field_name in data_field_indices:
+                        data_field_indices[field_name] = 0
+                    data_array.append(int(pdu_layer.get_field(field_name).fields[data_field_indices[field_named]].raw_value, 16))
+                    data_field_indices[field_name] += 1
+
+                    field_name = "ecat.reg.crc" + str(port) + ".rx"
+                    if not field_name in data_field_indices:
+                        data_field_indices[field_name] = 0
+                    data_array.append(int(pdu_layer.get_field(field_name).fields[data_field_indices[field_named]].raw_value, 16))
+                    data_field_indices[field_name] += 1
+
+            elif ado == 0x0102:
+                if pdu_count > 1 or pdu_layer.get_field("sub2_cmd") != None:
+                    # DEBUG
+                    print("Multiple special PDUs for case ado == 0x102 in packet " + str(self._pkt_count) + "! Better implementation needed.")
+                    # TODO: We should do this the same way as we did for
+                    # reg_physaddr, because that supports multiple PDUs of same
+                    # type in one packet.
+                assert pdu_layer.get_field("ecat.subframe.length") == "1"
+                data_array = [int(pdu_layer.get_field("ecat.reg.dlctrl3"), 16)]
+
+            elif ado == 0x0010:
+                # We assume, that 0x10 and 0x11 are allways changed together, so the len field should be set to 2.
+                if not "reg_physaddr" in data_field_indices:
+                    data_field_indices["reg_physaddr"] = 0
+                field = pdu_layer.get_field("reg_physaddr").fields[data_field_indices["reg_physaddr"]]
+                data_field_indices["reg_physaddr"] += 1
+                data_array = [field.hex_value >> 8, field.hex_value & 0xff]
+
+            elif ado == 0x0502:
+                # We assume, that ADO 0x502 to 0x508 are allways changed together, so the len field should be set to 6.
+                if not "" in data_field_indices:
+                    data_field_indices["reg_physaddr"] = 0
+                field = pdu_layer.get_field("reg_physaddr").fields[data_field_indices["reg_physaddr"]]
+                data_field_indices["reg_physaddr"] += 1
+                data_array = [field.hex_value >> 8, field.hex_value & 0xff]
+
+            elif ado == 0x800:
+                # We assume, that ADO 0x502 to 0x508 are allways changed together, so the len field should be set to 6.
+                if not "" in data_field_indices:
+                    data_field_indices["syncman"] = 0
+                field = pdu_layer.get_field("syncman").fields[data_field_indices["syncman"]]
+                data_field_indices["syncman"] += 1
+                data_array = list(bytes.fromhex(field.raw_value))
+
+
             else:
                 data_str = pdu_layer.get_field(pdu_prefix + "data")
-                data_array = self.data_string_to_bytes(data_str)
+                if data_str:
+                    data_array = self.data_string_to_bytes(data_str)
+                else:
+                    # DEBUG
+                    print("Missing data attribute for PDU " + str(self._pkt_count) + "," + str(pdu_count)) 
+                    print("ado", ado)
+                    print("sub_ado", pdu_layer.get_field("sub1_ado"))
+                    print("cmd_value", command_value)
+                    data_array = []
 
             # Calculate value of msg.length
             pdu_length = 12 + len(data_array)
