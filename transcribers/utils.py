@@ -38,7 +38,7 @@ all_transcribers = [
     MQTTTranscriber,
     NMEA0183UDPTranscriber,
     S7Transcriber,
-    EtherCatTranscriber
+    EtherCatTranscriber,
 ]
 
 

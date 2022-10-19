@@ -28,9 +28,10 @@ class FMMUEntity:
             self.raw[offset + i] = data[i]
             i += 1
 
-
     def logic_start_addr(self):
-        return self.raw[3] + (self.raw[2] << 8) + (self.raw[1] << 16) + (self.raw[0] << 24)
+        return (
+            self.raw[3] + (self.raw[2] << 8) + (self.raw[1] << 16) + (self.raw[0] << 24)
+        )
 
     def mapping_length(self):
         return self.raw[5] + (self.raw[4] << 8)
@@ -55,11 +56,11 @@ class EtherCatTranscriber(Transcriber):
         0x07: "BRD",
         0x08: "BWR",
         0x09: "BRW",
-        0x0a: "LRD",
-        0x0b: "LWR",
-        0x0c: "LRW",
-        0x0d: "ARMW",
-        0x0e: "FRMW",
+        0x0A: "LRD",
+        0x0B: "LWR",
+        0x0C: "LRW",
+        0x0D: "ARMW",
+        0x0E: "FRMW",
     }
     _activity_map = {
         0x00: "inform",
@@ -72,11 +73,11 @@ class EtherCatTranscriber(Transcriber):
         0x07: "interrogate",
         0x08: "command",
         0x09: "command",
-        0x0a: "interrogate",
-        0x0b: "command",
-        0x0c: "command",
-        0x0d: "command",
-        0x0e: "command",
+        0x0A: "interrogate",
+        0x0B: "command",
+        0x0C: "command",
+        0x0D: "command",
+        0x0E: "command",
     }
     # Maps configured addresses to auto-increment addresses
     # Both addresses should be strings.
@@ -91,7 +92,6 @@ class EtherCatTranscriber(Transcriber):
     # key (AUTO_INCR_ADDR, <addr>).
     _fmmu_entities_map = {}
 
-
     # Used for debugging output:
     _pkt_count = 0
 
@@ -102,7 +102,6 @@ class EtherCatTranscriber(Transcriber):
 
     def matches_protocol(self, pkt):
         return "ECAT" in pkt or "EtherCat" in pkt
-
 
     def parse_packet(self, pkt):
         self._pkt_count += 1
@@ -131,7 +130,7 @@ class EtherCatTranscriber(Transcriber):
             adr = None
             adp = None
             ado = None
-            if command_value in [0x0a, 0x0b, 0x0c]:
+            if command_value in [0x0A, 0x0B, 0x0C]:
                 adr = int(pdu_layer.get_field(pdu_prefix + "lad"), 16)
             else:
                 adp = int(pdu_layer.get_field(pdu_prefix + "adp"), 16)
@@ -227,7 +226,6 @@ class EtherCatTranscriber(Transcriber):
                 data_field_indices["syncman"] += 1
                 data_array = list(bytes.fromhex(field.raw_value))
 
-
             else:
                 data_str = pdu_layer.get_field(pdu_prefix + "data")
                 if data_str:
@@ -262,47 +260,48 @@ class EtherCatTranscriber(Transcriber):
 
             match command_value:
                 # For NOP or reading PDUs we store no data:
-                case 0x00 | 0x01 | 0x04 | 0x07 | 0x0a: # NOP, APRD, FPRD, BRD, LRD
+                case 0x00 | 0x01 | 0x04 | 0x07 | 0x0A:  # NOP, APRD, FPRD, BRD, LRD
                     pass
                 # Data should be set in the same way for WR and RW. We only look
                 # at writes anyway.
-                case 0x02 | 0x03: # APWR, APRW
+                case 0x02 | 0x03:  # APWR, APRW
                     memory_map = {}
                     offset = ado
                     for i in range(len(data_array)):
                         memory_map[offset + i] = data_array[i]
                     parsed_data[(AUTO_INCR_ADDR, "{0:#06x}".format(adp))] = memory_map
 
-                case 0x05 | 0x06: # FPWR, FPRW
+                case 0x05 | 0x06:  # FPWR, FPRW
                     memory_map = {}
                     offset = ado
                     for i in range(len(data_array)):
                         memory_map[offset + i] = data_array[i]
                     parsed_data[(CONFIG_ADDR, "{0:#06x}".format(adp))] = memory_map
 
-                case 0x08 | 0x09: # BWR, BRW
+                case 0x08 | 0x09:  # BWR, BRW
                     memory_map = {}
                     offset = ado
                     for i in range(len(data_array)):
                         memory_map[offset + i] = data_array[i]
                     parsed_data[(BROADCAST_ADDR, "*")] = memory_map
 
-                case 0x0b | 0x0c: # LWR, LRW
+                case 0x0B | 0x0C:  # LWR, LRW
                     i = 0
                     while i < len(data_array):
                         addr = self.match_logic_addr(adr + i)
-                        if addr == None:
-                            parsed_data[(LOGICAL_ADDR, "{0:#010x}".format(adr))] = data_array[i]
+                        if addr is None:
+                            parsed_data[
+                                (LOGICAL_ADDR, "{0:#010x}".format(adr))
+                            ] = data_array[i]
                         else:
                             if not addr[0] in parsed_data:
                                 parsed_data[addr[0]] = {}
                             parsed_data[addr[0]][addr[1]] = data_array[i]
                         i += 1
 
-
-                case 0x0d: # ARMW
+                case 0x0D:  # ARMW
                     assert False, "Do we even have these in our Pcaps?"
-                case 0x0e: # FRMW
+                case 0x0E:  # FRMW
                     assert False, "Do we even have these in our Pcaps?"
 
             #
@@ -310,16 +309,19 @@ class EtherCatTranscriber(Transcriber):
             #
             # We do not look at mem_updates to logical addresses, because we
             # don't know the memory address it should be mapped to.
-            for slave, mem_update in filter(lambda x: x[0][0] != LOGICAL_ADDR, parsed_data.items()):
+            for slave, mem_update in filter(
+                lambda x: x[0][0] != LOGICAL_ADDR, parsed_data.items()
+            ):
                 # 0x10 and 0x11 contain the configured address.
-                assert (0x10 in mem_update and 0x11 in mem_update) or (not 0x10 in mem_update and not 0x11 in mem_update)
+                assert (0x10 in mem_update and 0x11 in mem_update) or (
+                    0x10 not in mem_update and 0x11 not in mem_update
+                )
                 if 0x10 in mem_update:
                     self.update_config_addr(slave, mem_update)
 
                 # 0x600 to 0x6ff contain the FMMUs with logic memory maps.
-                if any(map(lambda a: a >= 0x600 and a <= 0x6ff, mem_update.keys())):
+                if any(map(lambda a: a >= 0x600 and a <= 0x6FF, mem_update.keys())):
                     self.update_FMMU(slave, mem_update)
-
 
             #
             # Construct the data attribute of the IPAL message from parsed_data
@@ -340,7 +342,12 @@ class EtherCatTranscriber(Transcriber):
                         slave_mem_addr = "aic_" + slave[1] + "/" + mem_addr_str
                     elif slave[0] == CONFIG_ADDR:
                         if slave[1] in self._config_addr_map:
-                            slave_mem_addr = "aic_" + self._config_addr_map[slave[1]] + "/" + mem_addr_str
+                            slave_mem_addr = (
+                                "aic_"
+                                + self._config_addr_map[slave[1]]
+                                + "/"
+                                + mem_addr_str
+                            )
                         else:
                             slave_mem_addr = "phy_" + slave[1] + "/" + mem_addr_str
 
@@ -348,7 +355,6 @@ class EtherCatTranscriber(Transcriber):
                         slave_mem_addr = "*/" + mem_addr_str
 
                     data[slave_mem_addr] = value
-
 
             m = IpalMessage(
                 id=self._id_counter.get_next_id(),
@@ -367,14 +373,13 @@ class EtherCatTranscriber(Transcriber):
 
         return res
 
-
     def match_response(self, requests, response):
         remove_from_queue = []
         return remove_from_queue
 
     def get_ado_adp_address(self, i, ecat):
-        ado = ecat.get("sub" + str(i +1) + "_ado")
-        adp = ecat.get("sub" + str(i +1) + "_adp" )
+        ado = ecat.get("sub" + str(i + 1) + "_ado")
+        adp = ecat.get("sub" + str(i + 1) + "_adp")
         current_address = "Ado: " + str(ado) + " Adp: " + str(adp)
         return current_address
 
@@ -398,7 +403,9 @@ class EtherCatTranscriber(Transcriber):
             self._config_addr_map[new_addr] = self._config_addr_map[slave[1]]
             # Maybe we should also remove the old mapping in this case
         elif slave[0] == BROADCAST_ADDR:
-            print("Changed (Reset?) configured address with boadcast.")
+            settings.logger.warning(
+                "Changed (Reset?) configured address with boadcast."
+            )
             self._config_addr_map = {}
         elif slave[0] == LOGICAL_ADDR:
             raise AssertionError
@@ -410,9 +417,10 @@ class EtherCatTranscriber(Transcriber):
 
         # Update FMMU map:
         if (CONFIG_ADDR, new_addr) in self._fmmu_entities_map:
-            self._fmmu_entities_map[(AUTO_INCR_ADDR, self._config_addr_map[new_addr])] = self._fmmu_entities_map[(CONFIG_ADDR, new_addr)]
+            self._fmmu_entities_map[
+                (AUTO_INCR_ADDR, self._config_addr_map[new_addr])
+            ] = self._fmmu_entities_map[(CONFIG_ADDR, new_addr)]
             # Maybe we should also remove the old mapping in this case
-
 
     # Updates the FMMU for the given slave in self._fmmu_entities_map.
     # Assumes, that memory_update contains an memory address in the address
@@ -431,16 +439,16 @@ class EtherCatTranscriber(Transcriber):
             raise AssertionError
             # We got a FMMU update for an unknown logical address.
         else:
-            print(slave)
+            settings.logger.error(slave)
             raise AssertionError
             # We have an unexpected address type
 
         # If this is the first FMMU change for this slave, insert empty FMMU map:
-        if not slave_addr_resolved in self._fmmu_entities_map:
+        if slave_addr_resolved not in self._fmmu_entities_map:
             self._fmmu_entities_map[slave_addr_resolved] = {}
 
         # Group the mem_addr, value pairs to mem_offset, [values] pairs:
-        groups = [] # Contains (<group_offset>, <group_data>)
+        groups = []  # Contains (<group_offset>, <group_data>)
         group_offset = FMMU_OFFSET
         while group_offset < FMMU_END:
             if group_offset in mem_update:
@@ -456,7 +464,9 @@ class EtherCatTranscriber(Transcriber):
 
         i = 0
         while i < len(groups):
-            update_offset = groups[i][0] # Offset of first byte in update_data to FMMU_OFFSET
+            update_offset = groups[i][
+                0
+            ]  # Offset of first byte in update_data to FMMU_OFFSET
             update_data = groups[i][1]
             i += 1
             # Determine offset of the changed FMMU entity:
@@ -474,10 +484,13 @@ class EtherCatTranscriber(Transcriber):
             # Save FMMU update for one updated memory area:
             update_entity_offset = update_offset - entity_offset
             if entity_offset in self._fmmu_entities_map[slave_addr_resolved]:
-                self._fmmu_entities_map[slave_addr_resolved][entity_offset].update(update_data, update_entity_offset)
+                self._fmmu_entities_map[slave_addr_resolved][entity_offset].update(
+                    update_data, update_entity_offset
+                )
             else:
-                self._fmmu_entities_map[slave_addr_resolved][entity_offset] = FMMUEntity(data=update_data, offset=update_entity_offset)
-
+                self._fmmu_entities_map[slave_addr_resolved][
+                    entity_offset
+                ] = FMMUEntity(data=update_data, offset=update_entity_offset)
 
     # Returns the auto-increment address or if that is not known the configured
     # address of the slave and the memory offset corresponding to the given
@@ -488,7 +501,13 @@ class EtherCatTranscriber(Transcriber):
     def match_logic_addr(self, addr):
         for slave_addr, fmmu_map in self._fmmu_entities_map.items():
             for fmmu_entity in fmmu_map.values():
-                if addr >= fmmu_entity.logic_start_addr() and addr < fmmu_entity.logic_start_addr() + fmmu_entity.mapping_length():
-                    phys_addr = fmmu_entity.phys_start_addr() + (addr - fmmu_entity.logic_start_addr())
+                if (
+                    addr >= fmmu_entity.logic_start_addr()
+                    and addr
+                    < fmmu_entity.logic_start_addr() + fmmu_entity.mapping_length()
+                ):
+                    phys_addr = fmmu_entity.phys_start_addr() + (
+                        addr - fmmu_entity.logic_start_addr()
+                    )
                     return (slave_addr, phys_addr)
         return None

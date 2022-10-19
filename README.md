@@ -347,10 +347,13 @@ To ensure that a transcriber's protocol implementation stays compliant, a transc
 ## Contributors
 
 - Antoine Saillard (RWTH Aachen University & Fraunhofer FKIE)
+- David Schachtschneider (RWTH Aachen University)
 - Eric Wagner (Fraunhofer FKIE & RWTH Aachen University)
 - Konrad Wolsing (Fraunhofer FKIE & RWTH Aachen University)
 - Leonardo Pompe (RWTH Aachen University)
 - Olav Lamberts (RWTH Aachen University)
+- Samir Benzammour (RWTH Aachen University)
+- Simeon Ricking (RWTH Aachen University)
 - Stefan Lenz (RWTH Aachen University)
 - Sven Zemanek (Fraunhofer FKIE)
 - Tim Nebel (RWTH Aachen University)
