@@ -1,0 +1,1085 @@
+{
+    "_state_extractor-config": {
+        "completeonly": false,
+        "compresslevel": 9,
+        "filter": null,
+        "ipalin": "misc/ipal/ethercat.ipal",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "options": {},
+        "state_extractor": "default",
+        "stateinmessage": false,
+        "stateout": "-",
+###IGNORE-LINE###
+    },
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0
+    },
+    "timestamp": 1658317615.976989
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.976989
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.976989
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.976989
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.97699
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.97699
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.97699
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.97699
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.97699
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.978977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.978977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.978977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.978977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.978977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.978979
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.978979
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.978979
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.978979
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.978979
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.980975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.980975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.980975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.980975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.980975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.980976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.980976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.980976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.980976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.980976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.982971
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.982971
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.982971
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.982971
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.982971
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.982973
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.982973
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.982973
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.982973
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.982973
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.984997
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.984997
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.984997
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.984997
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.984997
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.984998
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.984998
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.984998
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.984998
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.984998
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.986976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.986976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.986976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.986976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.986976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.986977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.986977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.986977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.986977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.986977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.988976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.988976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.988976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.988976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.988976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.988977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.988977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.988977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.988977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.988977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.990977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.990977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.990977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.990977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.990977
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.990978
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.990978
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.990978
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.990978
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.990978
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.992969
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.992969
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.992969
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.992969
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.992969
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.992983
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.992983
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.992983
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.992983
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.992983
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.994975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.994975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.994975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.994975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.994975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.994976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.994976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.994976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.994976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.994976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.997032
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.997032
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.997032
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.997032
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.997032
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.997034
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.997034
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.997034
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.997034
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.997034
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.998975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.998975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.998975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.998975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.998975
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.998976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.998976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.998976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.998976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317615.998976
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.000987
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.000987
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.000987
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.000987
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.000987
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.000988
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.000988
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.000988
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.000988
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.000988
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 1,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.002972
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.002972
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.002972
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.002972
+}
+{
+    "malicious": null,
+    "state": {
+        "log_0x01000000": 0,
+        "log_0x01000800": 0
+    },
+    "timestamp": 1658317616.002972
+}

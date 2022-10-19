@@ -98,7 +98,7 @@ class IEC104Transcriber(Transcriber):
                 msgs += self.parse_S_format(src, dest, timestamp, pkt, i)
 
             else:
-                print(iec104._all_fields)
+                settings.logger.warning(iec104._all_fields)
                 settings.logger.warning("Unknown IEC-104 type")
 
         return msgs
