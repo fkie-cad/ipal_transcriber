@@ -205,7 +205,7 @@ class EtherCatTranscriber(Transcriber):
                     data_array.append(
                         int(
                             pdu_layer.get_field(field_name)
-                            .fields[data_field_indices[field_named]]
+                            .fields[data_field_indices[field_name]]
                             .raw_value,
                             16,
                         )
@@ -218,7 +218,7 @@ class EtherCatTranscriber(Transcriber):
                     data_array.append(
                         int(
                             pdu_layer.get_field(field_name)
-                            .fields[data_field_indices[field_named]]
+                            .fields[data_field_indices[field_name]]
                             .raw_value,
                             16,
                         )
