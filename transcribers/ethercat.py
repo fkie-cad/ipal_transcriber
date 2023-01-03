@@ -306,51 +306,59 @@ class EtherCatTranscriber(Transcriber):
             # the memory address.
             parsed_data = {}
 
-            match command_value:
-                # For NOP or reading PDUs we store no data:
-                case 0x00 | 0x01 | 0x04 | 0x07 | 0x0A:  # NOP, APRD, FPRD, BRD, LRD
-                    pass
-                # Data should be set in the same way for WR and RW. We only look
-                # at writes anyway.
-                case 0x02 | 0x03:  # APWR, APRW
-                    memory_map = {}
-                    offset = ado
-                    for i in range(len(data_array)):
-                        memory_map[offset + i] = data_array[i]
-                    parsed_data[(AUTO_INCR_ADDR, "{0:#06x}".format(adp))] = memory_map
+            # For NOP or reading PDUs we store no data:
+            if command_value in [
+                0x00,
+                0x01,
+                0x04,
+                0x07,
+                0x0A,
+            ]:  # NOP, APRD, FPRD, BRD, LRD
+                pass
 
-                case 0x05 | 0x06:  # FPWR, FPRW
-                    memory_map = {}
-                    offset = ado
-                    for i in range(len(data_array)):
-                        memory_map[offset + i] = data_array[i]
-                    parsed_data[(CONFIG_ADDR, "{0:#06x}".format(adp))] = memory_map
+            # Data should be set in the same way for WR and RW. We only look
+            # at writes anyway.
+            elif command_value in [0x02, 0x03]:  # APWR, APRW
+                memory_map = {}
+                offset = ado
+                for i in range(len(data_array)):
+                    memory_map[offset + i] = data_array[i]
+                parsed_data[(AUTO_INCR_ADDR, "{0:#06x}".format(adp))] = memory_map
 
-                case 0x08 | 0x09:  # BWR, BRW
-                    memory_map = {}
-                    offset = ado
-                    for i in range(len(data_array)):
-                        memory_map[offset + i] = data_array[i]
-                    parsed_data[(BROADCAST_ADDR, "*")] = memory_map
+            elif command_value in [0x05, 0x06]:  # FPWR, FPRW
+                memory_map = {}
+                offset = ado
+                for i in range(len(data_array)):
+                    memory_map[offset + i] = data_array[i]
+                parsed_data[(CONFIG_ADDR, "{0:#06x}".format(adp))] = memory_map
 
-                case 0x0B | 0x0C:  # LWR, LRW
-                    i = 0
-                    while i < len(data_array):
-                        addr = self.match_logic_addr(adr + i)
-                        if addr is None:
-                            parsed_data[
-                                (LOGICAL_ADDR, "{0:#010x}".format(adr))
-                            ] = data_array[i]
-                        else:
-                            if not addr[0] in parsed_data:
-                                parsed_data[addr[0]] = {}
-                            parsed_data[addr[0]][addr[1]] = data_array[i]
-                        i += 1
+            elif command_value in [0x08, 0x09]:  # BWR, BRW
+                memory_map = {}
+                offset = ado
+                for i in range(len(data_array)):
+                    memory_map[offset + i] = data_array[i]
+                parsed_data[(BROADCAST_ADDR, "*")] = memory_map
 
-                case 0x0D:  # ARMW
-                    assert False, "Do we even have these in our Pcaps?"
-                case 0x0E:  # FRMW
-                    assert False, "Do we even have these in our Pcaps?"
+            elif command_value in [0x0B, 0x0C]:  # LWR, LRW
+                i = 0
+                while i < len(data_array):
+                    addr = self.match_logic_addr(adr + i)
+                    if addr is None:
+                        parsed_data[
+                            (LOGICAL_ADDR, "{0:#010x}".format(adr))
+                        ] = data_array[i]
+                    else:
+                        if not addr[0] in parsed_data:
+                            parsed_data[addr[0]] = {}
+                        parsed_data[addr[0]][addr[1]] = data_array[i]
+                    i += 1
+
+            elif command_value == 0x0D:  # ARMW
+                assert False, "Do we even have these in our Pcaps?"
+            elif command_value == 0x0E:  # FRMW
+                assert False, "Do we even have these in our Pcaps?"
+            else:
+                assert False, "Unknown condition"
 
             #
             # Update the address maps

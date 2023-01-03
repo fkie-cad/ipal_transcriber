@@ -417,7 +417,7 @@ class NMEA0183UDPTranscriber(NMEA0183):
 
     def matches_protocol(self, pkt):
 
-        if "UDP" not in pkt or "DATA" not in pkt:
+        if "UDP" not in pkt:
             return False
 
         raw = bytes.fromhex(pkt["UDP"].payload.replace(":", ""))
