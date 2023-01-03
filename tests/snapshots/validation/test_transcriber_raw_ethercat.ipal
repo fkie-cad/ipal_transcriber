@@ -2020,3 +2020,482 @@
     "timestamp": 1658317616.002972,
     "type": 7
 }
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "*/0x0101": 0
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 135,
+    "length": 13,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.07108,
+    "type": 8
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 136,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.073102,
+    "type": 7
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 137,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.075089,
+    "type": 8
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 138,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.075089,
+    "type": 7
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 139,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.076012,
+    "type": 1
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 140,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.076012,
+    "type": 1
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 141,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.076012,
+    "type": 1
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "aic_0x0000/0x0102": 199
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 142,
+    "length": 13,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.078131,
+    "type": 2
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 143,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.080951,
+    "type": 1
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 144,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.080951,
+    "type": 1
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 145,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.080951,
+    "type": 1
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 146,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.153966,
+    "type": 4
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "aic_0x0000/0x0010": 233,
+        "aic_0x0000/0x0011": 3
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 147,
+    "length": 14,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.155965,
+    "type": 2
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "aic_0xffff/0x0010": 234,
+        "aic_0xffff/0x0011": 3
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 148,
+    "length": 14,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.155965,
+    "type": 2
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "aic_0xfffe/0x0010": 235,
+        "aic_0xfffe/0x0011": 3
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 149,
+    "length": 14,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.155965,
+    "type": 2
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "aic_0xfffd/0x0010": 236,
+        "aic_0xfffd/0x0011": 3
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 150,
+    "length": 14,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.155965,
+    "type": 2
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "aic_0xfffc/0x0010": 237,
+        "aic_0xfffc/0x0011": 3
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 151,
+    "length": 14,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.155965,
+    "type": 2
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "aic_0xfffb/0x0502": 233,
+        "aic_0xfffb/0x0503": 3
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 152,
+    "length": 14,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.155965,
+    "type": 2
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "aic_0xfffa/0x0502": 233,
+        "aic_0xfffa/0x0503": 3
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 153,
+    "length": 14,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.155965,
+    "type": 2
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "aic_0x0007/0x0500": 0
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 154,
+    "length": 13,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.163982,
+    "type": 2
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 155,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.163982,
+    "type": 4
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 156,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.163982,
+    "type": 4
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 157,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.163982,
+    "type": 4
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 158,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.163982,
+    "type": 4
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "phy_0x03ee/0x0800": 0,
+        "phy_0x03ee/0x0801": 16,
+        "phy_0x03ee/0x0802": 128,
+        "phy_0x03ee/0x0803": 0,
+        "phy_0x03ee/0x0804": 38,
+        "phy_0x03ee/0x0805": 0,
+        "phy_0x03ee/0x0806": 1,
+        "phy_0x03ee/0x0807": 0
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 159,
+    "length": 20,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.163982,
+    "type": 5
+}
+{
+    "activity": "command",
+    "crc": null,
+    "data": {
+        "phy_0x03ef/0x0800": 0,
+        "phy_0x03ef/0x0801": 16,
+        "phy_0x03ef/0x0802": 128,
+        "phy_0x03ef/0x0803": 0,
+        "phy_0x03ef/0x0804": 38,
+        "phy_0x03ef/0x0805": 0,
+        "phy_0x03ef/0x0806": 1,
+        "phy_0x03ef/0x0807": 0
+    },
+    "dest": "01:01:05:01:00:00",
+    "id": 160,
+    "length": 20,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "02:01:05:6c:b0:15",
+    "timestamp": 1657099990.163982,
+    "type": 5
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 161,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.198022,
+    "type": 10
+}
+{
+    "activity": "inform",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 162,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.198022,
+    "type": 0
+}
+{
+    "activity": "inform",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 163,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.198022,
+    "type": 0
+}
+{
+    "activity": "inform",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 164,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.198022,
+    "type": 0
+}
+{
+    "activity": "interrogate",
+    "crc": null,
+    "data": {},
+    "dest": "01:01:05:01:00:00",
+    "id": 165,
+    "length": 12,
+    "malicious": null,
+    "protocol": "ethercat",
+    "responds to": [],
+    "src": "00:01:05:6c:b0:15",
+    "timestamp": 1657099990.198022,
+    "type": 7
+}

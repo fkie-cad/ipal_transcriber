@@ -39,6 +39,9 @@ def normalize(content):
 def assert_file_contents_equal(validation_path: Path, output_path: Path):
     validation_content = validation_path.read_text().splitlines()
     output_content = output_path.read_text().splitlines()
+
+    assert len(validation_content) == len(output_content)
+
     for val, out in zip(validation_content, output_content):
         assert "###IGNORE-LINE###" in val or val == out
 
