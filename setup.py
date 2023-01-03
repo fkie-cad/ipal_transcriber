@@ -8,7 +8,7 @@ setup(
         "ipal-transcriber",
         "ipal-state-extractor",
         "ipal-minimize",
-        "ipal-combine",
+        "ipal-join",
     ],
     package_data={"": ["*.ipal", "*.pcapng"]},
     install_requires=["pyshark", "python-dateutil"],

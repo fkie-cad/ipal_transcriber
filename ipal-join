@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+from transcriber.tools import join
+
+if __name__ == "__main__":
+    join.main()

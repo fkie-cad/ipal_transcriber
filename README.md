@@ -30,7 +30,7 @@ This software (`ipal-transcriber`) implements the automatic translation of indus
 - Konrad Wolsing, Eric Wagner, Antoine Saillard, and Martin Henze. 2022. IPAL: Breaking up Silos of Protocol-dependent and Domain-specific Industrial Intrusion Detection Systems. In 25th International Symposium on Research in Attacks, Intrusions and Defenses (RAID 2022), October 26–28, 2022, Limassol, Cyprus. ACM, New York, NY, USA, 17 pages. [https://doi.org/10.1145/3545948.3545968 ](https://doi.org/10.1145/3545948.3545968)
 - Wolsing, Konrad, Eric Wagner, and Martin Henze. "Poster: Facilitating Protocol-independent Industrial Intrusion Detection Systems." *Proceedings of the 2020 ACM SIGSAC Conference on Computer and Communications Security*. 2020 [https://doi.org/10.1145/3372297.3420019](https://doi.org/10.1145/3372297.3420019)
 
-## Getting Started
+## Getting started
 
 ###### Prerequisites
 
@@ -38,22 +38,35 @@ This software (`ipal-transcriber`) implements the automatic translation of indus
 
 ###### Installation (pip)
 
-Use `pip install .`  to install system-wide.
+Use `python3 -m pip install .` to install the scripts and dependencies system-wide using the `pip` [python package installer](https://pip.pypa.io/en/stable/installation/). This will install dependencies and the `transcriber` modules to the local site packages and add the `ipal-transcriber`, `ipal-state-extractor`, `ipal-minimize`, and `ipal-join` scripts to the `PATH`. The scripts can then be invoked system-wide (e.g. `ipal-transcriber -h`).
 
 ###### Installation (venv)
 
 Install it locally with `misc/install.sh` or manually with:
 
-```bas****h
+```bash
 python3 -m venv venv
 source venv/bin/activate
 
-pip3 install -r requirements.txt
+python3 -m pip install -r requirements.txt
+```
+
+The scripts can then be invoked after activating the virtual environment from the root of the project repository, e.g.:
+
+```bash
+source venv/bin/activate
+./ipal-transcriber -h
+deactivate
 ```
 
 ###### Installation (docker)
 
-Use `docker build -t ipal-transcriber:latest .` to build a Docker image.
+Use `docker build -t ipal-ids-transcriber:latest .` to build a Docker image with a `pip` installation of the project and development dependencies. The scripts can then be used within containers using the built image, e.g.:
+
+```bash
+docker run -it ipal-ids-transcriber:latest /bin/bash
+ipal-transcriber -h
+```
 
 #### Using the Transcriber
 
@@ -259,19 +272,19 @@ optional arguments:
 
 #### Combining IPAL messages
 
-The `ipal-combine` tool can be used to merge different IPAL dataset files from different IIDSs. Currently, the IDS outputs are ORed.
+The `ipal-join` tool can be used to merge different IPAL dataset files from different IIDSs. Currently, the IDS outputs are ORed. For more sophisticated methods, especially to combine different IDS outputs, refer to the `combiner` feature of the IPAL [IDS Framework](https://github.com/fkie-cad/ipal_ids_framework).
 
 ```bash
-ipal-combine -h
-usage: ipal-combine [-h] --dataset FILE --output FILE [--log STR] [--logfile FILE] FILE [FILE ...]
+ipal-join -h
+usage: ipal-join [-h] --dataset FILE --output FILE [--log STR] [--logfile FILE] FILE [FILE ...]
 
 positional arguments:
-  FILE            files to combine ('*.gz' compressed).
+  FILE            files to join ('*.gz' compressed).
 
 optional arguments:
   -h, --help      show this help message and exit
   --dataset FILE  original dataset ('*.gz' compressed).
-  --output FILE   path to store combined output to ('*.gz' compressed).
+  --output FILE   path to store joined output to ('*.gz' compressed).
   --log STR       define logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL). Default is WARNING.
   --logfile FILE  File to log to. Default is stderr.
 ```
@@ -280,10 +293,10 @@ optional arguments:
 
 ##### Tooling
 
-We use different tools for development, code formatting, style checking, and testing. You can install all tools with the following command:
+The set of tools used for development, code formatting, style checking, and testing can be installed with the following command:
 
 ```bash
-pip3 install -r requirements-dev.txt
+python3 -m pip install -r requirements-dev.txt
 ```
 
 All tools can be executed manually with the following commands and report errors if encountered:
@@ -294,7 +307,7 @@ flake8
 python3 -m pytest
 ```
 
-You can also enforce black and flake8 to check the code before any commit with Git's pre-commit.
+A `black` and `flake8` check of modified files before any commit can also be forced using Git's pre-commit hook functionality:
 
 ```bash
 pre-commit install

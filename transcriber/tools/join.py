@@ -23,9 +23,7 @@ def initialize_logger(args):
         settings.log = getattr(logging, args.log.upper(), None)
 
         if not isinstance(settings.log, int):
-            logging.getLogger("ipal-combine").error(
-                "Option '--log' parameter not found"
-            )
+            logging.getLogger("ipal-join").error("Option '--log' parameter not found")
             exit(1)
 
     if args.logfile:
@@ -36,7 +34,7 @@ def initialize_logger(args):
     else:
         logging.basicConfig(level=settings.log, format=settings.logformat)
 
-    settings.logger = logging.getLogger("ipal-combine")
+    settings.logger = logging.getLogger("ipal-join")
 
 
 def prepare_arg_parser(parser):
@@ -44,7 +42,7 @@ def prepare_arg_parser(parser):
     parser.add_argument(
         "files",
         metavar="FILE",
-        help="files to combine ('*.gz' compressed).",
+        help="files to join ('*.gz' compressed).",
         nargs="+",
     )
 
@@ -60,7 +58,7 @@ def prepare_arg_parser(parser):
         "--output",
         dest="output",
         metavar="FILE",
-        help="path to store combined output to ('*.gz' compressed).",
+        help="path to store joined output to ('*.gz' compressed).",
         required=True,
     )
 
@@ -82,7 +80,7 @@ def prepare_arg_parser(parser):
     )
 
 
-def combine(files, dataset, output):
+def join(files, dataset, output):
 
     # Load original dataset
     ds = {}
@@ -92,10 +90,11 @@ def combine(files, dataset, output):
         for line in f.readlines():
             js = json.loads(line)
             js["ids"] = False
-            js["metrics"] = {}
+            js["scores"] = {}
+            js["alerts"] = {}
             ds[js["timestamp"]] = js
 
-    # Combine datasets
+    # join datasets
     N = 0
 
     for file in files:
@@ -108,10 +107,11 @@ def combine(files, dataset, output):
                 assert js["timestamp"] in ds
 
                 ds[js["timestamp"]]["ids"] = ds[js["timestamp"]]["ids"] or js["ids"]
-                ds[js["timestamp"]]["metrics"].update(js["metrics"])
+                ds[js["timestamp"]]["scores"].update(js["scores"])
+                ds[js["timestamp"]]["alerts"].update(js["alerts"])
 
-    # Save combined dataset
-    settings.logger.info("Saving combined dataset")
+    # Save joined dataset
+    settings.logger.info("Saving joined dataset")
 
     with open_file(output, "wt") as f:
         for ts in sorted(ds.keys()):  # ordered by timestamp
@@ -129,8 +129,8 @@ def main():
         "Combining {} files to {}.".format(len(args.files), args.output)
     )
 
-    # Combine
-    combine(args.files, args.dataset, args.output)
+    # Join
+    join(args.files, args.dataset, args.output)
 
 
 if __name__ == "__main__":
