@@ -5,14 +5,26 @@ import gzip
 import json
 import logging
 import sys
+from pathlib import Path
 
 import transcriber.settings as settings
+
+CONFIG_KEYS = [
+    "_transcriber-config",
+    "_state_extractor-config",
+    "_iids-config",
+    "_evaluation-config",
+]
+
+FORCE_RENAME = False
 
 
 # Wrapper for hiding .gz files
 def open_file(filename, mode):
     if filename.endswith(".gz"):
         return gzip.open(filename, mode=mode, compresslevel=settings.compresslevel)
+    elif filename == "-":
+        return sys.stdin
     else:
         return open(filename, mode=mode, buffering=1)
 
@@ -38,7 +50,6 @@ def initialize_logger(args):
 
 
 def prepare_arg_parser(parser):
-
     parser.add_argument(
         "files",
         metavar="FILE",
@@ -62,6 +73,13 @@ def prepare_arg_parser(parser):
         required=True,
     )
 
+    parser.add_argument(
+        "--force-rename",
+        dest="force_rename",
+        help="Forces renaming dict entries, e.g., scores, metrics (Default: False).",
+        action="store_true",
+    )
+
     # Logging
     parser.add_argument(
         "--log",
@@ -79,9 +97,39 @@ def prepare_arg_parser(parser):
         required=False,
     )
 
+    # Version number
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s {settings.version}"
+    )
+
+
+def update_dict(orig, add, filename):
+    for k, v in add.items():
+        if k in orig or FORCE_RENAME:
+            k_new = f"{k}-{Path(filename).stem}"
+            assert k_new not in orig
+            k = k_new
+
+            if not FORCE_RENAME:
+                settings.logger.warning(
+                    f"key '{k}' already exists! Renaming to '{k_new}'"
+                )
+
+        orig[k] = v
+
+
+def handle_config(ds, js, filename):
+    for name in CONFIG_KEYS:
+        if name not in js:
+            continue
+
+        if name not in ds[js["timestamp"]]:
+            ds[js["timestamp"]][name] = {}
+
+        update_dict(ds[js["timestamp"]][name], js[name], filename)
+
 
 def join(files, dataset, output):
-
     # Load original dataset
     ds = {}
     settings.logger.info("Loading {} into memory.".format(dataset))
@@ -95,20 +143,22 @@ def join(files, dataset, output):
             ds[js["timestamp"]] = js
 
     # join datasets
-    N = 0
-
-    for file in files:
-        N += 1
-        settings.logger.info("- Processing file {}/{}: {}".format(N, len(files), file))
+    for N, file in enumerate(files):
+        settings.logger.info("- Processing {} ({}/{})".format(file, N + 1, len(files)))
 
         with open_file(file, "rt") as f:
             for line in f.readlines():
                 js = json.loads(line)
                 assert js["timestamp"] in ds
 
-                ds[js["timestamp"]]["ids"] = ds[js["timestamp"]]["ids"] or js["ids"]
-                ds[js["timestamp"]]["scores"].update(js["scores"])
-                ds[js["timestamp"]]["alerts"].update(js["alerts"])
+                if "ids" in js:
+                    ds[js["timestamp"]]["ids"] = ds[js["timestamp"]]["ids"] or js["ids"]
+                if "scores" in js:
+                    update_dict(ds[js["timestamp"]]["scores"], js["scores"], file)
+                if "alerts" in js:
+                    update_dict(ds[js["timestamp"]]["alerts"], js["alerts"], file)
+
+                handle_config(ds, js, file)
 
     # Save joined dataset
     settings.logger.info("Saving joined dataset")
@@ -119,6 +169,8 @@ def join(files, dataset, output):
 
 
 def main():
+    global FORCE_RENAME
+
     parser = argparse.ArgumentParser()
     prepare_arg_parser(parser)
 
@@ -128,6 +180,8 @@ def main():
     settings.logger.info(
         "Combining {} files to {}.".format(len(args.files), args.output)
     )
+
+    FORCE_RENAME = args.force_rename
 
     # Join
     join(args.files, args.dataset, args.output)

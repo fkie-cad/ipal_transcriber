@@ -58,7 +58,6 @@ def initialize_logger(args):
 
 
 def prepare_arg_parser(parser):
-
     parser.add_argument(
         "files",
         metavar="FILE",
@@ -97,6 +96,11 @@ def prepare_arg_parser(parser):
         required=False,
     )
 
+    # Version number
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s {settings.version}"
+    )
+
 
 def minimize(args):
     input, arguments = args
@@ -109,7 +113,6 @@ def minimize(args):
     with open_file(input, "rt") as fin:
         with open_file(tmp, "wt") as ftmp:
             for line in fin.readlines():
-
                 js = json.loads(line)
 
                 if "state" in js:

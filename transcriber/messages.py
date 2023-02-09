@@ -46,7 +46,6 @@ class Activity(Enum):
 
 
 class IpalMessage:
-
     _add_to_request_queue = False
     _match_to_requests = False
 

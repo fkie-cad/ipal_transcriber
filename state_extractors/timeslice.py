@@ -3,7 +3,6 @@ from state_extractors.state_extractor import StateExtractor
 
 
 class TimeSliceStateExtractor(StateExtractor):
-
     _name = "timeslice"
     _description = "Outputs complete state in regular time slices."
     _options = {

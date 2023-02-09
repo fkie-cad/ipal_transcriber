@@ -6,7 +6,6 @@ from transcribers.transcriber import Transcriber
 
 
 class IEC104Transcriber(Transcriber):
-
     _name = "iec104"
 
     type_to_value_name = {
@@ -63,7 +62,6 @@ class IEC104Transcriber(Transcriber):
         return "IEC60870_104" in pkt
 
     def parse_packet(self, pkt):
-
         msgs = []
 
         src = "{}:{}".format(pkt["IP"].src, pkt["TCP"].srcport)
@@ -72,7 +70,6 @@ class IEC104Transcriber(Transcriber):
         iec104_layers = pkt.get_multiple_layers("IEC60870_104")
 
         for i in range(len(iec104_layers)):
-
             iec104 = iec104_layers[i]
             # type = int(iec104.type, 16)
 
@@ -104,7 +101,6 @@ class IEC104Transcriber(Transcriber):
         return msgs
 
     def parse_U_format(self, src, dest, timestamp, pkt, pkt_index):
-
         iec104 = pkt.get_multiple_layers("IEC60870_104")[pkt_index]
         utype = int(iec104.utype, 16)
 
@@ -144,7 +140,6 @@ class IEC104Transcriber(Transcriber):
         return [m]
 
     def parse_S_format(self, src, dest, timestamp, pkt, pkt_index):
-
         iec104 = pkt.get_multiple_layers("IEC60870_104")[pkt_index]
 
         m = IpalMessage(
@@ -238,7 +233,6 @@ class IEC104Transcriber(Transcriber):
             return field.showname_value
 
     def parse_I_format(self, src, dest, timestamp, pkt, pkt_index):  # noqa: C901
-
         iec104 = pkt.get_multiple_layers("IEC60870_104")[pkt_index]
         asdu = pkt.get_multiple_layers("IEC60870_ASDU")[pkt_index]
         data = {}
@@ -259,7 +253,6 @@ class IEC104Transcriber(Transcriber):
         # 0: not used
         # 1 - 21: Process information in monitor direction
         if 1 <= type and type <= 21:
-
             flow = (dest, src)
             _match_to_requests = True
             _add_to_request_queue = False
@@ -275,7 +268,6 @@ class IEC104Transcriber(Transcriber):
 
         # 30 - 40: Process telegrams with long time tag
         elif 30 <= type and type <= 40:
-
             for i in range(len(getattr(asdu, value_name).fields)):
                 field = getattr(asdu, value_name).fields[i]
                 ioa = str(asdu.ioa.all_fields[i].showname_value)
@@ -286,7 +278,6 @@ class IEC104Transcriber(Transcriber):
 
         # 45 - 51: Process information in control direction
         elif 45 <= type and type <= 51:
-
             for i in range(len(getattr(asdu, value_name).fields)):
                 field = getattr(asdu, value_name).fields[i]
                 ioa = str(asdu.ioa.all_fields[i].showname_value)
@@ -297,7 +288,6 @@ class IEC104Transcriber(Transcriber):
 
         # 58 - 64: Command telegrams with long time tag
         elif 58 <= type and type <= 64:
-
             for i in range(len(getattr(asdu, value_name).fields)):
                 field = getattr(asdu, value_name).fields[i]
                 ioa = str(asdu.ioa.all_fields[i].showname_value)
@@ -317,7 +307,6 @@ class IEC104Transcriber(Transcriber):
             pass  # No process data
 
         elif type == 102:  # Read command
-
             for i in range(len(asdu.ioa.all_fields)):
                 ioa = str(asdu.ioa.all_fields[i].showname_value)
                 addr = "{}.{}".format(asdu.addr, ioa)
@@ -360,11 +349,8 @@ class IEC104Transcriber(Transcriber):
         return [m]
 
     def match_response(self, requests, response):
-
         if response.type == "U":
-
             for request in requests:
-
                 if request.data.keys() != response.data.keys():
                     continue
 
@@ -372,13 +358,10 @@ class IEC104Transcriber(Transcriber):
                 return [request]
 
         else:
-
             for request in requests[::-1]:
-
                 not_written_variables = request.data.copy()
                 not_requested_variables = []
                 for var in response.data:
-
                     if var in not_written_variables:
                         del not_written_variables[var]
                     else:

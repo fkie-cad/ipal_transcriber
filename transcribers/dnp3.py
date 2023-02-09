@@ -127,7 +127,6 @@ class DNP3Transcriber(Transcriber):
 
         dnp3_layers = pkt.get_multiple_layers("dnp3")
         for dnp in dnp3_layers:
-
             if not hasattr(dnp, "al_func"):
                 # Layer 2/3/4 only and contains no real
                 # change of state etc., therefore ignore for now at least.

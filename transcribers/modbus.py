@@ -29,7 +29,6 @@ class ModbusTranscriber(Transcriber):
             return "{}:{}".format(msg.src, key)
 
     def matches_protocol(self, pkt):
-
         return "MBTCP" in pkt
 
     def parse_packet(self, pkt):
@@ -44,14 +43,12 @@ class ModbusTranscriber(Transcriber):
         dest = "{}:{}".format(pkt["IP"].dst, pkt["TCP"].dstport)
 
         for i in range(len(adu_layers)):
-
             adu = adu_layers[i]
             mb = mb_layers[i]
 
             length = 6 + int(adu.len)
 
             if int(pkt["TCP"].srcport) == settings.MBTCP_PORT:  # Response
-
                 code = int(mb.func_code)
 
                 flow = (src, dest, int(adu.trans_id), code)
@@ -114,7 +111,6 @@ class ModbusTranscriber(Transcriber):
                 res.append(m)
 
             else:
-
                 settings.logger.critical(
                     "Unknown ports for Modbus ({}, {})".format(
                         pkt["TCP"].srcport, pkt["TCP"].dstport
@@ -145,7 +141,6 @@ class ModbusTranscriber(Transcriber):
             startAddr = int(mb.reference_num) + 1
             quantity = int(mb.bit_cnt)
             for i in range(quantity):
-
                 b = int(mb.data.all_fields[i // 8].showname_value)
                 bit = (b & (1 << (i % 8))) >> (i % 8)
                 if bit == 1 or bit == 0:
@@ -158,7 +153,6 @@ class ModbusTranscriber(Transcriber):
                 data[self._func_to_addr_space[code] + "." + str(startAddr + i)] = value
 
         elif code == 16:
-
             quantity = int(mb.word_cnt)
 
             for i in range(quantity):
@@ -196,7 +190,6 @@ class ModbusTranscriber(Transcriber):
                 data[self._func_to_addr_space[code] + "." + str(startAddr + i)] = None
 
         elif code == 16:
-
             quantity = int(mb.word_cnt)
 
             for i in range(quantity):
@@ -226,13 +219,11 @@ class ModbusTranscriber(Transcriber):
         data = {}
 
         if code == 1 or code == 2:
-
             quantity = int(mb.bit_cnt)
             for i in range(quantity):
                 data[self._func_to_addr_space[code] + "." + str(startAddr + i)] = None
 
         elif code == 3 or code == 4:
-
             quantity = int(mb.word_cnt)
             for i in range(quantity):
                 data[self._func_to_addr_space[code] + "." + str(startAddr + i)] = None
@@ -254,7 +245,6 @@ class ModbusTranscriber(Transcriber):
         m.data = {}
 
         if code == 4 or code == 3:
-
             for i in range(int(mb.byte_cnt) // 2):
                 m.data[
                     self._func_to_addr_space[code]
@@ -263,7 +253,6 @@ class ModbusTranscriber(Transcriber):
                 ] = int(mb.regval_uint16.all_fields[i].showname_value)
 
         elif code == 2:
-
             for i in range(len(mb.bitnum.all_fields)):
                 if mb.bitval.all_fields[i].showname_value == "True":
                     val = 1
@@ -284,9 +273,7 @@ class ModbusTranscriber(Transcriber):
                 ] = val
 
         elif code == 1:
-
             for i in range(len(mb.bitnum.all_fields)):
-
                 if mb.bitval.all_fields[i].showname_value == "True":
                     val = 1
                 elif mb.bitval.all_fields[i].showname_value == "False":
@@ -312,7 +299,6 @@ class ModbusTranscriber(Transcriber):
             )  # mb.pdfdump()
 
     def transcribe_diagnostic(self, m, mb):
-
         diagnostic_code = int(mb.get_field("diagnostic_code"))
 
         if diagnostic_code == 1:  # Restart Communication Option
@@ -339,7 +325,6 @@ class ModbusTranscriber(Transcriber):
             )  # mb.pdfdump()
 
     def transcribe_encapsulated_interface_transport_request(self, m, mb):
-
         if int(mb.mei) == 14:  # read device identification
             m.data["read device identification"] = None
             m.activity = Activity.INTERROGATE
@@ -358,7 +343,6 @@ class ModbusTranscriber(Transcriber):
         m._match_to_requests = True
 
     def match_response(self, requests, response):  # noqa: C901
-
         remove_from_queue = []
 
         if len(set([r.type for r in requests])) != 1 or (
@@ -378,7 +362,6 @@ class ModbusTranscriber(Transcriber):
             res_keys = list(response.data.keys())
 
             for request in requests:
-
                 req_keys = list(request.data.keys())
                 if req_keys[0] is None:
                     continue
@@ -390,7 +373,6 @@ class ModbusTranscriber(Transcriber):
                     remove_from_queue.append(request)
                 else:
                     if set(res_keys).issubset(req_keys):
-
                         response.responds_to.append(request.id)
                         for key in res_keys:
                             request.pop(key)
@@ -405,7 +387,6 @@ class ModbusTranscriber(Transcriber):
             for request in requests:
                 if request.data.keys() == response.data.keys():
                     for key in request.data.keys():
-
                         response.data[key] = None  # request.data[key]
 
                     response.responds_to.append(request.id)

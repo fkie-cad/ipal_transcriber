@@ -12,7 +12,6 @@ class VariableType(Enum):
 
 
 class NMEA0183(Transcriber):
-
     # Abstract NMEA 0183 class responsible for parsing raw NMEA 0183 sentences
     # independently of the overlying protocol (UDP or IEC-450).
 
@@ -270,7 +269,6 @@ class NMEA0183(Transcriber):
         return key
 
     def parse_sentence(self, msg, res):
-
         if msg[0] == "!" and not msg.startswith("!AIVDM"):
             settings.logger.warning("Unsupported NMEA type '{}'".format(msg[0]))
             return None
@@ -382,7 +380,6 @@ class NMEA0183(Transcriber):
         return res
 
     def match_response(self, requests, response):
-
         if response.type == "VDM":  # match fragmented AIS sentences
             assert (
                 len(set([msg._ais[0] for msg in requests])) == 1
@@ -412,11 +409,9 @@ class NMEA0183(Transcriber):
 
 
 class NMEA0183UDPTranscriber(NMEA0183):
-
     _name = "nmea0183udp"
 
     def matches_protocol(self, pkt):
-
         if "UDP" not in pkt:
             return False
 

@@ -6,7 +6,6 @@ from transcribers.utils import get_all_transcribers
 
 
 class StateExtractor:
-
     _name = None
     _description = None
     _options = None

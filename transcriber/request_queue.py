@@ -21,7 +21,6 @@ class RequestQueue:
 
         oldest_message = self.queue[0]
         while oldest_message.queue_timeout < current_time:
-
             # assumes chronological correctness
             del self.messages[oldest_message._flow][0]
 
@@ -51,7 +50,6 @@ class RequestQueue:
 
     def __match_response(self, response):
         if response._flow in self.messages:
-
             # Match response with individual protocol transcriber
             to_remove = self.transcribers[response.protocol].match_response(
                 self.messages[response._flow], response

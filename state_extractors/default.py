@@ -17,7 +17,6 @@ class DefaultStateExtractor(StateExtractor):
         pass
 
     def update_state(self, msg):
-
         for key in msg.data:
             if msg.data[key] is not None:
                 identifier = self._get_identifier(msg, key)

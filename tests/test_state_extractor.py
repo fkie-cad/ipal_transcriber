@@ -25,7 +25,6 @@ RAW_FILES = [
 
 @pytest.mark.parametrize("ipal,filename", RAW_FILES)
 def test_extractor_default(ipal, filename):
-
     args = ["--ipal.input", ipal, "--state.output", "-", "default"]
     errno, stdout, stderr = extractor(args)
     assert stderr == b"" or b"WARNING:asyncio:Unknown child process" in stderr

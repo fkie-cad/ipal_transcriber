@@ -53,7 +53,6 @@ def _dearmor_ascii(payload: str, fill_bits: int) -> List[int]:
     index = 0
 
     for char in payload:
-
         byte = ord(char) - 48
         byte = byte if byte < 40 else byte - 8
 

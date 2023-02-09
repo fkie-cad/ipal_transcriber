@@ -8,7 +8,6 @@ from transcribers.utils import IpalIdCounter, get_all_transcribers
 
 
 class PacketProcessor:
-
     _first = True
 
     def __init__(self):
@@ -29,7 +28,6 @@ class PacketProcessor:
             self.rule_processor = RuleProcessor(settings.rules)
 
     def process_packet(self, pkt):
-
         # 0th pipeline step: store timing information for eval output
 
         if settings.evalout:
@@ -102,7 +100,6 @@ class PacketProcessor:
             settings.evaloutfd.flush()
 
     def handle_checksum(self, ipal_messages, pkt):
-
         # Get transport checksum status
         if "TCP" in pkt:
             crc = int(pkt["TCP"].checksum_status)

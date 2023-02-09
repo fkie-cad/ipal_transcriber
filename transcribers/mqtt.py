@@ -9,7 +9,6 @@ import transcriber.settings as settings
 
 
 class MQTTProtocol:
-
     CONNECT = 1
     CONNACK = 2
     PUBLISH = 3
@@ -94,7 +93,6 @@ class MQTTTranscriber(Transcriber):
 
     @classmethod
     def state_identifier(cls, msg, key):
-
         if msg.activity in [Activity.INTERROGATE, Activity.COMMAND]:
             return "{}:{}".format(msg.dest, key)
         elif msg.activity in [Activity.INFORM, Activity.ACTION]:

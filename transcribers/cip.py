@@ -20,7 +20,6 @@ class CIPTranscriber(Transcriber):
         return "CIP" in pkt
 
     def parse_packet(self, pkt):
-
         res = []
 
         enip_layers = pkt.get_multiple_layers("ENIP")
@@ -33,7 +32,6 @@ class CIPTranscriber(Transcriber):
         dest = "{}:{}".format(pkt["IP"].dst, pkt["TCP"].dstport)
 
         for i in range(len(cip_layers)):
-
             enip = enip_layers[i]
             cip = cip_layers[i]
             cipcm = cipcm_layers[i]
@@ -41,7 +39,6 @@ class CIPTranscriber(Transcriber):
             length = int(enip.length)
 
             if int(pkt["TCP"].dstport) == settings.ENIP_PORT:  # Request
-
                 code = int(cipcm.cip_service, 16)
 
                 flow = (dest, src, int(enip.session, 16), code)
@@ -74,7 +71,6 @@ class CIPTranscriber(Transcriber):
                 res.append(m)
 
             elif int(pkt["TCP"].srcport) == settings.ENIP_PORT:  # Response
-
                 code = int(cip.sc, 16)
 
                 flow = (src, dest, int(enip.session, 16), code)
@@ -105,7 +101,6 @@ class CIPTranscriber(Transcriber):
                 res.append(m)
 
             else:
-
                 settings.logger.critical(
                     "Unknown ports for CIP ({}, {})".format(
                         pkt["TCP"].srcport, pkt["TCP"].dstport
@@ -157,7 +152,6 @@ class CIPTranscriber(Transcriber):
         pass  # TODO
 
     def match_response(self, requests, response):
-
         remove_from_queue = []
 
         if len(set([r.type for r in requests])) != 1 or (
@@ -172,7 +166,6 @@ class CIPTranscriber(Transcriber):
             res_keys = list(response.data.keys())
 
             for request in requests:
-
                 req_keys = list(request.data.keys())
                 if req_keys[0] is None:
                     continue
@@ -184,7 +177,6 @@ class CIPTranscriber(Transcriber):
                     remove_from_queue.append(request)
                 else:
                     if set(res_keys).issubset(req_keys):
-
                         response.responds_to.append(request.id)
                         for key in res_keys:
                             request.pop(key)

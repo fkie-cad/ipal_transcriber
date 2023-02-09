@@ -10,7 +10,6 @@ class RuleProcessor:
         self.rename = self.__parse_renaming(config)
 
     def __parse_rules(self, config, fields=["src", "dest", "type"]):
-
         self.fields = fields
 
         if "rules" not in config.JS:
@@ -19,7 +18,6 @@ class RuleProcessor:
 
         rules = []
         for rule in config.JS["rules"]:
-
             # Check rule integrity
             if "var" not in rule or not isinstance(rule["var"], list):
                 # 'var' : [...] required
@@ -47,7 +45,6 @@ class RuleProcessor:
         return rules
 
     def __parse_renaming(self, config):
-
         if "rename" not in config.JS:
             settings.logger.info("No attribute 'rename' found in config file")
             return []
@@ -59,7 +56,6 @@ class RuleProcessor:
         return rules
 
     def __matches(self, msg, rule):
-
         # Apply regex to each field to check (fields)
         matches = [
             rule[field](str(getattr(msg, field))) is not None for field in self.fields
@@ -67,12 +63,10 @@ class RuleProcessor:
         return all(matches)
 
     def apply(self, msg):
-
         if msg.protocol not in self.protocols:
             return
 
         for rule in self.rules:
-
             # Does rule match
             if not self.__matches(msg, rule):
                 continue

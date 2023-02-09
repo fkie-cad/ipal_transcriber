@@ -68,7 +68,6 @@ def add_arguments_to_parser(parser):
 
 # Returns state_extractor according to the arguments
 def parse_arguments(args):
-
     if args.stateout:
         settings.stateout = args.stateout
     if settings.stateout:
@@ -155,6 +154,11 @@ def parse_main_arguments():
         default=False,
         help="define file to log to. (Default: stderr)",
         required=False,
+    )
+
+    # Version number
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s {settings.version}"
     )
 
     # Parse arguments

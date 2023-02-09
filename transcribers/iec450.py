@@ -3,11 +3,9 @@ from transcribers.nmea0183 import NMEA0183
 
 
 class IEC450Transcriber(NMEA0183):
-
     _name = "iec450"
 
     def matches_protocol(self, pkt):
-
         if "UDP" not in pkt or not pkt["UDP"].get("payload", default=None):
             return False
 

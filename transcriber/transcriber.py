@@ -39,7 +39,6 @@ def load_rule_file(path):
 
 # Initialize logger
 def initialize_logger(args):
-
     # Logging
     if args.log:
         settings.log = getattr(logging, args.log.upper(), None)
@@ -74,7 +73,6 @@ def parse_malicious_file(path):
 
     # Pre-parse attacks for faster lookups
     for attack in attacks:
-
         # Test attack structure
         assert "id" in attack and "attack_point" in attack and "description" in attack
 
@@ -95,7 +93,6 @@ def parse_malicious_file(path):
 
 # Build parser arguments
 def prepare_arg_parser(parser):
-
     # Interface or PCAP option
     parser.add_argument(
         "--interface",
@@ -189,10 +186,14 @@ def prepare_arg_parser(parser):
         required=False,
     )
 
+    # Version number
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s {settings.version}"
+    )
+
 
 # check compatibility of arguements and store them for global access
 def load_settings(args):  # noqa: C901
-
     # Gzip compress level
     if args.compresslevel:
         try:

@@ -27,7 +27,6 @@ class S7Transcriber(Transcriber):
     }
 
     def matches_protocol(self, pkt):
-
         return "S7COMM" in pkt
 
     def parse_packet(self, pkt):  # noqa: C901
@@ -57,7 +56,6 @@ class S7Transcriber(Transcriber):
         )
 
         if job == 0x01:
-
             funcCode = int(s7_pkt.param_func, 16)
 
             # activity read request
@@ -67,14 +65,12 @@ class S7Transcriber(Transcriber):
                 # can be ignored by us
                 return []
             elif funcCode == 0x05:  # write variable
-
                 m.activity = Activity.COMMAND
                 m._add_to_request_queue = True
 
                 data = {}
                 itemcount = int(s7_pkt.param_itemcount)
                 for i in range(itemcount):
-
                     syntax_id = int(s7_pkt.param_item_syntaxid, 16)
 
                     if syntax_id == 0xB2:  # 1200SYM
@@ -82,7 +78,6 @@ class S7Transcriber(Transcriber):
                             s7_pkt.tiap_item_value.all_fields[i].showname_value
                         )
                     elif syntax_id == 0x10:  # S7ANY
-
                         area = self._id_to_area[
                             int(s7_pkt.param_item_area.all_fields[i].raw_value, 16)
                         ]
@@ -112,14 +107,12 @@ class S7Transcriber(Transcriber):
                 m.data = data
 
             elif funcCode == 0x04:  # read variable
-
                 m.activity = Activity.INTERROGATE
                 m._add_to_request_queue = True
 
                 data = {}
                 itemcount = int(s7_pkt.param_itemcount)
                 for i in range(itemcount):
-
                     syntax_id = int(s7_pkt.param_item_syntaxid, 16)
 
                     if syntax_id == 0xB2:  # 1200SYM
@@ -127,7 +120,6 @@ class S7Transcriber(Transcriber):
                             s7_pkt.tiap_item_value.all_fields[i].showname_value
                         )
                     elif syntax_id == 0x10:  # S7ANY
-
                         area = self._id_to_area[
                             int(s7_pkt.param_item_area.all_fields[i].raw_value, 16)
                         ]
@@ -160,7 +152,6 @@ class S7Transcriber(Transcriber):
                 return []
 
         elif job == 0x03:
-
             funcCode = int(s7_pkt.param_func, 16)
 
             m._flow = (dest, src, pduref)
@@ -169,7 +160,6 @@ class S7Transcriber(Transcriber):
                 # can be ignored by us
                 return []
             elif funcCode == 0x05:  # write variable
-
                 m.activity = Activity.ACTION
                 m._match_to_requests = True
 
@@ -182,7 +172,6 @@ class S7Transcriber(Transcriber):
                     )
 
             elif funcCode == 0x04:  # read variable
-
                 m.activity = Activity.INFORM
                 m._match_to_requests = True
 
@@ -207,12 +196,10 @@ class S7Transcriber(Transcriber):
         return [m]
 
     def match_response(self, requests, response):
-
         req_to_remove = []
 
         if None in response.data and response.activity == Activity.INFORM:
             for request in requests:
-
                 if request.activity != Activity.INTERROGATE:
                     continue
 
@@ -224,7 +211,6 @@ class S7Transcriber(Transcriber):
                 requested_data = len(request.data)
 
                 if requested_data == unmatched_data:
-
                     matchable_data = requested_data
 
                     response.responds_to.append(request.id)
@@ -240,16 +226,13 @@ class S7Transcriber(Transcriber):
                     break
 
         elif None in response.data and response.activity == Activity.ACTION:
-
             for request in requests:
                 if request.activity != Activity.COMMAND:
                     continue
 
                 if len(request.data) == len(response.data[None]):
-
                     keys = list(request.data.keys())
                     for i in range(len(request.data)):
-
                         if response.data[None][i] == 0xFF:  # Success return code
                             response.data[keys[i]] = request.data[keys[i]]
 

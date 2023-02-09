@@ -18,7 +18,6 @@ RAW_FILES = [
 
 @pytest.mark.parametrize("pcap,filename,protocol,rules", RAW_FILES)
 def test_transcriber_rules(pcap, filename, protocol, rules):
-
     args = [
         "--pcap",
         pcap,
