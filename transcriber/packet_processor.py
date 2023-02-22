@@ -6,6 +6,9 @@ from transcriber.request_queue import RequestQueue
 from transcriber.rule_processor import RuleProcessor
 from transcribers.utils import IpalIdCounter, get_all_transcribers
 
+# Prometheus metrics provider
+from prometheus_client import Counter, Summary
+TRANSCRIPTION_TIME = Summary('transcribe_processing_seconds', 'Time spent processing a packet')
 
 class PacketProcessor:
     _first = True
@@ -27,6 +30,7 @@ class PacketProcessor:
         if settings.rules:
             self.rule_processor = RuleProcessor(settings.rules)
 
+    @TRANSCRIPTION_TIME.time()
     def process_packet(self, pkt):
         # 0th pipeline step: store timing information for eval output
 

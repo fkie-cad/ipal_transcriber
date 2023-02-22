@@ -315,6 +315,13 @@ def main():
             capture.apply_on_packets(pkt_processor.process_packet)
 
         elif args.interface:
+            # Initialize Prometheus Logging, when listening on interface
+            from transcriber.tools.prometheus import PrometheusClient
+            try:
+                _prom = PrometheusClient()
+            except Exception as e:
+                settings.logger.warn("Prometheus Client could not be started.", e)
+
             settings.source = args.interface
             capture = pyshark.LiveCapture(
                 interface=args.interface,

@@ -4,6 +4,10 @@ import transcriber.settings as settings
 from transcriber.messages import IpalMessage, Activity
 from transcribers.transcriber import Transcriber
 
+# Prometheus metrics provider
+from prometheus_client import Summary
+PACKET_PARSE = Summary('packet_parse_iec104', 'Time spent to parse an IEC104 packet')
+PACKET_MATCH = Summary('packet_match_iec104', 'Time spent to match an IEC104 packet')
 
 class IEC104Transcriber(Transcriber):
     _name = "iec104"
@@ -61,6 +65,7 @@ class IEC104Transcriber(Transcriber):
     def matches_protocol(self, pkt):
         return "IEC60870_104" in pkt
 
+    @PACKET_PARSE.time()
     def parse_packet(self, pkt):
         msgs = []
 
@@ -348,6 +353,7 @@ class IEC104Transcriber(Transcriber):
 
         return [m]
 
+    @PACKET_MATCH.time()
     def match_response(self, requests, response):
         if response.type == "U":
             for request in requests:

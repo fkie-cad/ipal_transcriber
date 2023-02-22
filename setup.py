@@ -11,7 +11,11 @@ setup(
         "ipal-join",
     ],
     package_data={"": ["*.ipal", "*.pcapng"]},
-    install_requires=["pyshark", "python-dateutil"],
+    install_requires=[
+        "pyshark",
+        "python-dateutil",
+        "prometheus-client"
+    ],
     tests_require=["pytest"],
     url="https://github.com/fkie-cad/ipal_transcriber",
     author="Konrad Wolsing",
