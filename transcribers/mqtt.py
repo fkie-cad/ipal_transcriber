@@ -3,9 +3,9 @@
 # Stefan Lenz, RWTH Aachen University, 2022
 # Tim Nebel, RWTH Aachen University, 2022
 
-from transcriber.messages import IpalMessage, Activity
-from transcribers.transcriber import Transcriber
 import transcriber.settings as settings
+from transcriber.messages import Activity, IpalMessage
+from transcribers.transcriber import Transcriber
 
 
 class MQTTProtocol:

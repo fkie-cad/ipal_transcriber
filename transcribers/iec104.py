@@ -1,7 +1,7 @@
 import struct
 
 import transcriber.settings as settings
-from transcriber.messages import IpalMessage, Activity
+from transcriber.messages import Activity, IpalMessage
 from transcribers.transcriber import Transcriber
 
 

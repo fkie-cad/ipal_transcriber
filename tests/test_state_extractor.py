@@ -1,7 +1,6 @@
 import pytest
 
-from .conftest import check_with_validation_file
-from .conftest import extractor
+from .conftest import check_with_validation_file, extractor
 
 
 def test_extractor_empty():

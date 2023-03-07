@@ -1,7 +1,7 @@
-import transcriber.settings as settings
-
 from enum import Enum
 from typing import Any, Dict, List
+
+import transcriber.settings as settings
 
 
 class NavigationStatus(Enum):

@@ -1,8 +1,6 @@
 import pytest
 
-from .conftest import check_with_validation_file
-from .conftest import transcriber
-
+from .conftest import check_with_validation_file, transcriber
 
 RAW_FILES = [
     ("misc/pcaps/cip.pcapng", "cip.ipal", "cip", "misc/rules/minicps.py"),

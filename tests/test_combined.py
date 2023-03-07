@@ -1,7 +1,6 @@
 import pytest
 
-from .conftest import check_with_validation_file
-from .conftest import transcriber
+from .conftest import check_with_validation_file, transcriber
 
 RAW_FILES = [
     ("misc/pcaps/iec104.pcap", "iec104.state", "iec104"),

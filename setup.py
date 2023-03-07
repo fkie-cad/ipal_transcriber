@@ -1,8 +1,8 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="ipal-transcriber",
-    version="1.3.3",
+    version="1.3.4",
     packages=find_packages(exclude="tests"),
     scripts=[
         "ipal-transcriber",
@@ -12,7 +12,7 @@ setup(
     ],
     package_data={"": ["*.ipal", "*.pcapng"]},
     install_requires=["pyshark", "python-dateutil"],
-    tests_require=["pytest"],
+    tests_require=["pre-commit", "black", "flake8", "pytest", "pytest-cov", "isort"],
     url="https://github.com/fkie-cad/ipal_transcriber",
     author="Konrad Wolsing",
     author_email="wolsing@comsys.rwth-aachen.de",

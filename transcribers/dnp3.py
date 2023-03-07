@@ -2,25 +2,24 @@
 # Olav Lamberts, RWTH Aachen, 2022
 
 from __future__ import annotations
-import struct
 
 import math
-from enum import IntEnum, Enum
+import struct
+from enum import Enum, IntEnum
 from typing import Union
 
 import transcriber.settings as settings
-from transcriber.messages import IpalMessage, Activity
-from transcribers.transcriber import Transcriber
+from transcriber.messages import Activity, IpalMessage
 from transcribers.auxiliary_enums.dnp3 import (
-    _FunctionCodes,
-    _ObjectTypes,
     _CastingTypes,
+    _DnpMsgType,
+    _FunctionCodes,
     _ObjectHeader,
+    _ObjectTypes,
     _ObjectValueFields,
     _Qualifier,
-    _DnpMsgType,
 )
-
+from transcribers.transcriber import Transcriber
 
 # General transcriber extension possibilities through special makers/ flags:
 # - object doesn't exist/ is inactive/ disabled

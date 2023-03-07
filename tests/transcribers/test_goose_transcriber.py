@@ -9,9 +9,9 @@ import transcriber.settings as settings
 from tests.conftest import check_with_validation_file
 from transcribers.goose import (
     GooseTranscriber,
-    UnknownValueTypeException,
-    TimeQuality,
     Quality,
+    TimeQuality,
+    UnknownValueTypeException,
 )
 from transcribers.utils import IpalIdCounter
 

@@ -1,11 +1,11 @@
 import struct
 from dataclasses import dataclass
-from typing import List, Union, Optional
+from typing import List, Optional, Union
 
 from pyshark.packet.fields import LayerField
 from pyshark.packet.packet import Packet
 
-from transcriber.messages import IpalMessage, Activity
+from transcriber.messages import Activity, IpalMessage
 from transcribers.transcriber import Transcriber
 
 

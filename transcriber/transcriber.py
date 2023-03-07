@@ -5,13 +5,13 @@ import importlib.util
 import json
 import logging
 import os
-import pyshark
 import sys
 
-import transcriber.settings as settings
-import transcriber.packet_processor as packet_processor
-import transcriber.state_extractor as state_extractor
+import pyshark
 
+import transcriber.packet_processor as packet_processor
+import transcriber.settings as settings
+import transcriber.state_extractor as state_extractor
 from transcribers.utils import get_all_transcribers
 
 
@@ -78,10 +78,8 @@ def parse_malicious_file(path):
 
         # Packet label
         if "ipalid" in attack:
-            assert "start" not in attack and "end" not in attack
             settings.malicious["pkts"][attack["ipalid"]] = attack["id"]
         elif "start" in attack and "end" in attack:
-            assert "ipalid" not in attack
             settings.malicious["time"].append(
                 (attack["start"], attack["end"], attack["id"])
             )

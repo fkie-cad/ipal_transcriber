@@ -1,9 +1,8 @@
 from pyshark.packet.packet import Packet as PysharkPacket
 
-from transcriber.messages import IpalMessage, Activity
-from transcribers.transcriber import Transcriber
 import transcriber.settings as settings
-
+from transcriber.messages import Activity, IpalMessage
+from transcribers.transcriber import Transcriber
 
 AUTO_INCR_ADDR = 0
 CONFIG_ADDR = 1

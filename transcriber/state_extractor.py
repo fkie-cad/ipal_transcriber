@@ -3,12 +3,12 @@ import argparse
 import gzip
 import json
 import logging
-import sys
 import os
+import sys
 
 import transcriber.settings as settings
-from transcriber.messages import IpalMessage
 from state_extractors.utils import get_all_state_extractors
+from transcriber.messages import IpalMessage
 
 
 # Wrapper for hiding .gz files

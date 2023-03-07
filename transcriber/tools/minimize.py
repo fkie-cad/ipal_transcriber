@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-from itertools import product
-from multiprocessing import Pool
 import argparse
 import gzip
 import json
 import logging
 import os
 import random
+from itertools import product
+from multiprocessing import Pool
 
 import transcriber.settings as settings
 

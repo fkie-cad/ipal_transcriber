@@ -2,12 +2,14 @@
     "_transcriber-config": {
         "compresslevel": 9,
         "crc": "and",
+        "enip_port": 44818,
         "ipalout": "-",
         "log": 30,
         "logfile": null,
         "logformat": "%(levelname)s:%(name)s:%(message)s",
         "malicious": null,
         "maliciousdefault": null,
+        "mbtcp_port": 502,
         "protocols": [
             "cip"
         ],
@@ -21,7 +23,8 @@
         ],
         "rules": null,
         "source": "misc/pcaps/cip.pcapng",
-        "timeout": 1.0
+        "timeout": 1.0,
+###IGNORE-LINE###
     },
     "activity": "interrogate",
     "crc": false,

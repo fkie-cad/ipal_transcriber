@@ -1,9 +1,9 @@
 from enum import Enum, auto
 
-from transcriber.messages import IpalMessage, Activity
-from transcribers.transcriber import Transcriber
-from transcribers.ais import decode_ais
 import transcriber.settings as settings
+from transcriber.messages import Activity, IpalMessage
+from transcribers.ais import decode_ais
+from transcribers.transcriber import Transcriber
 
 
 class VariableType(Enum):

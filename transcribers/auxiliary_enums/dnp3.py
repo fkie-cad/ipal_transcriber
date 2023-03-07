@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import IntEnum, Enum
+from enum import Enum, IntEnum
 
 from transcriber import settings as settings
 from transcriber.messages import Activity

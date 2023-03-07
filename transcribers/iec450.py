@@ -1,4 +1,4 @@
-from transcriber.messages import IpalMessage, Activity
+from transcriber.messages import Activity, IpalMessage
 from transcribers.nmea0183 import NMEA0183
 
 

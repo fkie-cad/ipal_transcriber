@@ -1,6 +1,6 @@
 import logging
 
-version = "v1.3.3"
+version = "v1.3.4"
 
 # Gzip options
 compresslevel = 9  # 0 no compress, 1 large/fast, 9 small/slow
@@ -57,7 +57,10 @@ stateinmessage = False
 
 def transcriber_settings_to_dict():
     return {
+        "version": version,
         "compresslevel": compresslevel,
+        "mbtcp_port": MBTCP_PORT,
+        "enip_port": ENIP_PORT,
         "pyshark_options": pyshark_options,
         "source": source,
         "protocols": protocols,
