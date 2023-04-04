@@ -20,6 +20,7 @@ RETAIN = [
     "ids",
     "scores",
     "alerts",
+    "adjust",
     "_transcriber-config",
     "_state_extractor-config",
     "_iids-config",
