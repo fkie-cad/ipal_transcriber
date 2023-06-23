@@ -10,6 +10,7 @@ from transcribers.modbus import ModbusTranscriber
 from transcribers.mqtt import MQTTTranscriber
 from transcribers.nmea0183 import NMEA0183UDPTranscriber
 from transcribers.s7 import S7Transcriber
+from transcribers.mavlink import MAVLinkTranscriber
 
 
 class IpalIdCounter:
@@ -39,6 +40,7 @@ all_transcribers = [
     NMEA0183UDPTranscriber,
     S7Transcriber,
     EtherCatTranscriber,
+    MAVLinkTranscriber,
 ]
 
 
