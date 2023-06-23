@@ -1,0 +1,89 @@
+{
+    "_state_extractor-config": {
+        "completeonly": false,
+        "compresslevel": 9,
+        "filter": null,
+        "ipalin": "misc/ipal/MAVLink.ipal",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "options": {},
+        "state_extractor": "default",
+        "stateinmessage": false,
+        "stateout": "-",
+###IGNORE-LINE###
+    },
+    "malicious": null,
+    "state": {
+        "192.168.2.2:45815:1:_raw": "000000001e00000303"
+    },
+    "timestamp": 1681821082.243768
+}
+{
+    "malicious": null,
+    "state": {
+        "192.168.2.2:45815:1:_raw": "0ffc30130ffc20130ffc30133401613787000000000000000000000000005f"
+    },
+    "timestamp": 1681821082.39191
+}
+{
+    "malicious": null,
+    "state": {
+        "192.168.2.2:45815:1:_raw": "00000000000000000c0e23"
+    },
+    "timestamp": 1681821082.392585
+}
+{
+    "malicious": null,
+    "state": {
+        "192.168.2.2:45815:1:_raw": "1e03000098010000ff7f6137ffffffffffffffffffffffffffffffffffff87000000005f0000000001"
+    },
+    "timestamp": 1681821082.392666
+}
+{
+    "malicious": null,
+    "state": {
+        "192.168.2.2:45815:1:_raw": "110e2300f025703c59bebd3b71d3f53e77b5c43c334d1fbc554e913c"
+    },
+    "timestamp": 1681821082.39268
+}
+{
+    "malicious": null,
+    "state": {
+        "192.168.2.1:14550:255:_raw": "0100eaffda011e00000001",
+        "192.168.2.2:45815:1:_raw": "110e2300f025703c59bebd3b71d3f53e77b5c43c334d1fbc554e913c"
+    },
+    "timestamp": 1681821082.477993
+}
+{
+    "malicious": null,
+    "state": {
+        "192.168.2.1:14550:255:_raw": "0100eaffda011e00000001",
+        "192.168.2.2:45815:1:_raw": "8573f388c405f105be05f705ba05b905a7050e06001405"
+    },
+    "timestamp": 1681821082.69755
+}
+{
+    "malicious": null,
+    "state": {
+        "192.168.2.1:14550:255:_raw": "0100eaffda011e00000001",
+        "192.168.2.2:45815:1:_raw": "380f2300000080bf54657468657254726e"
+    },
+    "timestamp": 1681821082.70045
+}
+{
+    "malicious": null,
+    "state": {
+        "192.168.2.1:14550:255:_raw": "0100eaffda011e00000001",
+        "192.168.2.2:45815:1:_raw": "5b0f2300000000000000000000000000a9010000000002000000f80a"
+    },
+    "timestamp": 1681821082.719582
+}
+{
+    "malicious": null,
+    "state": {
+        "192.168.2.1:14550:255:_raw": "0100eaffda011e00000001",
+        "192.168.2.2:45815:1:_raw": "a10f2300a609b33c28020b3b8053fc3e661fff3b8d5714bc32cf1c3d"
+    },
+    "timestamp": 1681821082.795851
+}

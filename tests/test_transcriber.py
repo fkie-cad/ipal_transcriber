@@ -28,6 +28,7 @@ RAW_FILES = [
     ("misc/pcaps/dnp3.pcap", "dnp3.ipal", "dnp3"),
     ("misc/pcaps/mqtt.pcap", "mqtt.ipal", "mqtt"),
     ("misc/pcaps/ethercat.pcapng", "ethercat.ipal", "ethercat"),
+    ("misc/pcaps/MAVLink.pcap", "mavlink.ipal", "MAVLink"),
 ]
 
 

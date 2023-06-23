@@ -6,11 +6,11 @@ from transcribers.ethercat import EtherCatTranscriber
 from transcribers.goose import GooseTranscriber
 from transcribers.iec104 import IEC104Transcriber
 from transcribers.iec450 import IEC450Transcriber
+from transcribers.mavlink import MAVLinkTranscriber
 from transcribers.modbus import ModbusTranscriber
 from transcribers.mqtt import MQTTTranscriber
 from transcribers.nmea0183 import NMEA0183UDPTranscriber
 from transcribers.s7 import S7Transcriber
-from transcribers.mavlink import MAVLinkTranscriber
 
 
 class IpalIdCounter:

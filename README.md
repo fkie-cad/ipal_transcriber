@@ -366,6 +366,7 @@ To ensure that a transcriber's protocol implementation stays compliant, a transc
 - Antoine Saillard (RWTH Aachen University & Fraunhofer FKIE)
 - David Schachtschneider (RWTH Aachen University)
 - Eric Wagner (Fraunhofer FKIE & RWTH Aachen University)
+- Julia Kunz (RWTH Aachen University)
 - Konrad Wolsing (Fraunhofer FKIE & RWTH Aachen University)
 - Leonardo Pompe (RWTH Aachen University)
 - Olav Lamberts (RWTH Aachen University)

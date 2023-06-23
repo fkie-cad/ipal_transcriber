@@ -9,6 +9,10 @@
         "logformat": "%(levelname)s:%(name)s:%(message)s",
         "malicious": null,
         "maliciousdefault": null,
+        "mavlink_port": [
+            14550,
+            14580
+        ],
         "mbtcp_port": 502,
         "protocols": [
             "iec104"
