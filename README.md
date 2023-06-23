@@ -24,6 +24,7 @@ This software (`ipal-transcriber`) implements the automatic translation of indus
 | S7                    | Rudimentary | Job: 1, 3<br />Function Code: 4, 5                           |
 | DNP3                  | Rudimentary | Function Code: 0-2, 7,8, 13,14, 20, 24, 129, 130<br /> objects (group-id:var): 1:2, 2:1, 20:{0,2}, 50:3, 52:2, 60:{1-4}, 80:1 |
 | EtherCAT              | Rudimentary | TODO: add matching data |
+| MavLink 2.0           | Rudimentary | Depends on the message definitions parsed |
 
 ###### Publications
 
@@ -365,6 +366,7 @@ To ensure that a transcriber's protocol implementation stays compliant, a transc
 - Antoine Saillard (RWTH Aachen University & Fraunhofer FKIE)
 - David Schachtschneider (RWTH Aachen University)
 - Eric Wagner (Fraunhofer FKIE & RWTH Aachen University)
+- Julia Kunz (RWTH Aachen University)
 - Konrad Wolsing (Fraunhofer FKIE & RWTH Aachen University)
 - Leonardo Pompe (RWTH Aachen University)
 - Olav Lamberts (RWTH Aachen University)

@@ -1,13 +1,14 @@
 import logging
 
-version = "v1.3.4"
+version = "v1.3.5"
 
 # Gzip options
 compresslevel = 9  # 0 no compress, 1 large/fast, 9 small/slow
 
-# Pyshark options
-MBTCP_PORT = 502  # Default Modbus Port
+# Assumed default ports
+MBTCP_PORT = 502
 ENIP_PORT = 44818
+MAVLINK_PORT = [14550, 14580]
 
 pyshark_options = [
     "-o",
@@ -61,6 +62,7 @@ def transcriber_settings_to_dict():
         "compresslevel": compresslevel,
         "mbtcp_port": MBTCP_PORT,
         "enip_port": ENIP_PORT,
+        "mavlink_port": MAVLINK_PORT,
         "pyshark_options": pyshark_options,
         "source": source,
         "protocols": protocols,

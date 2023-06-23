@@ -11,6 +11,12 @@ RAW_FILES = [
         "misc/rules/nmea.py",
     ),
     ("misc/pcaps/iec450-nmea.pcap", "iec450-nmea.ipal", "iec450", "misc/rules/nmea.py"),
+    (
+        "misc/pcaps/MAVLink.pcap",
+        "mavlink.ipal",
+        "MAVLink",
+        "misc/rules/mavlink_common.py",
+    ),
 ]
 
 
