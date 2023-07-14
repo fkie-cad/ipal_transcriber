@@ -73,7 +73,7 @@ ipal-transcriber -h
 
 `ipal-transcriber` can be used on network interfaces (```--interface```)  or traffic captures (```--pcap```). Set  ```--ipal.output``` either to a file to write the output to, or use '-' to write to *stdout*. If the filename ends with '.gz' it is automatically compressed. 
 
-An optional rule file (```--rule```) allows modifying the output by renaming, removing, or modifying process names and values. For some protocols, e.g. Modbus, request packets need to be cached to properly parse responses. ```--timeout``` defines an upper bound on how long a packet is cached for. Each message can be labeled as malicious or benign, which can be used for the later evaluation of intrusion detection methods. The default value is taken from ```--malicious.default```. Provide a file with packet-specific or time interval labels  with ```--malicious```.
+An optional rule file (```--rules```) allows modifying the output by renaming, removing, or modifying process names and values. For some protocols, e.g. Modbus, request packets need to be cached to properly parse responses. ```--timeout``` defines an upper bound on how long a packet is cached for. Each message can be labeled as malicious or benign, which can be used for the later evaluation of intrusion detection methods. The default value is taken from ```--malicious.default```. Provide a file with packet-specific or time interval labels  with ```--malicious```.
 
 ```bash
 ./ipal-transcriber -h
@@ -100,9 +100,9 @@ options:
   --logfile FILE        define file to log to. (Default: stderr)
   --compresslevel INT   set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 9)
   --version             show program's version number and exit
-  --state.output FILE   output location for state information. ('-' stdout, '*.gz' copress)
+  --state.output FILE   output location for state information. ('-' stdout, '*.gz' compress)
   --filter LIST         semicolon separated list of state names to filter for. (Default: no filter)
-  --complete-only BOOL  output complete states after filterinig only. (Default: True)
+  --complete-only BOOL  output complete states after filtering only. (Default: True)
   --state-in-message BOOL
                         embed state inside the messages. (Default: False)
 
@@ -183,7 +183,7 @@ JS = {
 - `protocols`: a list of the protocols the packets of which transformation rules and rename operations should be applied to (required)
 - `rules`: a list of dictionaries describing transformation rules (optional). Each dictionary may contain the following keys:
     - `var`: list containing the data fields to apply the rule to (required)
-    - `type`, `src`, `dst`: regular expression matching the type, source and destiation field respectively of messages the rule should apply to. (All optional, default to matching any value when omitted).
+    - `type`, `src`, `dst`: regular expression matching the type, source and destination field respectively of messages the rule should apply to. (All optional, default to matching any value when omitted).
     - `method`: method that should be applied to the fields specified in `var`, requires `name` to also be present (optional)
     - `name`: name of the new data field which will contain the result of `method`, requires `method` to be present (optional)
     - `remove`: whether to remove the fields specified in `var` (optional, defaults to false if omitted)  
@@ -209,9 +209,9 @@ usage: ipal-state-extractor [-h] [--ipal.input FILE] [--state.output FILE] [--fi
 options:
   -h, --help            show this help message and exit
   --ipal.input FILE     input location for message information. ('-' stdin, '*gz' compressed)
-  --state.output FILE   output location for state information. ('-' stdout, '*.gz' copress)
+  --state.output FILE   output location for state information. ('-' stdout, '*.gz' compress)
   --filter LIST         semicolon separated list of state names to filter for. (Default: no filter)
-  --complete-only BOOL  output complete states after filterinig only. (Default: True)
+  --complete-only BOOL  output complete states after filtering only. (Default: True)
   --state-in-message BOOL
                         embed state inside the messages. (Default: False)
   --compresslevel INT   set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 9)
@@ -254,7 +254,7 @@ The state format represents the entire state, the values of all sensors and actu
 
 #### Minimizing IPAL messages
 
-The `ipal-minimize` tool clears the process information (`data` and `state`) from IPAL messages or state files. This may be used to safe disk space in case the actual process data is not required.
+The `ipal-minimize` tool clears the process information (`data` and `state`) from IPAL messages or state files. This may be used to save disk space in case the actual process data is not required.
 
 ```bash
 ipal-minimize -h

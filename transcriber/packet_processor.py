@@ -41,7 +41,7 @@ class PacketProcessor:
             if self.transcribers[protocol].matches_protocol(pkt):
                 break
         else:
-            settings.logger.debug("No parser for package: {}".format(pkt))
+            settings.logger.debug("No parser for packet: {}".format(pkt))
             return
 
         # now we can parse the packet

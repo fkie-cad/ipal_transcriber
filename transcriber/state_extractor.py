@@ -25,7 +25,7 @@ def add_arguments_to_parser(parser):
         "--state.output",
         dest="stateout",
         metavar="FILE",
-        help="output location for state information. ('-' stdout, '*.gz' copress)",
+        help="output location for state information. ('-' stdout, '*.gz' compress)",
         required=False,
     )
 
@@ -41,7 +41,7 @@ def add_arguments_to_parser(parser):
         "--complete-only",
         dest="complete",
         metavar="BOOL",
-        help="output complete states after filterinig only. (Default: True)",
+        help="output complete states after filtering only. (Default: True)",
         required=False,
     )
 
