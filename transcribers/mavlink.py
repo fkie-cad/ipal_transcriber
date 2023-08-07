@@ -11,6 +11,9 @@ class MAVLinkTranscriber(Transcriber):
 
     @classmethod
     def matches_protocol(self, pkt):
+        if "UDP" not in pkt:
+            return False
+
         port_matches = (
             int(pkt["UDP"].srcport) in settings.MAVLINK_PORT
             or int(pkt["UDP"].dstport) in settings.MAVLINK_PORT

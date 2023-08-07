@@ -52,3 +52,44 @@ def test_transcriber_raw(pcap, filename, protocol):
     check_with_validation_file(
         filename, stdout.decode("utf-8"), test_transcriber_raw.__name__
     )
+
+
+@pytest.mark.parametrize("pcap", [x[0] for x in RAW_FILES])
+def test_transcriber_all_protocols(pcap):
+    args = [
+        "--pcap",
+        pcap,
+        "--ipal.output",
+        "-",
+        "--crc",
+        "and",
+        "--timeout",
+        "1000",
+    ]
+    errno, stdout, stderr = transcriber(args)
+    assert stderr == b"" or b"WARNING:asyncio:Unknown child process" in stderr
+    assert errno == 0
+
+
+@pytest.mark.parametrize("pcap,protocol", [(x[0], x[2]) for x in RAW_FILES])
+def test_transcriber_all_other_protocols(pcap, protocol):
+    all_other_protocols = [x[2] for x in RAW_FILES if not x[2] == protocol]
+    args = (
+        [
+            "--pcap",
+            pcap,
+            "--protocols",
+        ]
+        + all_other_protocols
+        + [
+            "--ipal.output",
+            "-",
+            "--crc",
+            "and",
+            "--timeout",
+            "1000",
+        ]
+    )
+    errno, stdout, stderr = transcriber(args)
+    assert stderr == b"" or b"WARNING:asyncio:Unknown child process" in stderr
+    assert errno == 0
