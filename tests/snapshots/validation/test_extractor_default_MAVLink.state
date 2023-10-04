@@ -3,6 +3,7 @@
         "completeonly": false,
         "compresslevel": 9,
         "filter": null,
+        "hostname": false,
         "ipalin": "misc/ipal/MAVLink.ipal",
         "log": 30,
         "logfile": null,

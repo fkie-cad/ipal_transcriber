@@ -1,6 +1,6 @@
 import logging
 
-version = "v1.3.5"
+version = "v1.3.6"
 
 # Gzip options
 compresslevel = 9  # 0 no compress, 1 large/fast, 9 small/slow
@@ -40,6 +40,7 @@ evalout = None
 evaloutfd = None
 
 # Logging settings
+hostname = False
 logger = logging.getLogger("ipal-transcriber")
 log = logging.WARNING
 logformat = "%(levelname)s:%(name)s:%(message)s"
@@ -72,6 +73,7 @@ def transcriber_settings_to_dict():
         "maliciousdefault": maliciousdefault,
         "malicious": maliciousin,
         "ipalout": ipalout,
+        "hostname": hostname,
         "log": log,
         "logformat": logformat,
         "logfile": logfile,
@@ -88,6 +90,7 @@ def state_extractor_settings_to_dict():
         "filter": filter,
         "completeonly": completeonly,
         "stateinmessage": stateinmessage,
+        "hostname": hostname,
         "log": log,
         "logformat": logformat,
         "logfile": logfile,

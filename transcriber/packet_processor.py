@@ -1,4 +1,5 @@
 import json
+import socket
 import time
 
 import transcriber.settings as settings
@@ -148,6 +149,9 @@ class PacketProcessor:
         if self._first:
             output["_transcriber-config"] = settings.transcriber_settings_to_dict()
             self._first = False
+
+        if settings.hostname:
+            output["hostname"] = socket.gethostname()
 
         settings.ipaloutfd.write(json.dumps(output) + "\n")
         settings.ipaloutfd.flush()

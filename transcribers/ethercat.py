@@ -385,7 +385,7 @@ class EtherCatTranscriber(Transcriber):
             for slave, mem_update in parsed_data.items():
                 if slave[0] == LOGICAL_ADDR:
                     slave_mem_addr = "log_" + slave[1]
-                    assert type(mem_update) == int
+                    assert type(mem_update) is int
                     data[slave_mem_addr] = mem_update
                     continue
 

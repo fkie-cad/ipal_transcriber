@@ -5,6 +5,7 @@ import importlib.util
 import json
 import logging
 import os
+import socket
 import sys
 
 import pyshark
@@ -39,6 +40,11 @@ def load_rule_file(path):
 
 # Initialize logger
 def initialize_logger(args):
+    # Decide if hostname is added
+    if args.hostname:
+        settings.hostname = True
+        settings.logformat = f"%(asctime)s:{socket.gethostname()}:" + settings.logformat
+
     # Logging
     if args.log:
         settings.log = getattr(logging, args.log.upper(), None)
@@ -155,6 +161,14 @@ def prepare_arg_parser(parser):
         metavar="FILE",
         help="output location for ipal messages ('-' stdout, '*.gz' compress).",
         required=False,
+    )
+
+    parser.add_argument(
+        "--hostname",
+        dest="hostname",
+        help="Add the hostname to the output.",
+        required=False,
+        action="store_true",
     )
 
     # Logging

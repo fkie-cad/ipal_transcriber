@@ -4,6 +4,7 @@ import gzip
 import json
 import logging
 import os
+import socket
 import sys
 
 import transcriber.settings as settings
@@ -139,6 +140,14 @@ def parse_main_arguments():
         required=False,
     )
 
+    parser.add_argument(
+        "--hostname",
+        dest="hostname",
+        help="Add the hostname to the output.",
+        required=False,
+        action="store_true",
+    )
+
     # Logging
     parser.add_argument(
         "--log",
@@ -163,6 +172,10 @@ def parse_main_arguments():
 
     # Parse arguments
     args = parser.parse_args()
+
+    if args.hostname:
+        settings.hostname = True
+        settings.logformat = f"%(asctime)s:{socket.gethostname()}:" + settings.logformat
 
     # Logging
     if args.log:

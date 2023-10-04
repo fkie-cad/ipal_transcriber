@@ -40,6 +40,14 @@ cffconvert:
   - cffconvert --validate -i CITATION.cff
   allow_failure: true
 
+execute:
+  stage: Test
+  script:
+    - ./ipal-transcriber --version
+    - ./ipal-state-extractor --version
+    - ./ipal-minimize --version
+    - ./ipal-join --version
+
 pytest:
   stage: Test
   script:

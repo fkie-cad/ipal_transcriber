@@ -3,6 +3,7 @@
         "compresslevel": 9,
         "crc": "and",
         "enip_port": 44818,
+        "hostname": false,
         "ipalout": "-",
         "log": 30,
         "logfile": null,

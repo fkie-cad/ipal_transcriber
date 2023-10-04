@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import socket
 
 import transcriber.settings as settings
 from transcribers.utils import get_all_transcribers
@@ -55,7 +56,11 @@ class StateExtractor:
             output["_state_extractor-config"]["options"] = self._options
             self._first = False
 
+        if settings.hostname:
+            output["hostname"] = socket.gethostname()
+
         settings.stateoutfd.write(json.dumps(output) + "\n")
+        settings.stateoutfd.flush()
 
     @classmethod
     def add_arguments_to_parser(cls, subparser):
