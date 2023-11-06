@@ -1,13 +1,26 @@
+from typing import List
+
 import transcriber.settings as settings
 
 
-def position_sign(vars):
-    if vars[1] in ["N", "E"]:
-        return +vars[0]
-    elif vars[1] in ["S", "W"]:
-        return -vars[0]
+def ddm_str_to_dd(vars: List[str]) -> float:
+    mod = 1
+    hours = 0
+    minutes = 0.0
+
+    if vars[1] in ["N", "S"]:
+        hours = int(vars[0][:2])
+        minutes = float(vars[0][2:])
+    elif vars[1] in ["W", "E"]:
+        hours = int(vars[0][:3])
+        minutes = float(vars[0][3:])
     else:
-        settings.logger.warning("Encountered unknown character '{}'".format(vars[1]))
+        settings.logger.warning(f"Encountered unknown character '{vars[1]}'")
+
+    if vars[1] in ["S", "W"]:
+        mod = -1
+
+    return mod * (hours + (minutes / 60.0))
 
 
 JS = {
@@ -23,28 +36,28 @@ JS = {
         {  # Position North-South
             "type": "RMC",
             "var": ["RMC2", "RMC3"],
-            "method": position_sign,
+            "method": ddm_str_to_dd,
             "name": "latitude",
             "remove": True,
         },
         {  # Position East-West
             "type": "RMC",
             "var": ["RMC4", "RMC5"],
-            "method": position_sign,
+            "method": ddm_str_to_dd,
             "name": "longitude",
             "remove": True,
         },
         {  # Position North-South
             "type": "GGA",
             "var": ["GGA1", "GGA2"],
-            "method": position_sign,
+            "method": ddm_str_to_dd,
             "name": "latitude",
             "remove": True,
         },
         {  # Position East-West
             "type": "GGA",
             "var": ["GGA3", "GGA4"],
-            "method": position_sign,
+            "method": ddm_str_to_dd,
             "name": "longitude",
             "remove": True,
         },
