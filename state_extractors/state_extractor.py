@@ -3,6 +3,7 @@ import json
 import socket
 
 import transcriber.settings as settings
+from transcribers.transcriber import Transcriber
 from transcribers.utils import get_all_transcribers
 
 
@@ -16,9 +17,18 @@ class StateExtractor:
 
         self._state = {}
         self._first = True
+        self._warned_protocol = False
 
     def _get_identifier(self, msg, key):
-        return self.transcribers[msg.protocol].state_identifier(msg, key)
+        try:
+            return self.transcribers[msg.protocol].state_identifier(msg, key)
+        except KeyError:
+            if not self._write_state:
+                settings.logger.warning(
+                    "Protocol unknown, using default state_identifier"
+                )
+                self._write_state = True
+            return Transcriber.state_identifier(msg, key)
 
     def _write_state(self, msg, malicious=None, timestamp=None):
         if not settings.stateout:
