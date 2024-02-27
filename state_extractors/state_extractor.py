@@ -50,9 +50,9 @@ class StateExtractor:
             }
 
         if self._first:
-            output[
-                "_state_extractor-config"
-            ] = settings.state_extractor_settings_to_dict()
+            output["_state_extractor-config"] = (
+                settings.state_extractor_settings_to_dict()
+            )
             output["_state_extractor-config"]["options"] = self._options
             self._first = False
 

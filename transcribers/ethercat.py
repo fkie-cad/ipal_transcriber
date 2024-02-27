@@ -343,9 +343,9 @@ class EtherCatTranscriber(Transcriber):
                 while i < len(data_array):
                     addr = self.match_logic_addr(adr + i)
                     if addr is None:
-                        parsed_data[
-                            (LOGICAL_ADDR, "{0:#010x}".format(adr))
-                        ] = data_array[i]
+                        parsed_data[(LOGICAL_ADDR, "{0:#010x}".format(adr))] = (
+                            data_array[i]
+                        )
                     else:
                         if not addr[0] in parsed_data:
                             parsed_data[addr[0]] = {}
@@ -543,9 +543,9 @@ class EtherCatTranscriber(Transcriber):
                     update_data, update_entity_offset
                 )
             else:
-                self._fmmu_entities_map[slave_addr_resolved][
-                    entity_offset
-                ] = FMMUEntity(data=update_data, offset=update_entity_offset)
+                self._fmmu_entities_map[slave_addr_resolved][entity_offset] = (
+                    FMMUEntity(data=update_data, offset=update_entity_offset)
+                )
 
     # Returns the auto-increment address or if that is not known the configured
     # address of the slave and the memory offset corresponding to the given

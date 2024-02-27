@@ -14,7 +14,7 @@ class ModbusTranscriber(Transcriber):
         5: "coil",
         6: "holding.register",
         15: "coil",
-        16: "holding.register"
+        16: "holding.register",
         # only possible to request multiple holding registers at once, which is handled in another function
     }
 
