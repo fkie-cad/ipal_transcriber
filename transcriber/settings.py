@@ -1,6 +1,6 @@
 import logging
 
-version = "v1.3.7"
+version = "v1.3.8"
 
 # Gzip options
 compresslevel = 9  # 0 no compress, 1 large/fast, 9 small/slow

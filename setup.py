@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="ipal-transcriber",
-    version="1.3.7",
+    version="1.3.8",
     packages=find_packages(exclude="tests"),
     scripts=[
         "ipal-transcriber",

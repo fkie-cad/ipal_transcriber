@@ -1,5 +1,6 @@
 import threading
 
+from transcribers.br24 import BR24Transcriber
 from transcribers.cip import CIPTranscriber
 from transcribers.dnp3 import DNP3Transcriber
 from transcribers.ethercat import EtherCatTranscriber
@@ -41,6 +42,7 @@ all_transcribers = [
     S7Transcriber,
     EtherCatTranscriber,
     MAVLinkTranscriber,
+    BR24Transcriber,
 ]
 
 

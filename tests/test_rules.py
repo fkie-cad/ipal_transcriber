@@ -17,6 +17,7 @@ RAW_FILES = [
         "MAVLink",
         "misc/rules/mavlink_common.py",
     ),
+    ("misc/pcaps/BR24.pcap.gz", "BR24.ipal", "Navico-BR24", "misc/rules/br24.py"),
 ]
 
 

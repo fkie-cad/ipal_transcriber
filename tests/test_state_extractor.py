@@ -20,6 +20,7 @@ RAW_FILES = [
     ("misc/ipal/mqtt.ipal", "mqtt.state"),
     ("misc/ipal/ethercat.ipal", "ethercat.state"),
     ("misc/ipal/MAVLink.ipal", "MAVLink.state"),
+    ("misc/ipal/BR24.ipal.gz", "BR24.state"),
 ]
 
 
