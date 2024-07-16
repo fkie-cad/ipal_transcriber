@@ -540,7 +540,7 @@ class DNP3Transcriber(Transcriber):
         # If the CON bit is set, a *confirmation* msg (func code 0x0) shall be returned,
         # if not set, it shall *not* be returned (ref. 4.2.2.4.3)
         # => Any msg with con bit set will be classified as "request" here
-        conf_msg_requested = int(dnp.al_con) == 1
+        conf_msg_requested = dnp.al_con is True
 
         if f.msg_type == _DnpMsgType.REQUEST:
             if f.always_requires_response:

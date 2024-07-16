@@ -32,7 +32,7 @@
 ###IGNORE-LINE###
     },
     "activity": "interrogate",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "FIT201": null
     },
@@ -48,7 +48,7 @@
 }
 {
     "activity": "inform",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "FIT201": 2.450000047683716
     },
@@ -66,7 +66,7 @@
 }
 {
     "activity": "interrogate",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "LIT101": null
     },
@@ -82,7 +82,7 @@
 }
 {
     "activity": "inform",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "LIT101": 0.742222249507904
     },
@@ -100,7 +100,7 @@
 }
 {
     "activity": "interrogate",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "MV101": null
     },
@@ -116,7 +116,7 @@
 }
 {
     "activity": "inform",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "MV101": 1
     },
@@ -134,7 +134,7 @@
 }
 {
     "activity": "interrogate",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "LIT301": null
     },
@@ -150,7 +150,7 @@
 }
 {
     "activity": "inform",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "LIT301": 0.5
     },
@@ -168,7 +168,7 @@
 }
 {
     "activity": "interrogate",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "P101": null
     },
@@ -184,7 +184,7 @@
 }
 {
     "activity": "inform",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "P101": 1
     },
@@ -202,7 +202,7 @@
 }
 {
     "activity": "interrogate",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "LIT101": null
     },
@@ -218,7 +218,7 @@
 }
 {
     "activity": "inform",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "LIT101": 0.742222249507904
     },
@@ -236,7 +236,7 @@
 }
 {
     "activity": "interrogate",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "MV101": null
     },
@@ -252,7 +252,7 @@
 }
 {
     "activity": "inform",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "MV101": 1
     },
@@ -270,7 +270,7 @@
 }
 {
     "activity": "interrogate",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "FIT201": null
     },
@@ -286,7 +286,7 @@
 }
 {
     "activity": "inform",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "FIT201": 2.450000047683716
     },
@@ -304,7 +304,7 @@
 }
 {
     "activity": "interrogate",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "P101": null
     },
@@ -320,7 +320,7 @@
 }
 {
     "activity": "inform",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "P101": 1
     },
@@ -338,7 +338,7 @@
 }
 {
     "activity": "interrogate",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "LIT301": null
     },
@@ -354,7 +354,7 @@
 }
 {
     "activity": "inform",
-    "crc": false,
+###IGNORE-LINE###
     "data": {
         "LIT301": 0.5
     },
