@@ -239,7 +239,7 @@ def main():
 
     # Convert json into message!
     try:
-        for line in settings.ipalinfd.readlines():
+        for line in settings.ipalinfd:
             msg = IpalMessage.from_json(json.loads(line))
             state_extractor.update_state(msg)
 
