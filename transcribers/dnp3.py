@@ -1,8 +1,6 @@
 # This DNP3 Transcriber was implemented by
 # Olav Lamberts, RWTH Aachen, 2022
 
-from __future__ import annotations
-
 import math
 import struct
 from enum import Enum, IntEnum
@@ -17,7 +15,6 @@ from transcribers.auxiliary_enums.dnp3 import (
     _ObjectHeader,
     _ObjectTypes,
     _ObjectValueFields,
-    _Qualifier,
 )
 from transcribers.transcriber import Transcriber
 
@@ -92,12 +89,12 @@ class DNP3Transcriber(Transcriber):
             Activity.CONFIRMATION,
         ]:
             # Confirmation Activity should never address a datapoint though.
-            return "{}:{}".format(msg.dest, key)
+            return f"{msg.dest}:{key}"
         elif msg.activity in [Activity.INFORM, Activity.ACTION]:
-            return "{}:{}".format(msg.src, key)
+            return f"{msg.src}:{key}"
         else:
             # settings.logger.critical("Unknown activity {}".format(msg.activity))
-            return "{}:{}".format(msg.src, key)
+            return f"{msg.src}:{key}"
 
     @staticmethod
     def matches_protocol(pkt):
@@ -120,8 +117,8 @@ class DNP3Transcriber(Transcriber):
         # Generally, DNP3 is defined also for serial communication (e.g., RS-232) but we assume
         #  for now that TCP/IP is used until a dataset w/ other characteristics becomes available
         l4_proto = "TCP" if "TCP" in pkt else "UDP"
-        src = "{}:{}".format(pkt["IP"].src, pkt[l4_proto].srcport)
-        dest = "{}:{}".format(pkt["IP"].dst, pkt[l4_proto].dstport)
+        src = f"{pkt['IP'].src}:{pkt[l4_proto].srcport}"
+        dest = f"{pkt['IP'].dst}:{pkt[l4_proto].dstport}"
         timestamp = float(pkt.sniff_time.timestamp())
 
         dnp3_layers = pkt.get_multiple_layers("dnp3")
@@ -288,7 +285,7 @@ class DNP3Transcriber(Transcriber):
             ]
 
         if target is not None:
-            return {_SignalKeys.SIGNAL_TARGET: target}
+            return {_SignalKeys.SIGNAL_TARGET.value: target}
 
         raise RuntimeError(f"Couldn't handle {dnp}")
 
@@ -323,7 +320,7 @@ class DNP3Transcriber(Transcriber):
             # specific way; e.g. include the user-name for the first, file-name second,
             # and config-location for the last
 
-        return {_SignalKeys.SIGNAL_TARGET: signal_targets}
+        return {_SignalKeys.SIGNAL_TARGET.value: signal_targets}
 
     @staticmethod
     def _parse_main_payload_data(dnp, outstation_addr):
@@ -362,7 +359,7 @@ class DNP3Transcriber(Transcriber):
                 # Further, as outlined below, a point can actually report different values for different
                 # variations, even if it does not change in between, simply because the format
                 # requested by var1 does not properly fit the current input point's state.
-                # Therefore, adding the variation to the address allows to destinguish between
+                # Therefore, adding the variation to the address allows to distinguish between
                 # addressing schemes which have different reporting "capacities" (e.g. 16 bit vs. 32 bit values)
                 #  besides also adding side-information like time-of-occurrence to the main value,
                 #  dependent on the var chosen
@@ -413,13 +410,13 @@ class DNP3Transcriber(Transcriber):
         if cast_type == _CastingTypes.INT:
             return shark_val_field.int_value
         if cast_type == _CastingTypes.INT_THROUGH_SHOW:
-            # little-endianess, the #bits of the octets relevant for the actual main value
+            # little-endianness, the #bits of the octets relevant for the actual main value
             # sometimes result in .{int,binary,...}_value
             # representing the wrong parsing of the data.
             return int(shark_val_field.show)
         if cast_type == _CastingTypes.TS_48_BIT_TO_SEC_MS:
             transmitted_val = shark_val_field.binary_value
-            # 48-bit value; but for some reason formitted in a way
+            # 48-bit value; but for some reason formatted in a way
             # s.t. // 10^3 are *exactly* the epoch-seconds and mod 10^3 ms
             # even though 48-bit value would allow for more accurate measurements in the
             # part-nanosecond region
@@ -498,7 +495,7 @@ class DNP3Transcriber(Transcriber):
                             # continue to send other cmds while the restart is in progress.
                             # Thus, it becomes tricky to find that *maybe send* post-restart pkt w/e taking it away
                             # from a different cmd send during the device restart.
-                            # Since the g52v2 is only a very rough estimate, and in QUT-DNP3 doens't fit at all,
+                            # Since the g52v2 is only a very rough estimate, and in QUT-DNP3 doesn't fit at all,
                             # of how long the outstation is busy, taking the g52v2 timestamp does not necessarily
                             # help.
                             settings.logger.warning(
@@ -533,7 +530,7 @@ class DNP3Transcriber(Transcriber):
             a response might occur when for "its" correct version no response would occur
 
         In case of several types of errors, e.g., incorrectly formatted AL fragment,
-            a response w/ IIN2.2 PARAMETER_ERROR Bit should be send (c.f. 4.5.11)
+            a response w/ IIN2.2 PARAMETER_ERROR Bit should be sent (c.f. 4.5.11)
         """
         f = _FunctionCodes(int(dnp.al_func))
 
@@ -580,7 +577,7 @@ class DNP3Transcriber(Transcriber):
         """
 
         :param dnp: dnp3-stack
-        :param count_status: statekeeping of how how much of dnp was parsed so far
+        :param count_status: statekeeping of how much of dnp was parsed so far
         :param header: Obj. header wrapper as in 4.2.2.7
         :return: [i: i is index of point in following objs of packets]: sorted by order in pkt
 
@@ -618,7 +615,7 @@ class _CountingStatus:
     """
     The "Counting Status" is applied for state-keeping during parsing
     of an individual packets.
-    The transcriber parses the pkt-values differently dependent on if they the
+    The transcriber parses the pkt-values differently dependent on if the
     individual dp contents are bits, counters, timestamps, etc.
 
     In a DNP3 pkt parse by pyshark, i.e., parsed by tshark -> xml -> python

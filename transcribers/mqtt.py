@@ -94,12 +94,12 @@ class MQTTTranscriber(Transcriber):
     @classmethod
     def state_identifier(cls, msg, key):
         if msg.activity in [Activity.INTERROGATE, Activity.COMMAND]:
-            return "{}:{}".format(msg.dest, key)
+            return f"{msg.dest}:{key}"
         elif msg.activity in [Activity.INFORM, Activity.ACTION]:
-            return "{}:{}".format(msg.src, key)
+            return f"{msg.src}:{key}"
         else:
-            settings.logger.critical("Unknown activity {}".format(msg.activity))
-            return "{}:{}".format(msg.src, key)
+            settings.logger.critical(f"Unknown activity {msg.activity}")
+            return f"{msg.src}:{key}"
 
     def matches_protocol(self, pkt):
         return "MQTT" in pkt
@@ -114,8 +114,8 @@ class MQTTTranscriber(Transcriber):
         return requests
 
     def _mqtt_to_ipal(self, request, pkt):
-        src = "{}:{}".format(pkt["IP"].src, pkt["TCP"].srcport)
-        dest = "{}:{}".format(pkt["IP"].dst, pkt["TCP"].dstport)
+        src = f"{pkt['IP'].src}:{pkt['TCP'].srcport}"
+        dest = f"{pkt['IP'].dst}:{pkt['TCP'].dstport}"
         type = MQTTProtocol.msgtype(request)
         length = 2 + int(request.len)  # 2 Byte MQTT Headers
         activity = MQTTProtocol.activity(type)

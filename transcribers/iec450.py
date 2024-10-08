@@ -21,8 +21,8 @@ class IEC450Transcriber(NMEA0183):
         raw = bytes.fromhex(pkt["UDP"].payload.replace(":", ""))
         msg = raw.decode("ascii")
 
-        src = "{}:{}".format(ip.src, udp.srcport)
-        dest = "{}:{}".format(ip.dst, udp.dstport)
+        src = f"{ip.src}:{udp.srcport}"
+        dest = f"{ip.dst}:{udp.dstport}"
         timestamp = float(pkt.sniff_time.timestamp())
         length = len(msg)
 

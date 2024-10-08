@@ -12,7 +12,7 @@ python3 -m pip install --upgrade pip
 echo "Installing python packages"
 pip3 install -r requirements.txt
 
-read -n1 -p "Setup the IPAL Transcriber developer tools too? [y,n] " doit
+read -r -n1 -p "Setup the IPAL Transcriber developer tools too? [y,n] " doit
 case $doit in  
   y|Y) pwd && pip3 install -r requirements-dev.txt && pre-commit install ;; 
   *) echo "Skipping developer tools" ;; 

@@ -1,4 +1,4 @@
-from enum import Enum, IntEnum
+from enum import IntEnum
 from typing import List, Optional, Union
 
 from pyshark.packet.packet import Packet
@@ -80,10 +80,11 @@ class BR24Transcriber(Transcriber):
         res._match_to_requests = False
         res.type = _ImagePacketType.IMG_DEFAULT
 
-        data = {}
+        data = {
+            "scanline_count": raw_message[5],
+            "scanline_len": raw_message[6] | raw_message[7] << 8,
+        }
         # frame header
-        data["scanline_count"] = raw_message[5]
-        data["scanline_len"] = raw_message[6] | raw_message[7] << 8
 
         # scanlines
         # for i in range(data["scanline_count"]) -> always 32

@@ -1,7 +1,7 @@
 {
     "_state_extractor-config": {
         "completeonly": false,
-        "compresslevel": 9,
+        "compresslevel": 6,
         "filter": null,
         "hostname": false,
         "ipalin": "misc/ipal/mqtt.ipal",

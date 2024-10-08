@@ -1,9 +1,9 @@
 import logging
 
-version = "v1.3.8"
+version = "v1.4.1"
 
 # Gzip options
-compresslevel = 9  # 0 no compress, 1 large/fast, 9 small/slow
+compresslevel = 6  # 0 no compress, 1 large/fast, 9 small/slow
 
 # Assumed default ports
 MBTCP_PORT = 502
@@ -16,7 +16,7 @@ pyshark_options = [
     "-o",
     "tcp.check_checksum:TRUE",
     "-o",
-    "mbtcp.tcp.port:{}".format(MBTCP_PORT),
+    f"mbtcp.tcp.port:{MBTCP_PORT}",
 ]
 
 pyshark_decode_as = {}

@@ -64,8 +64,8 @@ class IEC104Transcriber(Transcriber):
     def parse_packet(self, pkt):
         msgs = []
 
-        src = "{}:{}".format(pkt["IP"].src, pkt["TCP"].srcport)
-        dest = "{}:{}".format(pkt["IP"].dst, pkt["TCP"].dstport)
+        src = f"{pkt['IP'].src}:{pkt['TCP'].srcport}"
+        dest = f"{pkt['IP'].dst}:{pkt['TCP'].dstport}"
         timestamp = float(pkt.sniff_time.timestamp())
         iec104_layers = pkt.get_multiple_layers("IEC60870_104")
 
@@ -193,13 +193,13 @@ class IEC104Transcriber(Transcriber):
             flow = (dest, src)
             match_to_requests = True
 
-        elif 20 <= cot and cot <= 41:  # interrogated by ...
+        elif 20 <= cot <= 41:  # interrogated by ...
             activity = Activity.INFORM
             flow = (dest, src)
             match_to_requests = True
 
         else:
-            settings.logger.warning("[IEC-104] CoT {} not implemented".format(cot))
+            settings.logger.warning(f"[IEC-104] CoT {cot} not implemented")
 
         return activity, flow, add_to_request_queue, match_to_requests
 
@@ -226,9 +226,7 @@ class IEC104Transcriber(Transcriber):
 
         else:
             settings.logger.warning(
-                "Can not interpret data of type {}. Returning default format: {}".format(
-                    type, field.showname_value
-                )
+                f"Can not interpret data of type {type}. Returning default format: {field.showname_value}"
             )
             return field.showname_value
 
@@ -252,7 +250,7 @@ class IEC104Transcriber(Transcriber):
 
         # 0: not used
         # 1 - 21: Process information in monitor direction
-        if 1 <= type and type <= 21:
+        if 1 <= type <= 21:
             flow = (dest, src)
             _match_to_requests = True
             _add_to_request_queue = False
@@ -261,37 +259,37 @@ class IEC104Transcriber(Transcriber):
             for i in range(len(getattr(asdu, value_name).fields)):
                 field = getattr(asdu, value_name).fields[i]
                 ioa = str(asdu.ioa.all_fields[i].showname_value)
-                addr = "{}.{}".format(asdu.addr, ioa)
+                addr = f"{asdu.addr}.{ioa}"
                 data[addr] = self._interpret_data(type, field)
 
         # 22 - 29: Not defined
 
         # 30 - 40: Process telegrams with long time tag
-        elif 30 <= type and type <= 40:
+        elif 30 <= type <= 40:
             for i in range(len(getattr(asdu, value_name).fields)):
                 field = getattr(asdu, value_name).fields[i]
                 ioa = str(asdu.ioa.all_fields[i].showname_value)
-                addr = "{}.{}".format(asdu.addr, ioa)
+                addr = f"{asdu.addr}.{ioa}"
                 data[addr] = self._interpret_data(type, field)
 
         # 41 - 44: Not defined
 
         # 45 - 51: Process information in control direction
-        elif 45 <= type and type <= 51:
+        elif 45 <= type <= 51:
             for i in range(len(getattr(asdu, value_name).fields)):
                 field = getattr(asdu, value_name).fields[i]
                 ioa = str(asdu.ioa.all_fields[i].showname_value)
-                addr = "{}.{}".format(asdu.addr, ioa)
+                addr = f"{asdu.addr}.{ioa}"
                 data[addr] = self._interpret_data(type, field)
 
         # 52 - 57: Not defined
 
         # 58 - 64: Command telegrams with long time tag
-        elif 58 <= type and type <= 64:
+        elif 58 <= type <= 64:
             for i in range(len(getattr(asdu, value_name).fields)):
                 field = getattr(asdu, value_name).fields[i]
                 ioa = str(asdu.ioa.all_fields[i].showname_value)
-                addr = "{}.{}".format(asdu.addr, ioa)
+                addr = f"{asdu.addr}.{ioa}"
                 data[addr] = self._interpret_data(type, field)
 
         # 65 - 69: Not defined
@@ -309,7 +307,7 @@ class IEC104Transcriber(Transcriber):
         elif type == 102:  # Read command
             for i in range(len(asdu.ioa.all_fields)):
                 ioa = str(asdu.ioa.all_fields[i].showname_value)
-                addr = "{}.{}".format(asdu.addr, ioa)
+                addr = f"{asdu.addr}.{ioa}"
                 data[addr] = None
 
         elif type == 103:  # Clock synchronization command
@@ -327,7 +325,7 @@ class IEC104Transcriber(Transcriber):
         # 136 - 255: Special use
 
         else:
-            settings.logger.warning("[IEC-104] TypeId {} not implemented".format(type))
+            settings.logger.warning(f"[IEC-104] TypeId {type} not implemented")
 
         # Create IPAL message
         m = IpalMessage(
@@ -339,7 +337,7 @@ class IEC104Transcriber(Transcriber):
             activity=activity,
             flow=flow,
             length=int(iec104.apdulen) + 2,
-            type="I-" + str(type),
+            type=f"I-{str(type)}",
         )
 
         m.data = data

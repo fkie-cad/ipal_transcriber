@@ -169,12 +169,12 @@ class _FunctionCodes(IntEnum):
     @property
     def should_never_be_responded_to(self) -> bool:
         """
-        Identifies FCs for which a direct response *shall never* be send
+        Identifies FCs for which a direct response *shall never* be sent
 
         Note: Except for unclear things regarding 0x0, fully implemented
         Note 2: In case that Authentication is required *and* that
             no aggressive authentication mode is deployed,
-            all of those below except AUTH_REQ_NR  can (and in the case of DIRECT_OPERATE_NR *must()
+            all of those below except AUTH_REQ_NR  can (and in the case of DIRECT_OPERATE_NR) must
             require an authentication response from the outstation first.
         Therefore, the return value assumes no authentication is deployed
             c.f. Table 7-7, 7.5.2.3.2
@@ -195,7 +195,7 @@ class _FunctionCodes(IntEnum):
     @property
     def response_is_optional(self) -> bool:
         """
-        Identifies FCs for which a response *may* be send
+        Identifies FCs for which a response *may* be sent
 
         Note: Except for unclear things regarding 0x0, 0x81 fully implemented
         """
@@ -344,7 +344,7 @@ class _FunctionCodes(IntEnum):
         if self == _FunctionCodes.CONFIRM:
             return Activity.CONFIRMATION
 
-        # check if these also could be send by outstation for some reason - don't think so
+        # check if these also could be sent by outstation for some reason - don't think so
         # but whatever...
         if self in (
             _FunctionCodes.READ,
@@ -442,7 +442,7 @@ class _ObjectValueFields(str, Enum):
 class _CastingTypes(Enum):
     """
     Internal transcriber identifiers for how
-        values from an object value field should be casted in python.
+        values from an object value field should be cast in python.
 
     One cannot generally access the pdml-xml value in the final
         datatype/ format in which it should be stored in IPAL
@@ -453,7 +453,7 @@ class _CastingTypes(Enum):
     STRING = "string"
 
     # use int(field.show) because .int_value for some reason
-    # throws "nonetype' error' in some cases
+    # throws "nonetype error" in some cases
     INT_THROUGH_SHOW = "int through show"
     TS_48_BIT_TO_SEC_MS = "raw 48-bit ts to seconds.float"
     MILLI_S_TS = "millisecond time"
@@ -474,7 +474,7 @@ class _ObjectGroups(IntEnum):
     - group ID 60, which references an outstation's internal 4 sets of objects
         which were manually assigned to one (?or more?) of these classes.
 
-    - group ID 0: device attributes, such as: names, supported security parameters, support for specific sub-groups,
+    - group ID 0: device attributes, such as: names, supported security parameters, support for specific subgroups,
         - maximum per-group index controllable by station (may not be equal to the resp. #dps)
         - #per-group points controllable by the station
         - supported group-id variations (~ value-formats, size (16 bit vs. 32 bit), additional info)
@@ -696,7 +696,7 @@ class _ObjectGroups(IntEnum):
 
         if self.point_type == _PointType.VIRTUAL_TERMINAL:
             if self == 112:
-                # Not entirely sure if outsatation
+                # Not entirely sure if outstation
                 # ever responds with this obj.
                 # not further defined in DNP3
                 # but when, it should be action

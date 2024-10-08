@@ -1,7 +1,7 @@
 import struct
 
 import transcriber.settings as settings
-from transcriber.messages import Activity, IpalMessage
+from transcriber.messages import IpalMessage
 from transcribers.transcriber import Transcriber
 
 
@@ -10,7 +10,7 @@ class MAVLinkTranscriber(Transcriber):
     _name = "MAVLink"
 
     @classmethod
-    def matches_protocol(self, pkt):
+    def matches_protocol(cls, pkt):
         if "UDP" not in pkt:
             return False
 

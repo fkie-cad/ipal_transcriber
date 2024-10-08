@@ -14,20 +14,20 @@ This software (`ipal-transcriber`) implements the automatic translation of indus
 
 ###### Implemented Protocols
 
-| Implemented Protocols | Status      | Supported Message Types                                      |
-| --------------------- | ----------- | ------------------------------------------------------------ |
-| CIP                   | Rudimentary | Code: 76, 77                                                 |
-| Goose                 | Moderate    |                                                              |
-| IEC 60870-5-104       | Well    | U\_Format <br /> I\_Format: 1-21, 30-40, 45-51, 58-64, 70, 100-106 |
-| IEC 61162-450         | Moderate    | UdPbC, no tags                                               |
-| Modbus TCP            | Moderate    | Function Codes: 1, 2, 3, 4, 5, 6, 8, 15, 16, 43              |
-| MQTT                  | Rudimentary | Basic MQTT 3.1                                               |
-| NMEA0183              | Well        | DBT, DPT, GGA, GLL, GNS, GSA, GSV, HDM, HDT, RMC, ROT, RPM, TLL, TTM, VBW, VHW, VLW, VTG, ZDA, RMB, APB, RSA, DTM, Q, AIVDM |
-| S7                    | Rudimentary | Job: 1, 3<br />Function Code: 4, 5                           |
+| Implemented Protocols | Status      | Supported Message Types                                                                                                       |
+|-----------------------|-------------|-------------------------------------------------------------------------------------------------------------------------------|
+| CIP                   | Rudimentary | Code: 76, 77                                                                                                                  |
+| Goose                 | Moderate    |                                                                                                                               |
+| IEC 60870-5-104       | Well        | U\_Format <br /> I\_Format: 1-21, 30-40, 45-51, 58-64, 70, 100-106                                                            |
+| IEC 61162-450         | Moderate    | UdPbC, no tags                                                                                                                |
+| Modbus TCP            | Moderate    | Function Codes: 1, 2, 3, 4, 5, 6, 8, 15, 16, 43                                                                               |
+| MQTT                  | Rudimentary | Basic MQTT 3.1                                                                                                                |
+| NMEA0183              | Well        | DBT, DPT, GGA, GLL, GNS, GSA, GSV, HDM, HDT, RMC, ROT, RPM, TLL, TTM, VBW, VHW, VLW, VTG, ZDA, RMB, APB, RSA, DTM, Q, AIVDM   |
+| S7                    | Rudimentary | Job: 1, 3<br />Function Code: 4, 5                                                                                            |
 | DNP3                  | Rudimentary | Function Code: 0-2, 7,8, 13,14, 20, 24, 129, 130<br /> objects (group-id:var): 1:2, 2:1, 20:{0,2}, 50:3, 52:2, 60:{1-4}, 80:1 |
-| EtherCAT              | Rudimentary | TODO: add matching data |
-| MavLink 2.0           | Rudimentary | Depends on the message definitions parsed |
-| Navico BR24           | Moderate    | REP, REG, IMG                                                |
+| EtherCAT              | Rudimentary | TODO: add matching data                                                                                                       |
+| MavLink 2.0           | Rudimentary | Depends on the message definitions parsed                                                                                     |
+| Navico BR24           | Moderate    | REP, REG, IMG                                                                                                                 |
 
 ###### Publications
 
@@ -103,7 +103,7 @@ options:
   --ipal.output FILE    output location for ipal messages ('-' stdout, '*.gz' compress).
   --log STR             define logging level as one of DEBUG, INFO, WARNING, ERROR, or CRITICAL. (Default: WARNING)
   --logfile FILE        define file to log to. (Default: stderr)
-  --compresslevel INT   set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 9)
+  --compresslevel INT   set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 6)
   --version             show program's version number and exit
   --state.output FILE   output location for state information. ('-' stdout, '*.gz' compress)
   --filter LIST         semicolon separated list of state names to filter for. (Default: no filter)
@@ -156,7 +156,7 @@ The field 'data' contains a dictionary of all transmitted industrial process val
 
 Rules should be specified in a file passed through `--rules` to the transcriber. Rules allow renaming, removing, or modifying process names and values. More specifically, they allow the addition and removal of select data fields from IPAL messages matching certain patterns, and the renaming of message source and destination fields.
 
-A rules file is a python module containing a variable named `JS` pointing to a dictionary discribing the desired post-processing step.
+A rules file is a python module containing a variable named `JS` pointing to a dictionary describing the desired post-processing step.
 A rules file may optionally also declare methods containing the post-processing logic. An example rules file can be found under `misc/rules/nmea.py` an extract of which is given below:
 
 ```python
@@ -219,7 +219,7 @@ options:
   --complete-only BOOL  output complete states after filtering only. (Default: True)
   --state-in-message BOOL
                         embed state inside the messages. (Default: False)
-  --compresslevel INT   set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 9)
+  --compresslevel INT   set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 6)
   --log STR             define logging level as one of DEBUG, INFO, WARNING, ERROR, or CRITICAL. (Default: WARNING)
   --logfile FILE        define file to log to. (Default: stderr)
   --version             show program's version number and exit
@@ -234,9 +234,9 @@ State Extractors:
 
 Currently, the following state extraction methods are implemented:
 
-| State Extractor | Description                                                  |
-| --------------- | ------------------------------------------------------------ |
-| default         | Output one state for each message and keep the value of each variable. |
+| State Extractor | Description                                                                                      |
+|-----------------|--------------------------------------------------------------------------------------------------|
+| default         | Output one state for each message and keep the value of each variable.                           |
 | timeslice       | Keep the last value of each variable and output a state in regular intervals, e.g. every second. |
 
 ###### State Format
@@ -253,7 +253,7 @@ The state format represents the entire state, the values of all sensors and actu
     "10.10.10.10:102:19": 0,
     "10.10.10.10:102:20": 0
   },
-  "malicious": null,
+  "malicious": null
 }
 ```
 
@@ -329,26 +329,26 @@ More information on the black and flake8 setup can be found at https://ljvmirand
 The process for adding support for a new protocol is the following:
 
 1. Add a new module in ```transcribers/```
-1. Create a new parser class inheriting the Transcriber class (see ```transcribers/transcriber.py```). The parser class may implement:
+2. Create a new parser class inheriting the Transcriber class (see ```transcribers/transcriber.py```). The parser class may implement:
     - `matches_protocol`: given a packet, return `True` if the parser can handle it, `False` otherwise (required)
     - `parse_packet`: given a packet the parser can handle, return a list of valid IPAL messages (required)
     - `state_identifier`: given a packet and the name of a data field, return a string identifying the corresponding field (optional, used by the state extractor)
     - `matches_response`: given a list of request messages and a response message, modify the response message's `responds_to` field, by adding matching request `id`s, may return a list of request messages to remove from the request queue (optional)
-1. Add the new transcriber to the list in ```transcribers/utils.py```
-1. Add the new protocol to the [implemented protocols](#implemented-protocols) table above
-1. Add test cases covering the added protocol
+3. Add the new transcriber to the list in ```transcribers/utils.py```
+4. Add the new protocol to the [implemented protocols](#implemented-protocols) table above
+5. Add test cases covering the added protocol
 
 ##### Adding a State Extractor
 
 The process for adding a new state extraction method is the following:
 
 1. Add a new file in ```state_extractors/```
-1. Create a new state extractor class inheriting the StateExtractor class (see ```state_extractors/state_extractor.py```). The state extractor class may implement:
+2. Create a new state extractor class inheriting the StateExtractor class (see ```state_extractors/state_extractor.py```). The state extractor class may implement:
     - `update_state`: given an IPAL message, update the current process state and if desired call ``_write_state`` to write the state to output (required)
-    - `finalize`: called by the main state extractor script after all messages have been processed, implementing `finalize` allows to execute logic on completion, e.g. outputing one final state (required)
+    - `finalize`: called by the main state extractor script after all messages have been processed, implementing `finalize` allows to execute logic on completion, e.g. outputting one final state (required)
     - `add_arguments_to_parser`: add arguments to the main state extractor script, the `args` namespace is passed to the class on initialization, allowing reading in additional user configuration and flags (optional)
-1. Add the new state extractor to the list in ```state_extractors/utils.py```
-1. Add the new state extractor to the [implemented state extractors](#implemented-state-extractors) table above
+3. Add the new state extractor to the list in ```state_extractors/utils.py```
+4. Add the new state extractor to the [implemented state extractors](#implemented-state-extractors) table above
 
 ##### Adding Tests
 
@@ -370,6 +370,7 @@ To ensure that a transcriber's protocol implementation stays compliant, a transc
 
 - Antoine Saillard (RWTH Aachen University & Fraunhofer FKIE)
 - David Schachtschneider (RWTH Aachen University)
+- David Valero Ribes (RWTH Aachen University)
 - Eric Wagner (Fraunhofer FKIE & RWTH Aachen University)
 - Julia Kunz (RWTH Aachen University)
 - Konrad Wolsing (Fraunhofer FKIE & RWTH Aachen University)

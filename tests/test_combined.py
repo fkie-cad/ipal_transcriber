@@ -1,6 +1,6 @@
 import pytest
 
-from .conftest import check_with_validation_file, transcriber
+from .conftest import check_command_output, check_with_validation_file, transcriber
 
 RAW_FILES = [
     ("misc/pcaps/iec104.pcap", "iec104.state", "iec104"),
@@ -35,8 +35,21 @@ def test_transcriber_combined(pcap, filename, protocol):
         "default",
     ]
     errno, stdout, stderr = transcriber(args)
-    assert stderr == b"" or b"WARNING:asyncio:Unknown child process" in stderr
-    assert errno == 0
+
+    expected_stderr = [
+        b"",
+        r"WARNING:asyncio:Unknown child process pid \d+, will report returncode 255\n?",
+    ]
+
+    check_command_output(
+        errno,
+        args,
+        stdout,
+        stderr,
+        expectedcode=0,
+        expected_stderr=expected_stderr,
+        check_for=["ERROR"],
+    )
     check_with_validation_file(
         filename, stdout.decode("utf-8"), test_transcriber_combined.__name__
     )

@@ -15,7 +15,7 @@ from transcribers.s7 import S7Transcriber
 
 
 class IpalIdCounter:
-    # Used to assign a uniqe ID to each message. These IDs are used
+    # Used to assign a unique ID to each message. These IDs are used
     # e.g. as references for responses.
 
     def __init__(self):

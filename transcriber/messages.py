@@ -1,6 +1,6 @@
-import json
-import sys
-from enum import Enum, auto
+from enum import Enum
+
+import orjson
 
 
 class Activity(Enum):
@@ -92,7 +92,12 @@ class IpalMessage:
         self._flow = flow
 
     def __str__(self):
-        return json.dumps(self.export_json(), indent=4)
+        return orjson.dumps(
+            self.export_json(),
+            option=orjson.OPT_SERIALIZE_NUMPY
+            | orjson.OPT_INDENT_2
+            | orjson.OPT_NON_STR_KEYS,
+        )
 
     @classmethod
     def from_json(cls, js):

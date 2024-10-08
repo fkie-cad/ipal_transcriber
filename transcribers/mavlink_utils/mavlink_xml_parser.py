@@ -1,27 +1,14 @@
 #!/usr/bin/env python3
 import argparse
-import gzip
-import sys
 import xml.etree.ElementTree as ET
-from struct import *
 
 from jinja2 import Template
+
+from transcriber.transcriber import open_file
 
 # Converts MAVLink XML definition into Transcriber rules to parse the payload.
 # Some default message definitions can be found here:
 # https://github.com/mavlink/mavlink/tree/master/message_definitions/v1.0
-
-
-# Wrapper for hiding .gz files and stdout
-def open_file(filename, mode):
-    if filename is None:
-        return None
-    elif filename.endswith(".gz"):
-        return gzip.open(filename, mode=mode + "t")
-    elif filename == "-":
-        return sys.stdout
-    else:
-        return open(filename, mode=mode, buffering=1)
 
 
 def render_rules(rules, dest_file):
@@ -114,7 +101,7 @@ def decode_hex(variable, field_type):
 
 
 def check_if_ordered(fields):
-    # Check if fields are ordered by type (technically not nexessary anymore but there for testing)
+    # Check if fields are ordered by type (technically not necessary anymore but therefore testing)
     if (len(fields)) == 1:
         return True
 
@@ -128,7 +115,7 @@ def check_if_ordered(fields):
 def order_messages(messages):
     # The fields are reordered during transmission WHO THOUGHT THAT WAS A GOOD IDEA?!
     # The XML is already ORDERED !!!!
-    # Order fields by type length (arrays dont count)
+    # Order fields by type length (arrays don't count)
     for m in messages.values():
         fields = m["fields"]
 

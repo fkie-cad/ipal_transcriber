@@ -34,8 +34,8 @@ class S7Transcriber(Transcriber):
         tcp = pkt["TCP"]
         s7_pkt = pkt["S7COMM"]
 
-        src = "{}:{}".format(ip.src, tcp.srcport)
-        dest = "{}:{}".format(ip.dst, tcp.dstport)
+        src = f"{ip.src}:{tcp.srcport}"
+        dest = f"{ip.dst}:{tcp.dstport}"
         length = int(s7_pkt.header_parlg) + int(s7_pkt.header_datlg)
 
         try:
@@ -82,20 +82,9 @@ class S7Transcriber(Transcriber):
                             int(s7_pkt.param_item_area.all_fields[i].raw_value, 16)
                         ]
                         if area == "DB":
-                            area += ".{}".format(
-                                int(s7_pkt.param_item_db.all_fields[i].raw_value, 16)
-                            )
+                            area += f".{int(s7_pkt.param_item_db.all_fields[i].raw_value, 16)}"
 
-                        address = (
-                            area
-                            + "."
-                            + str(
-                                int(
-                                    s7_pkt.param_item_address.all_fields[i].raw_value,
-                                    16,
-                                )
-                            )
-                        )
+                        address = f"{area}.{str(int(s7_pkt.param_item_address.all_fields[i].raw_value, 16))}"
                     else:
                         settings.logger.warning("Unknown Syntax ID")
                         return []
@@ -124,20 +113,9 @@ class S7Transcriber(Transcriber):
                             int(s7_pkt.param_item_area.all_fields[i].raw_value, 16)
                         ]
                         if area == "DB":
-                            area += ".{}".format(
-                                int(s7_pkt.param_item_db.all_fields[i].raw_value, 16)
-                            )
+                            area += f".{int(s7_pkt.param_item_db.all_fields[i].raw_value, 16)}"
 
-                        address = (
-                            area
-                            + "."
-                            + str(
-                                int(
-                                    s7_pkt.param_item_address.all_fields[i].raw_value,
-                                    16,
-                                )
-                            )
-                        )
+                        address = f"{area}.{str(int(s7_pkt.param_item_address.all_fields[i].raw_value, 16))}"
                     else:
                         settings.logger.warning("Unknown Syntax ID")
                         return []

@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 import argparse
-import gzip
 import importlib.util
-import json
 import logging
 import os
 import socket
 import sys
+from pathlib import Path
+from typing import IO
 
+import orjson
 import pyshark
+from zlib_ng import gzip_ng_threaded as gzip
 
 import transcriber.packet_processor as packet_processor
 import transcriber.settings as settings
@@ -16,12 +18,48 @@ import transcriber.state_extractor as state_extractor
 from transcribers.utils import get_all_transcribers
 
 
-# Wrapper for hiding .gz files
-def open_file(filename, mode):
-    if filename.endswith(".gz"):
-        return gzip.open(filename, mode=mode, compresslevel=settings.compresslevel)
+def open_file(
+    filename: str | os.PathLike | Path,
+    mode: str = "r",
+    compresslevel: int | None = None,
+    force_gzip: bool = False,
+) -> IO | None:
+    """
+    Wrapper to hide .gz files and stdin/stdout
+
+    :param filename: filename to open
+    :param mode: file mode
+    :param compresslevel: force compresslevel, if None level is taken from settings
+    :param force_gzip: if file should be treated as gzip even without .gz ending
+    :return: file-like object or None
+    """
+
+    # make sure filename is a string and not path-like object
+    filename = str(filename)
+
+    if not compresslevel:
+        compresslevel = settings.compresslevel
+
+    if filename == "-" and force_gzip:
+        # we can give gzip stdin/stdout to read / write from if explicitly wanted
+        if "r" in mode:
+            filename = sys.stdin
+        elif "w" in mode:
+            filename = sys.stdout
+
+    if filename is None:
+        return None
+    elif filename.endswith(".gz") or force_gzip:
+        return gzip.open(filename, mode=mode, compresslevel=compresslevel, threads=-1)
+    elif (filename == "-" or filename == "stdin") and "r" in mode:
+        return sys.stdin
+    elif (filename == "-" or filename == "stdout") and "w" in mode:
+        return sys.stdout
     else:
-        return open(filename, mode=mode, buffering=1)
+        if "b" in mode:
+            return open(filename, mode=mode, buffering=0)
+        else:
+            return open(filename, mode=mode, buffering=1)
 
 
 # Load modification rules from rules file
@@ -43,7 +81,7 @@ def initialize_logger(args):
     # Decide if hostname is added
     if args.hostname:
         settings.hostname = True
-        settings.logformat = f"%(asctime)s:{socket.gethostname()}:" + settings.logformat
+        settings.logformat = f"%(asctime)s:{socket.gethostname()}:{settings.logformat}"
 
     # Logging
     if args.log:
@@ -73,9 +111,9 @@ def parse_malicious_file(path):
     settings.malicious = {"pkts": {}, "time": []}
     settings.maliciousin = path
 
-    # Load josn file
+    # Load json file
     with open_file(settings.maliciousin, "r") as fin:
-        attacks = json.load(fin)
+        attacks = orjson.loads(fin.read())
 
     # Pre-parse attacks for faster lookups
     for attack in attacks:
@@ -115,9 +153,7 @@ def prepare_arg_parser(parser):
     parser.add_argument(
         "--protocols",
         metavar="STR",
-        help="specify a subset of the available transcribers {}. (Default: all)".format(
-            list(get_all_transcribers().keys())
-        ),
+        help=f"specify a subset of the available transcribers {list(get_all_transcribers().keys())}. (Default: all)",
         nargs="+",
         required=False,
     )
@@ -193,8 +229,8 @@ def prepare_arg_parser(parser):
         "--compresslevel",
         dest="compresslevel",
         metavar="INT",
-        default=9,
-        help="set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 9)",
+        default=6,
+        help="set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 6)",
         required=False,
     )
 
@@ -204,7 +240,7 @@ def prepare_arg_parser(parser):
     )
 
 
-# check compatibility of arguements and store them for global access
+# check compatibility of arguments and store them for global access
 def load_settings(args):  # noqa: C901
     # Gzip compress level
     if args.compresslevel:
@@ -216,7 +252,7 @@ def load_settings(args):  # noqa: C901
             )
             exit(1)
 
-        if settings.compresslevel < 0 or 9 < settings.compresslevel:
+        if 0 > settings.compresslevel > 9:
             settings.logger.error(
                 "Option '--compresslevel' must be an integer from 0-9"
             )
@@ -233,7 +269,7 @@ def load_settings(args):  # noqa: C901
     if args.protocols:
         for protocol in args.protocols:
             if protocol not in list(get_all_transcribers().keys()):
-                settings.logger.error("Unknown protocol: {}".format(protocol))
+                settings.logger.error(f"Unknown protocol: {protocol}")
                 exit(1)
         settings.protocols = args.protocols
     else:

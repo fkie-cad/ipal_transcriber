@@ -3,7 +3,7 @@ from state_extractors.state_extractor import StateExtractor
 
 
 class DefaultStateExtractor(StateExtractor):
-    # Keeps a buffer of the last value for each state variable and updates the buffer whenever a new message arrives. A state is malicious if at least one message is maliciious.
+    # Keeps a buffer of the last value for each state variable and updates the buffer whenever a new message arrives. A state is malicious if at least one message is malicious.
 
     _name = "default"
     _description = "Simple last value buffer of all variables"

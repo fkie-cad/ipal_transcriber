@@ -21,12 +21,12 @@ class ModbusTranscriber(Transcriber):
     @classmethod
     def state_identifier(cls, msg, key):
         if msg.activity in [Activity.INTERROGATE, Activity.COMMAND]:
-            return "{}:{}".format(msg.dest, key)
+            return f"{msg.dest}:{key}"
         elif msg.activity in [Activity.INFORM, Activity.ACTION]:
-            return "{}:{}".format(msg.src, key)
+            return f"{msg.src}:{key}"
         else:
-            settings.logger.critical("Unknown activity {}".format(msg.activity))
-            return "{}:{}".format(msg.src, key)
+            settings.logger.critical(f"Unknown activity {msg.activity}")
+            return f"{msg.src}:{key}"
 
     def matches_protocol(self, pkt):
         return "MBTCP" in pkt
@@ -39,8 +39,8 @@ class ModbusTranscriber(Transcriber):
 
         mb_layers = pkt.get_multiple_layers("MODBUS")
 
-        src = "{}:{}".format(pkt["IP"].src, pkt["TCP"].srcport)
-        dest = "{}:{}".format(pkt["IP"].dst, pkt["TCP"].dstport)
+        src = f"{pkt['IP'].src}:{pkt['TCP'].srcport}"
+        dest = f"{pkt['IP'].dst}:{pkt['TCP'].dstport}"
 
         for i in range(len(adu_layers)):
             adu = adu_layers[i]
@@ -55,7 +55,7 @@ class ModbusTranscriber(Transcriber):
 
                 m = IpalMessage(
                     id=self._id_counter.get_next_id(),
-                    src=src + ":{}".format(adu.unit_id),
+                    src=f"{src}:{adu.unit_id}",
                     dest=dest,
                     timestamp=float(pkt.sniff_time.timestamp()),
                     protocol=self._name,
@@ -73,7 +73,7 @@ class ModbusTranscriber(Transcriber):
                 else:
                     m.activity = Activity.INFORM  # NOTE maybe not an accurate activity
                     settings.logger.warning(
-                        "Not implemented response function code {}".format(mb.func_code)
+                        f"Not implemented response function code {mb.func_code}"
                     )  # msg.pdfdump()
                 res.append(m)
 
@@ -85,7 +85,7 @@ class ModbusTranscriber(Transcriber):
                 m = IpalMessage(
                     id=self._id_counter.get_next_id(),
                     src=src,
-                    dest=dest + ":{}".format(adu.unit_Id),
+                    dest=f"{dest}:{adu.unit_Id}",
                     timestamp=float(pkt.sniff_time.timestamp()),
                     protocol=self._name,
                     flow=flow,
@@ -106,15 +106,13 @@ class ModbusTranscriber(Transcriber):
                         Activity.INTERROGATE
                     )  # NOTE maybe not an appropriate activity
                     settings.logger.warning(
-                        "Not implemented request function code {}".format(mb.func_code)
+                        f"Not implemented request function code {mb.func_code}"
                     )
                 res.append(m)
 
             else:
                 settings.logger.critical(
-                    "Unknown ports for Modbus ({}, {})".format(
-                        pkt["TCP"].srcport, pkt["TCP"].dstport
-                    )
+                    f"Unknown ports for Modbus ({pkt['TCP'].srcport}, {pkt['TCP'].dstport})"
                 )
 
         return res
@@ -130,43 +128,63 @@ class ModbusTranscriber(Transcriber):
         if code == 5:
             startAddr = int(mb.reference_num) + 1
             value = 0 if mb.data.all_fields[0].showname_value == "0000" else 1
-            data[self._func_to_addr_space[code] + "." + str(startAddr)] = value
+            data[f"{self._func_to_addr_space[code]}.{startAddr}"] = value
 
         elif code == 6:
             startAddr = int(mb.reference_num) + 1
-            value = int(mb.data.all_fields[0].showname_value, 16)
-            data[self._func_to_addr_space[code] + "." + str(startAddr)] = value
+            if mb.get("data"):
+                # newer wireshark versions (>=4.4) present data differently
+                value = int(mb.data.all_fields[0].showname_value, 16)
+            else:
+                value = int(mb.regval_uint16.showname_value, 16)
+            data[f"{self._func_to_addr_space[code]}.{startAddr}"] = value
 
         elif code == 15:
-            startAddr = int(mb.reference_num) + 1
-            quantity = int(mb.bit_cnt)
-            for i in range(quantity):
-                b = int(mb.data.all_fields[i // 8].showname_value)
-                bit = (b & (1 << (i % 8))) >> (i % 8)
-                if bit == 1 or bit == 0:
-                    value = bit
-                else:
-                    settings.logger.error(
-                        "Something went wrong during parsing of coil write request"
-                    )
+            if mb.get("data"):
+                # newer wireshark versions present data differently
+                startAddr = int(mb.reference_num) + 1
+                quantity = int(mb.bit_cnt)
+                for i in range(quantity):
+                    b = int(mb.data.all_fields[i // 8].showname_value)
+                    bit = (b & (1 << (i % 8))) >> (i % 8)
+                    if bit == 1 or bit == 0:
+                        value = bit
+                    else:
+                        settings.logger.error(
+                            "Something went wrong during parsing of coil write request"
+                        )
 
-                data[self._func_to_addr_space[code] + "." + str(startAddr + i)] = value
+                    data[f"{self._func_to_addr_space[code]}.{str(startAddr + i)}"] = (
+                        value
+                    )
+            else:
+                # for wireshark =>4.4
+                for addr, bit_value in zip(mb.bitnum.all_fields, mb.bitval.all_fields):
+                    # wireshark gives us the "on the wire" address, however ipal uses the "human-readable" address
+                    addr = int(addr.showname_value) + 1
+                    if bit_value.showname_value == "False":
+                        value = 0
+                    elif bit_value.showname_value == "True":
+                        value = 1
+                    else:
+                        settings.logger.error(
+                            "Something went wrong during parsing of coil write request"
+                        )
+                        value = None
+
+                    data[f"{self._func_to_addr_space[code]}.{addr}"] = value
 
         elif code == 16:
             quantity = int(mb.word_cnt)
 
             for i in range(quantity):
                 data[
-                    self._func_to_addr_space[code]
-                    + "."
-                    + str(mb.regnum16.all_fields[i].showname_value)
+                    f"{self._func_to_addr_space[code]}.{mb.regnum16.all_fields[i].showname_value}"
                 ] = int(mb.regval_uint16.all_fields[i].showname_value)
 
         else:
             settings.logger.warning(
-                "Not implemented request code {} in transcribe_write_request".format(
-                    mb.func_code
-                )
+                f"Not implemented request code {mb.func_code} in transcribe_write_request"
             )
         m.data = data
 
@@ -179,31 +197,27 @@ class ModbusTranscriber(Transcriber):
         code = int(mb.func_code)
 
         if code == 5:
-            data[self._func_to_addr_space[code] + "." + str(startAddr)] = None
+            data[f"{self._func_to_addr_space[code]}.{startAddr}"] = None
 
         elif code == 6:
-            data[self._func_to_addr_space[code] + "." + str(startAddr)] = None
+            data[f"{self._func_to_addr_space[code]}.{startAddr}"] = None
 
         elif code == 15:
             quantity = int(mb.bit_cnt)
             for i in range(quantity):
-                data[self._func_to_addr_space[code] + "." + str(startAddr + i)] = None
+                data[f"{self._func_to_addr_space[code]}.{startAddr + i}"] = None
 
         elif code == 16:
             quantity = int(mb.word_cnt)
 
             for i in range(quantity):
                 data[
-                    self._func_to_addr_space[code]
-                    + "."
-                    + str(int(mb.reference_num) + i)
+                    f"{self._func_to_addr_space[code]}.{int(mb.reference_num) + i}"
                 ] = None
 
         else:
             settings.logger.warning(
-                "Not implemented response code {} in transcribe_write_response".format(
-                    mb.func_code
-                )
+                f"Not implemented response code {mb.func_code} in transcribe_write_response"
             )  # mb.pdfdump()
 
         m.data = data
@@ -221,18 +235,16 @@ class ModbusTranscriber(Transcriber):
         if code == 1 or code == 2:
             quantity = int(mb.bit_cnt)
             for i in range(quantity):
-                data[self._func_to_addr_space[code] + "." + str(startAddr + i)] = None
+                data[f"{self._func_to_addr_space[code]}.{startAddr + i}"] = None
 
         elif code == 3 or code == 4:
             quantity = int(mb.word_cnt)
             for i in range(quantity):
-                data[self._func_to_addr_space[code] + "." + str(startAddr + i)] = None
+                data[f"{self._func_to_addr_space[code]}.{startAddr + i}"] = None
 
         else:
             settings.logger.warning(
-                "Not implemented request code {} in transcribe_read_request".format(
-                    code
-                )
+                f"Not implemented request code {code} in transcribe_read_request"
             )
         m.data = data
 
@@ -247,9 +259,7 @@ class ModbusTranscriber(Transcriber):
         if code == 4 or code == 3:
             for i in range(int(mb.byte_cnt) // 2):
                 m.data[
-                    self._func_to_addr_space[code]
-                    + "."
-                    + mb.regnum16.all_fields[i].showname_value
+                    f"{self._func_to_addr_space[code]}.{mb.regnum16.all_fields[i].showname_value}"
                 ] = int(mb.regval_uint16.all_fields[i].showname_value)
 
         elif code == 2:
@@ -261,15 +271,11 @@ class ModbusTranscriber(Transcriber):
                 else:
                     val = None
                     settings.logger.warning(
-                        "Unknown coil value {}".format(
-                            mb.bitval.all_fields[i].showname_value == "True"
-                        )
+                        f"Unknown coil value {mb.bitval.all_fields[i].showname_value == 'True'}"
                     )
 
                 m.data[
-                    self._func_to_addr_space[code]
-                    + "."
-                    + mb.bitnum.all_fields[i].showname_value
+                    f"{self._func_to_addr_space[code]}.{mb.bitnum.all_fields[i].showname_value}"
                 ] = val
 
         elif code == 1:
@@ -281,21 +287,15 @@ class ModbusTranscriber(Transcriber):
                 else:
                     val = None
                     settings.logger.warning(
-                        "Unknown coil value {}".format(
-                            mb.bitval.all_fields[i].showname_value == "True"
-                        )
+                        f"Unknown coil value {mb.bitval.all_fields[i].showname_value == 'True'}"
                     )
                 m.data[
-                    self._func_to_addr_space[code]
-                    + "."
-                    + mb.bitnum.all_fields[i].showname_value
+                    f"{self._func_to_addr_space[code]}.{mb.bitnum.all_fields[i].showname_value}"
                 ] = val
 
         else:
             settings.logger.warning(
-                "Not implemented response code {} in transcribe_read_response".format(
-                    mb.func_code
-                )
+                f"Not implemented response code {mb.func_code} in transcribe_read_response"
             )  # mb.pdfdump()
 
     def transcribe_diagnostic(self, m, mb):
@@ -319,9 +319,7 @@ class ModbusTranscriber(Transcriber):
         else:
             m.activity = Activity.COMMAND  # NOTE maybe not an accurate activity
             settings.logger.warning(
-                "Not implemented request code {}, {} in transcribe_diagnostic".format(
-                    mb.func_code, diagnostic_code
-                )
+                f"Not implemented request code {mb.func_code}, {diagnostic_code} in transcribe_diagnostic"
             )  # mb.pdfdump()
 
     def transcribe_encapsulated_interface_transport_request(self, m, mb):
@@ -332,9 +330,7 @@ class ModbusTranscriber(Transcriber):
 
         else:
             settings.logger.warning(
-                "Not implemented request code {}, {} in transcribe_encapsulated_interface_transport_request".format(
-                    mb.func_code, mb.mei
-                )
+                f"Not implemented request code {mb.func_code}, {mb.mei} in transcribe_encapsulated_interface_transport_request"
             )  # mb.pdfdump()
 
     def transcribe_error_response(self, m, mb):

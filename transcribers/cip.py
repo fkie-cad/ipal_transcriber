@@ -9,12 +9,12 @@ class CIPTranscriber(Transcriber):
     @classmethod
     def state_identifier(cls, msg, key):
         if msg.activity in [Activity.INTERROGATE, Activity.COMMAND]:
-            return "{}:{}".format(msg.dest, key)
+            return f"{msg.dest}:{key}"
         elif msg.activity in [Activity.INFORM, Activity.ACTION]:
-            return "{}:{}".format(msg.src, key)
+            return f"{msg.src}:{key}"
         else:
-            settings.logger.critical("Unknown activity {}".format(msg.activity))
-            return "{}:{}".format(msg.src, key)
+            settings.logger.critical(f"Unknown activity {msg.activity}")
+            return f"{msg.src}:{key}"
 
     def matches_protocol(self, pkt):
         return "CIP" in pkt
@@ -28,8 +28,8 @@ class CIPTranscriber(Transcriber):
 
         cipcm_layers = pkt.get_multiple_layers("CIPCM")
 
-        src = "{}:{}".format(pkt["IP"].src, pkt["TCP"].srcport)
-        dest = "{}:{}".format(pkt["IP"].dst, pkt["TCP"].dstport)
+        src = f"{pkt['IP'].src}:{pkt['TCP'].srcport}"
+        dest = f"{pkt['IP'].dst}:{pkt['TCP'].dstport}"
 
         for i in range(len(cip_layers)):
             enip = enip_layers[i]
@@ -65,7 +65,7 @@ class CIPTranscriber(Transcriber):
                         Activity.INTERROGATE
                     )  # NOTE maybe not an accurate activity
                     settings.logger.warning(
-                        "Not implemented request function code {}".format(cip.service)
+                        f"Not implemented request function code {cip.service}"
                     )
 
                 res.append(m)
@@ -95,16 +95,14 @@ class CIPTranscriber(Transcriber):
                 else:
                     m.activity = Activity.INFORM  # NOTE maybe not an accurate activity
                     settings.logger.warning(
-                        "Not implemented response function code {}".format(cip.service)
+                        f"Not implemented response function code {cip.service}"
                     )
 
                 res.append(m)
 
             else:
                 settings.logger.critical(
-                    "Unknown ports for CIP ({}, {})".format(
-                        pkt["TCP"].srcport, pkt["TCP"].dstport
-                    )
+                    f"Unknown ports for CIP ({pkt['TCP'].srcport}, {pkt['TCP'].dstport})"
                 )
 
         return res
@@ -121,9 +119,7 @@ class CIPTranscriber(Transcriber):
 
         else:
             settings.logger.warning(
-                "Not implemented request code {} in transcribe_read_request".format(
-                    cip.service
-                )
+                f"Not implemented request code {cip.service} in transcribe_read_request"
             )
 
     def transcribe_read_response(self, m, cip, cipcm):
@@ -140,9 +136,7 @@ class CIPTranscriber(Transcriber):
 
         else:
             settings.logger.warning(
-                "Not implemented response code {} in transcribe_read_response".format(
-                    cip.service
-                )
+                f"Not implemented response code {cip.service} in transcribe_read_response"
             )
 
     def transcribe_write_request(self, m, cip, cipcm):

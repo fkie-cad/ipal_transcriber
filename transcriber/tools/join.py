@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 import argparse
-import glob
-import gzip
-import json
 import logging
-import sys
 from pathlib import Path
 
+import orjson
+
 import transcriber.settings as settings
+from transcriber.transcriber import open_file
 
 CONFIG_KEYS = [
     "_transcriber-config",
@@ -17,16 +16,6 @@ CONFIG_KEYS = [
 ]
 
 FORCE_RENAME = False
-
-
-# Wrapper for hiding .gz files
-def open_file(filename, mode):
-    if filename.endswith(".gz"):
-        return gzip.open(filename, mode=mode, compresslevel=settings.compresslevel)
-    elif filename == "-":
-        return sys.stdin
-    else:
-        return open(filename, mode=mode, buffering=1)
 
 
 # Initialize logger
@@ -132,11 +121,11 @@ def handle_config(ds, js, filename):
 def join(files, dataset, output):
     # Load original dataset
     ds = {}
-    settings.logger.info("Loading {} into memory.".format(dataset))
+    settings.logger.info(f"Loading {dataset} into memory.")
 
     with open_file(dataset, "rt") as f:
-        for line in f.readlines():
-            js = json.loads(line)
+        for line in f:
+            js = orjson.loads(line)
             js["ids"] = False
             js["scores"] = {}
             js["alerts"] = {}
@@ -144,11 +133,11 @@ def join(files, dataset, output):
 
     # join datasets
     for N, file in enumerate(files):
-        settings.logger.info("- Processing {} ({}/{})".format(file, N + 1, len(files)))
+        settings.logger.info(f"- Processing {file} ({N + 1}/{len(files)})")
 
         with open_file(file, "rt") as f:
-            for line in f.readlines():
-                js = json.loads(line)
+            for line in f:
+                js = orjson.loads(line)
                 assert js["timestamp"] in ds
 
                 if "ids" in js:
@@ -163,9 +152,16 @@ def join(files, dataset, output):
     # Save joined dataset
     settings.logger.info("Saving joined dataset")
 
-    with open_file(output, "wt") as f:
+    with open_file(output, "wb") as f:
         for ts in sorted(ds.keys()):  # ordered by timestamp
-            f.write("{}\n".format(json.dumps(ds[ts])))
+            f.write(
+                orjson.dumps(
+                    ds[ts],
+                    option=orjson.OPT_SERIALIZE_NUMPY
+                    | orjson.OPT_APPEND_NEWLINE
+                    | orjson.OPT_NON_STR_KEYS,
+                )
+            )
 
 
 def main():
@@ -177,9 +173,7 @@ def main():
     args = parser.parse_args()
     initialize_logger(args)
 
-    settings.logger.info(
-        "Combining {} files to {}.".format(len(args.files), args.output)
-    )
+    settings.logger.info(f"Combining {len(args.files)} files to {args.output}.")
 
     FORCE_RENAME = args.force_rename
 

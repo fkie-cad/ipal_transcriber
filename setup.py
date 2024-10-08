@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="ipal-transcriber",
-    version="1.3.8",
+    version="1.4.1",
     packages=find_packages(exclude="tests"),
     scripts=[
         "ipal-transcriber",
@@ -11,7 +11,7 @@ setup(
         "ipal-join",
     ],
     package_data={"": ["*.ipal", "*.pcapng"]},
-    install_requires=["pyshark", "python-dateutil"],
+    install_requires=["pyshark", "python-dateutil", "orjson", "zlib-ng"],
     tests_require=["pre-commit", "black", "flake8", "pytest", "pytest-cov", "isort"],
     url="https://github.com/fkie-cad/ipal_transcriber",
     author="Konrad Wolsing",
@@ -21,7 +21,8 @@ setup(
     keywords="industrial protocols networking security capture packets IDS CIP GOOSE Modbus S7 IEC 60870-5-104 NMEA0183 IEC 61162-450 DNP3",
     classifiers=[
         "License :: MIT License",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
     ],
 )

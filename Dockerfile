@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:latest
 
 RUN apt-get update \
     && apt-get -y install software-properties-common sudo g++ \
@@ -13,7 +13,7 @@ WORKDIR /home/ipal/ipal_transcriber/
 COPY --chown=ipal . .
 
 # Install transcriber
-RUN sudo pip install .
-RUN sudo pip install -r requirements-dev.txt
+RUN sudo pip install --break-system-packages .
+RUN sudo pip install --break-system-packages -r requirements-dev.txt
 
 CMD /bin/bash

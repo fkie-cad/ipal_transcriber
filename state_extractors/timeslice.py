@@ -48,13 +48,13 @@ class TimeSliceStateExtractor(StateExtractor):
         )
 
     def update_state(self, msg):
-        # Based on the current messages timestamp, we check wether
+        # Based on the current messages timestamp, we check whether
         # we should have output states since the last state update.
         # If so, we do this now before considering new state changes.
         # Assumption: Delays between messages are so short that this
         # does not introduce significant delays.
         # Otherwise, we would have to rely on timers and callback functions
-        # to output states at the corrent times.
+        # to output states at the current times.
 
         if self.nextslice is None:  # Initial timestamp
             self.nextslice = msg.timestamp

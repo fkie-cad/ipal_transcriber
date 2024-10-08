@@ -1,7 +1,5 @@
-from pyshark.packet.packet import Packet as PysharkPacket
-
 import transcriber.settings as settings
-from transcriber.messages import Activity, IpalMessage
+from transcriber.messages import IpalMessage
 from transcribers.transcriber import Transcriber
 
 AUTO_INCR_ADDR = 0
@@ -18,7 +16,9 @@ FMMU_END = FMMU_OFFSET + FMMU_ENTITY_NUMBER * FMMU_ENTITY_LENGTH
 class FMMUEntity:
     raw = [0] * 16
 
-    def __init__(self, data=[], offset=0):
+    def __init__(self, data=None, offset=0):
+        if data is None:
+            data = []
         self.update(data, offset)
 
     def update(self, data, offset):
@@ -122,19 +122,19 @@ class EtherCatTranscriber(Transcriber):
         data_field_indices = (
             {}
         )  # Stores the index for the next PDU with a field of a given name.
-        while hasattr(pdu_layer, "sub" + str(pdu_count) + "_cmd"):
-            pdu_prefix = "sub" + str(pdu_count) + "_"
-            command_value = int(pdu_layer.get_field(pdu_prefix + "cmd"), 16)
+        while hasattr(pdu_layer, f"sub{str(pdu_count)}_cmd"):
+            pdu_prefix = f"sub{str(pdu_count)}_"
+            command_value = int(pdu_layer.get_field(f"{pdu_prefix}cmd"), 16)
 
             # Parse addresses
             adr = None
             adp = None
             ado = None
             if command_value in [0x0A, 0x0B, 0x0C]:
-                adr = int(pdu_layer.get_field(pdu_prefix + "lad"), 16)
+                adr = int(pdu_layer.get_field(f"{pdu_prefix}lad"), 16)
             else:
-                adp = int(pdu_layer.get_field(pdu_prefix + "adp"), 16)
-                ado = int(pdu_layer.get_field(pdu_prefix + "ado"), 16)
+                adp = int(pdu_layer.get_field(f"{pdu_prefix}adp"), 16)
+                ado = int(pdu_layer.get_field(f"{pdu_prefix}ado"), 16)
 
             #
             # Get or reconstruct data fields:
@@ -152,9 +152,7 @@ class EtherCatTranscriber(Transcriber):
                 if pdu_count > 1 or pdu_layer.get_field("sub2_cmd") is not None:
                     # DEBUG
                     settings.logger.debug(
-                        "Multiple special PDUs for case ado == 0x101 in packet "
-                        + str(self._pkt_count)
-                        + "! Better implementation needed."
+                        f"Multiple special PDUs for case ado == 0x101 in packet {str(self._pkt_count)}! Better implementation needed."
                     )
                     # TODO: We should do this the same way as we did for
                     # reg_physaddr, because that supports multiple PDUs of same
@@ -165,23 +163,21 @@ class EtherCatTranscriber(Transcriber):
                 if pdu_count > 1 or pdu_layer.get_field("sub2_cmd") is not None:
                     # DEBUG
                     settings.logger.debug(
-                        "Multiple special PDUs for case ado == 0x130 in packet "
-                        + str(self._pkt_count)
-                        + "! Better implementation needed."
+                        f"Multiple special PDUs for case ado == 0x130 in packet {str(self._pkt_count)}! Better implementation needed."
                     )
                     # TODO: We should do this the same way as we did for
                     # reg_physaddr, because that supports multiple PDUs of same
                     # type in one packet.
                 alstatus_data = pdu_layer._all_fields["ecat.get.alstatus"]
-                assert (alstatus_data) == 6
+                assert alstatus_data == 6
                 data_array = [int(alstatus_data[4:6], 16), int(alstatus_data[2:4], 16)]
 
-            elif ado is not None and ado >= 0x300 and ado <= 0x307:
+            elif ado is not None and 0x300 <= ado <= 0x307:
                 data_array = []
                 reg_offset = ado - 0x300
 
                 if reg_offset % 2 == 1:
-                    field_name = "ecat.reg.crc" + str((reg_offset - 1) / 2) + ".rx"
+                    field_name = f"ecat.reg.crc{str((reg_offset - 1) / 2)}.rx"
                     if field_name not in data_field_indices:
                         data_field_indices[field_name] = 0
                     data_array.append(
@@ -197,8 +193,8 @@ class EtherCatTranscriber(Transcriber):
                 else:
                     port = reg_offset / 2
 
-                while port < 4 and "ecat.reg.crc" + str(port) in pdu_layer._all_fields:
-                    field_name = "ecat.reg.crc" + str(port) + ".frame"
+                while port < 4 and f"ecat.reg.crc{str(port)}" in pdu_layer._all_fields:
+                    field_name = f"ecat.reg.crc{str(port)}.frame"
                     if field_name not in data_field_indices:
                         data_field_indices[field_name] = 0
                     data_array.append(
@@ -211,7 +207,7 @@ class EtherCatTranscriber(Transcriber):
                     )
                     data_field_indices[field_name] += 1
 
-                    field_name = "ecat.reg.crc" + str(port) + ".rx"
+                    field_name = f"ecat.reg.crc{str(port)}.rx"
                     if field_name not in data_field_indices:
                         data_field_indices[field_name] = 0
                     data_array.append(
@@ -228,9 +224,7 @@ class EtherCatTranscriber(Transcriber):
                 if pdu_count > 1 or pdu_layer.get_field("sub2_cmd") is not None:
                     # DEBUG
                     settings.logger.debug(
-                        "Multiple special PDUs for case ado == 0x102 in packet "
-                        + str(self._pkt_count)
-                        + "! Better implementation needed."
+                        f"Multiple special PDUs for case ado == 0x102 in packet {str(self._pkt_count)}! Better implementation needed."
                     )
                     # TODO: We should do this the same way as we did for
                     # reg_physaddr, because that supports multiple PDUs of same
@@ -269,16 +263,13 @@ class EtherCatTranscriber(Transcriber):
                 data_array = list(bytes.fromhex(field.raw_value))
 
             else:
-                data_str = pdu_layer.get_field(pdu_prefix + "data")
+                data_str = pdu_layer.get_field(f"{pdu_prefix}data")
                 if data_str:
                     data_array = self.data_string_to_bytes(data_str)
                 else:
                     # DEBUG
                     settings.logger.debug(
-                        "Missing data attribute for PDU "
-                        + str(self._pkt_count)
-                        + ","
-                        + str(pdu_count)
+                        f"Missing data attribute for PDU {str(self._pkt_count)},{str(pdu_count)}"
                     )
                     settings.logger.debug("ado", ado)
                     settings.logger.debug("sub_ado", pdu_layer.get_field("sub1_ado"))
@@ -295,7 +286,7 @@ class EtherCatTranscriber(Transcriber):
             # We first parse the data to the following format:
             # parsed_data is a dict, that maps slave_addr to another dict D.
             # D maps memory addresses of this slave to their new values.
-            # slave_addr is either a auto-increment address of the form
+            # slave_addr is either an auto-increment address of the form
             # (AUTO_INCR_ADDR, <value>) or a config address of the form
             # (CONFIG_ADDR, <value>). <value> should be a hex string.
             # The memory addresses should be given as integers.
@@ -322,14 +313,14 @@ class EtherCatTranscriber(Transcriber):
                 offset = ado
                 for i in range(len(data_array)):
                     memory_map[offset + i] = data_array[i]
-                parsed_data[(AUTO_INCR_ADDR, "{0:#06x}".format(adp))] = memory_map
+                parsed_data[(AUTO_INCR_ADDR, f"{adp:#06x}")] = memory_map
 
             elif command_value in [0x05, 0x06]:  # FPWR, FPRW
                 memory_map = {}
                 offset = ado
                 for i in range(len(data_array)):
                     memory_map[offset + i] = data_array[i]
-                parsed_data[(CONFIG_ADDR, "{0:#06x}".format(adp))] = memory_map
+                parsed_data[(CONFIG_ADDR, f"{adp:#06x}")] = memory_map
 
             elif command_value in [0x08, 0x09]:  # BWR, BRW
                 memory_map = {}
@@ -343,9 +334,7 @@ class EtherCatTranscriber(Transcriber):
                 while i < len(data_array):
                     addr = self.match_logic_addr(adr + i)
                     if addr is None:
-                        parsed_data[(LOGICAL_ADDR, "{0:#010x}".format(adr))] = (
-                            data_array[i]
-                        )
+                        parsed_data[(LOGICAL_ADDR, f"{adr:#010x}")] = data_array[i]
                     else:
                         if not addr[0] in parsed_data:
                             parsed_data[addr[0]] = {}
@@ -375,7 +364,7 @@ class EtherCatTranscriber(Transcriber):
                     self.update_config_addr(slave, mem_update)
 
                 # 0x600 to 0x6ff contain the FMMUs with logic memory maps.
-                if any(map(lambda a: a >= 0x600 and a <= 0x6FF, mem_update.keys())):
+                if any(map(lambda a: 0x600 <= a <= 0x6FF, mem_update.keys())):
                     self.update_FMMU(slave, mem_update)
 
             #
@@ -384,30 +373,27 @@ class EtherCatTranscriber(Transcriber):
             data = {}
             for slave, mem_update in parsed_data.items():
                 if slave[0] == LOGICAL_ADDR:
-                    slave_mem_addr = "log_" + slave[1]
+                    slave_mem_addr = f"log_{slave[1]}"
                     assert type(mem_update) is int
                     data[slave_mem_addr] = mem_update
                     continue
 
                 for mem_addr_int, value in mem_update.items():
                     # Convert int to hex str:
-                    mem_addr_str = "{0:#06x}".format(mem_addr_int)
+                    mem_addr_str = f"{mem_addr_int:#06x}"
 
                     if slave[0] == AUTO_INCR_ADDR:
-                        slave_mem_addr = "aic_" + slave[1] + "/" + mem_addr_str
+                        slave_mem_addr = f"aic_{slave[1]}/{mem_addr_str}"
                     elif slave[0] == CONFIG_ADDR:
                         if slave[1] in self._config_addr_map:
                             slave_mem_addr = (
-                                "aic_"
-                                + self._config_addr_map[slave[1]]
-                                + "/"
-                                + mem_addr_str
+                                f"aic_{self._config_addr_map[slave[1]]}/{mem_addr_str}"
                             )
                         else:
-                            slave_mem_addr = "phy_" + slave[1] + "/" + mem_addr_str
+                            slave_mem_addr = f"phy_{slave[1]}/{mem_addr_str}"
 
                     elif slave[0] == BROADCAST_ADDR:
-                        slave_mem_addr = "*/" + mem_addr_str
+                        slave_mem_addr = f"*/{mem_addr_str}"
 
                     data[slave_mem_addr] = value
 
@@ -433,9 +419,9 @@ class EtherCatTranscriber(Transcriber):
         return remove_from_queue
 
     def get_ado_adp_address(self, i, ecat):
-        ado = ecat.get("sub" + str(i + 1) + "_ado")
-        adp = ecat.get("sub" + str(i + 1) + "_adp")
-        current_address = "Ado: " + str(ado) + " Adp: " + str(adp)
+        ado = ecat.get(f"sub{str(i + 1)}_ado")
+        adp = ecat.get(f"sub{str(i + 1)}_adp")
+        current_address = f"Ado: {str(ado)} Adp: {str(adp)}"
         return current_address
 
     @staticmethod
@@ -447,7 +433,7 @@ class EtherCatTranscriber(Transcriber):
 
     # Updates the saved configured address for the given slave in the
     # config_addr -> auto_incr_addr mapping (self._config_addr_map).
-    # Assumes, that memory_update contains an memory address in the address
+    # Assumes, that memory_update contains a memory address in the address
     # space of the FMMU.
     # slave should be an address of the form (<ADDR_KIND>, <address>).
     def update_config_addr(self, slave, mem_update):
@@ -478,13 +464,13 @@ class EtherCatTranscriber(Transcriber):
             # Maybe we should also remove the old mapping in this case
 
     # Updates the FMMU for the given slave in self._fmmu_entities_map.
-    # Assumes, that memory_update contains an memory address in the address
+    # Assumes, that memory_update contains a memory address in the address
     # space of the FMMU.
     # slave should be an address of the form (<ADDR_KIND>, <address>).
     def update_FMMU(self, slave, mem_update):
         if slave[0] == AUTO_INCR_ADDR:
             slave_addr_resolved = slave
-        if slave[0] == BROADCAST_ADDR:
+        elif slave[0] == BROADCAST_ADDR:
             slave_addr_resolved = slave
         elif slave[0] == CONFIG_ADDR and slave in self._config_addr_map:
             slave_addr_resolved = (AUTO_INCR_ADDR, self._config_addr_map[slave[1]])
@@ -557,12 +543,12 @@ class EtherCatTranscriber(Transcriber):
         for slave_addr, fmmu_map in self._fmmu_entities_map.items():
             for fmmu_entity in fmmu_map.values():
                 if (
-                    addr >= fmmu_entity.logic_start_addr()
-                    and addr
+                    fmmu_entity.logic_start_addr()
+                    <= addr
                     < fmmu_entity.logic_start_addr() + fmmu_entity.mapping_length()
                 ):
                     phys_addr = fmmu_entity.phys_start_addr() + (
                         addr - fmmu_entity.logic_start_addr()
                     )
-                    return (slave_addr, phys_addr)
+                    return slave_addr, phys_addr
         return None

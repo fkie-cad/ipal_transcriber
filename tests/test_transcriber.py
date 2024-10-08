@@ -1,14 +1,19 @@
 import pytest
 
-from .conftest import check_with_validation_file, transcriber
+from .conftest import check_command_output, check_with_validation_file, transcriber
 
 
 def test_transcriber_empty():
-    errno, stdout, stderr = transcriber([])
-    assert errno == 1
-    assert (
-        stderr
-        == b"ERROR:ipal-transcriber:Use either --pcap or --interface to indicate source of transcribed traffic\n"
+    expected_stderr = [
+        (
+            b"ERROR:ipal-transcriber:Use either --pcap or "
+            b"--interface to indicate source of transcribed traffic\n"
+        )
+    ]
+    args = []
+    errno, stdout, stderr = transcriber(args)
+    check_command_output(
+        errno, args, stdout, stderr, expectedcode=1, expected_stderr=expected_stderr
     )
 
 
@@ -48,8 +53,22 @@ def test_transcriber_raw(pcap, filename, protocol):
         "1000",
     ]
     errno, stdout, stderr = transcriber(args)
-    assert stderr == b"" or b"WARNING:asyncio:Unknown child process" in stderr
-    assert errno == 0
+
+    expected_stderr = [
+        b"",
+        r"WARNING:asyncio:Unknown child process pid \d+, will report returncode 255\n?",
+    ]
+
+    check_command_output(
+        errno,
+        args,
+        stdout,
+        stderr,
+        expectedcode=0,
+        expected_stderr=expected_stderr,
+        check_for=["ERROR"],
+    )
+
     check_with_validation_file(
         filename, stdout.decode("utf-8"), test_transcriber_raw.__name__
     )
@@ -68,8 +87,21 @@ def test_transcriber_all_protocols(pcap):
         "1000",
     ]
     errno, stdout, stderr = transcriber(args)
-    assert stderr == b"" or b"WARNING:asyncio:Unknown child process" in stderr
-    assert errno == 0
+
+    expected_stderr = [
+        b"",
+        r"WARNING:asyncio:Unknown child process pid \d+, will report returncode 255\n?",
+    ]
+
+    check_command_output(
+        errno,
+        args,
+        stdout,
+        stderr,
+        expectedcode=0,
+        expected_stderr=expected_stderr,
+        check_for=["ERROR"],
+    )
 
 
 @pytest.mark.parametrize("pcap,protocol", [(x[0], x[2]) for x in RAW_FILES])
@@ -92,5 +124,18 @@ def test_transcriber_all_other_protocols(pcap, protocol):
         ]
     )
     errno, stdout, stderr = transcriber(args)
-    assert stderr == b"" or b"WARNING:asyncio:Unknown child process" in stderr
-    assert errno == 0
+
+    expected_stderr = [
+        b"",
+        r"WARNING:asyncio:Unknown child process pid \d+, will report returncode 255\n?",
+    ]
+
+    check_command_output(
+        errno,
+        args,
+        stdout,
+        stderr,
+        expectedcode=0,
+        expected_stderr=expected_stderr,
+        check_for=["ERROR"],
+    )

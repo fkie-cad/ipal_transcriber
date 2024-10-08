@@ -270,7 +270,7 @@ class NMEA0183(Transcriber):
 
     def parse_sentence(self, msg, res):
         if msg[0] == "!" and not msg.startswith("!AIVDM"):
-            settings.logger.warning("Unsupported NMEA type '{}'".format(msg[0]))
+            settings.logger.warning(f"Unsupported NMEA type '{msg[0]}'")
             return None
 
         msg = msg[1:-2]  # remove header ($ or !) and \r\n
@@ -284,9 +284,7 @@ class NMEA0183(Transcriber):
         tokens = msg.split(",")[1:]
 
         if hdr[0] == "P":  # Proprietary sentence
-            settings.logger.warning(
-                "Unsupported proprietary NMEA sentence '{}'".format(hdr)
-            )
+            settings.logger.warning(f"Unsupported proprietary NMEA sentence '{hdr}'")
             return None
 
         elif hdr[4] == "Q":  # Query sentence
@@ -294,8 +292,8 @@ class NMEA0183(Transcriber):
             listener = hdr[2:4]
             request = tokens[0]
 
-            res.src += ":" + talker
-            res.dest += ":" + listener
+            res.src += f":{talker}"
+            res.dest += f":{listener}"
             res.activity = Activity.INTERROGATE
             res.type = request
             res.data = {}
@@ -307,7 +305,7 @@ class NMEA0183(Transcriber):
             talkerID = hdr[:2]
             sentenceID = hdr[2:]
 
-            res.src += ":" + talkerID
+            res.src += f":{talkerID}"
             res.type = sentenceID
 
             # AIS can be fragmented
@@ -328,16 +326,14 @@ class NMEA0183(Transcriber):
             talkerID = hdr[:2]
             sentenceID = hdr[2:]
 
-            res.src += ":" + talkerID
+            res.src += f":{talkerID}"
             res.type = sentenceID
 
             res._match_to_requests = True
             res._flow = (res.src.split(":")[0], sentenceID)
 
             if sentenceID not in self._sentence_structures:
-                settings.logger.warning(
-                    "Not implemented NMEA sentence '{}'".format(sentenceID)
-                )
+                settings.logger.warning(f"Not implemented NMEA sentence '{sentenceID}'")
                 return None
             structure = self._sentence_structures[sentenceID]
 
@@ -346,16 +342,12 @@ class NMEA0183(Transcriber):
             # Warn on lack of tokens, error on excessive tokens
             if len(tokens) > len(structure):
                 settings.logger.error(
-                    "{} sentence contains {} fields, expected {}: discarding sentence".format(
-                        sentenceID, len(tokens), len(structure)
-                    )
+                    f"{sentenceID} sentence contains {len(tokens)} fields, expected {len(structure)}: discarding sentence"
                 )
                 return None
             if len(tokens) < len(structure):
                 settings.logger.warning(
-                    "{} sentence contains {} fields, expected {}".format(
-                        sentenceID, len(tokens), len(structure)
-                    )
+                    f"{sentenceID} sentence contains {len(tokens)} fields, expected {len(structure)}"
                 )
 
             for i in range(len(tokens)):
@@ -431,12 +423,12 @@ class NMEA0183UDPTranscriber(NMEA0183):
         udp = pkt["UDP"]
         msg = bytes.fromhex(udp.payload.replace(":", "")).decode("ascii")
 
-        src = "{}:{}".format(ip.src, udp.srcport)
-        dest = "{}:{}".format(ip.dst, udp.dstport)
+        src = f"{ip.src}:{udp.srcport}"
+        dest = f"{ip.dst}:{udp.dstport}"
         timestamp = float(pkt.sniff_time.timestamp())
 
         # handle the case where more than one sentence is in the UDP payload
-        sentences = [sentence + "\r\n" for sentence in msg.split("\r\n")[:-1]]
+        sentences = [f"{sentence}\r\n" for sentence in msg.split("\r\n")[:-1]]
 
         ipal_messages = []
 

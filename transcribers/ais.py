@@ -8,7 +8,7 @@ class NavigationStatus(Enum):
     UNDERWAY_ENGINE = 0
     AT_ANCHOR = 1
     NOT_UNDER_COMMAND = 2
-    RESTRICTED_MANOEUVERABILITY = 3
+    RESTRICTED_MANOEUVRABILITY = 3
     CONSTRAINED_BY_DRAUGHT = 4
     MOORED = 5
     AGROUND = 6
@@ -32,7 +32,7 @@ def decode_ais(fragments: List[str]) -> Dict[str, Any]:
     bits = []
 
     for tokens in fragments:
-        assert radio_channel == tokens[0]  # Same radio channel accross fragments
+        assert radio_channel == tokens[0]  # Same radio channel across fragments
         payload = tokens[1]
         fill_bits = int(tokens[2])
         bits += _dearmor_ascii(payload, fill_bits)
@@ -90,13 +90,13 @@ def _decode_bit_string(bits: List[int]) -> Dict[str, Any]:
     # 21 Aids-to-navigation report
     # 25 Static data report
 
-    settings.logger.warning("Unsupported AIS message type ({})".format(message_type))
+    settings.logger.warning(f"Unsupported AIS message type ({message_type})")
     return {"message_type": message_type}
 
 
 def _bits_to_unsigned_int(bits: List[int], start: int, end: int) -> int:
     """
-    interprete the given range of a bit string as an unsigned integer
+    interpret the given range of a bit string as an unsigned integer
     as specified in the NMEA AIS sentence standard
     """
 
@@ -114,7 +114,7 @@ def _bits_to_unsigned_int(bits: List[int], start: int, end: int) -> int:
 
 def _bits_to_signed_int(bits: List[int], start: int, end: int) -> int:
     """
-    interprete the given range of a bit string as an signed integer
+    interpret the given range of a bit string as a signed integer
     as specified in the NMEA AIS sentence standard
     """
     assert start < end
@@ -142,7 +142,7 @@ def _bits_to_signed_float(
     bits: List[int], start: int, end: int, resolution: float
 ) -> float:
     """
-    interprete the given range of a bit string as an signed float
+    interpret the given range of a bit string as a signed float
     as specified in the NMEA AIS sentence standard
 
     the resolution should be the step size by which the range of the
@@ -157,7 +157,7 @@ def _bits_to_unsigned_float(
     bits: List[int], start: int, end: int, resolution: float
 ) -> float:
     """
-    interprete the given range of a bit string as an unsigned float
+    interpret the given range of a bit string as an unsigned float
     as specified in the NMEA AIS sentence standard
 
     the resolution should be the step size by which the range of the
@@ -169,7 +169,7 @@ def _bits_to_unsigned_float(
 
 def _bits_to_bool(bits: List[int], start: int, end: int) -> bool:
     """
-    interprete the given range of a bit string as a bool
+    interpret the given range of a bit string as a bool
     as specified in the NMEA AIS sentence standard
     """
     assert start == end
@@ -178,7 +178,7 @@ def _bits_to_bool(bits: List[int], start: int, end: int) -> bool:
 
 def _bits_to_string(bits: List[int], start: int, end: int) -> str:
     """
-    interprete the given range of a bit string as a string
+    interpret the given range of a bit string as a string
     as specified in the NMEA AIS sentence standard
     """
     ASCII = "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?"

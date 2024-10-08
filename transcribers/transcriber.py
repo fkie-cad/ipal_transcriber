@@ -17,7 +17,7 @@ class Transcriber:
         # Default is source and variable name separated by ':'.
 
         # INFO Same ip+port+key for different protocols unlikely
-        return "{}:{}".format(msg.src, key)
+        return f"{msg.src}:{key}"
 
     def matches_protocol(self, pkt):
         # Returns true if a packet can be handled by this transcriber
@@ -28,5 +28,7 @@ class Transcriber:
         raise NotImplementedError
 
     def match_response(self, requests, response):
-        # Modifies a response by information derived from the corresponding request(s). This method may alter the requests in the request array but not the request array! It may return a list of requests to delete from the queue
+        # Modifies a response by information derived from the corresponding request(s). This method may alter the
+        # requests in the request array but not the request array! It may return a list of requests to delete from
+        # the queue
         return []

@@ -1,23 +1,16 @@
 #!/usr/bin/env python3
 import argparse
-import gzip
-import json
 import logging
 import os
 import socket
 import sys
 
+import orjson
+
 import transcriber.settings as settings
+import transcriber.transcriber as transcriber
 from state_extractors.utils import get_all_state_extractors
 from transcriber.messages import IpalMessage
-
-
-# Wrapper for hiding .gz files
-def open_file(filename, mode):
-    if filename.endswith(".gz"):
-        return gzip.open(filename, mode=mode, compresslevel=settings.compresslevel)
-    else:
-        return open(filename, mode=mode, buffering=1)
 
 
 # Build parser arguments
@@ -74,8 +67,8 @@ def parse_arguments(args):
     if settings.stateout:
         if settings.stateout != "stdout" and settings.stateout != "-":
             # clear the file we are about to write to
-            open_file(settings.stateout, "wt").close()
-            settings.stateoutfd = open_file(settings.stateout, "wt")
+            transcriber.open_file(settings.stateout, "wt").close()
+            settings.stateoutfd = transcriber.open_file(settings.stateout, "wt")
         else:
             settings.stateoutfd = sys.stdout
 
@@ -102,7 +95,7 @@ def parse_arguments(args):
         else:
             settings.logger.error("--state-in-message can be either 'true' or 'false'")
 
-    # Lookup and initilize selected state-extractor
+    # Lookup and initialize selected state-extractor
     if args.state_extractor:
         settings.state_extractor = args.state_extractor
         return args.state_extractor(args)
@@ -135,8 +128,8 @@ def parse_main_arguments():
         "--compresslevel",
         dest="compresslevel",
         metavar="INT",
-        default=9,
-        help="set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 9)",
+        default=6,
+        help="set the gzip compress level. 0 no compress, 1 fast/large, ..., 9 slow/tiny. (Default: 6)",
         required=False,
     )
 
@@ -175,7 +168,7 @@ def parse_main_arguments():
 
     if args.hostname:
         settings.hostname = True
-        settings.logformat = f"%(asctime)s:{socket.gethostname()}:" + settings.logformat
+        settings.logformat = f"%(asctime)s:{socket.gethostname()}:{settings.logformat}"
 
     # Logging
     if args.log:
@@ -206,7 +199,7 @@ def parse_main_arguments():
             )
             exit(1)
 
-        if settings.compresslevel < 0 or 9 < settings.compresslevel:
+        if 0 > settings.compresslevel > 9:
             settings.logger.error(
                 "Option '--compresslevel' must be an integer from 0-9"
             )
@@ -217,7 +210,7 @@ def parse_main_arguments():
         settings.ipalin = args.ipalin
     if settings.ipalin:
         if settings.ipalin != "stdin" and settings.ipalin != "-":
-            settings.ipalinfd = open_file(settings.ipalin, "r")
+            settings.ipalinfd = transcriber.open_file(settings.ipalin, "r")
         else:
             settings.ipalinfd = sys.stdin
     else:
@@ -240,7 +233,7 @@ def main():
     # Convert json into message!
     try:
         for line in settings.ipalinfd:
-            msg = IpalMessage.from_json(json.loads(line))
+            msg = IpalMessage.from_json(orjson.loads(line))
             state_extractor.update_state(msg)
 
         state_extractor.finalize()  # Finalize

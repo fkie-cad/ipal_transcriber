@@ -1,12 +1,17 @@
 import pytest
 
-from .conftest import check_with_validation_file, extractor
+from .conftest import check_command_output, check_with_validation_file, extractor
 
 
 def test_extractor_empty():
-    errno, stdout, stderr = extractor([])
-    assert errno == 1
-    assert stderr == b"ERROR:ipal-state-extractor:Define a state_extractor!\n"
+    args = []
+    errno, stdout, stderr = extractor(args)
+
+    expected_stderr = [b"ERROR:ipal-state-extractor:Define a state_extractor!\n"]
+
+    check_command_output(
+        errno, args, stdout, stderr, expectedcode=1, expected_stderr=expected_stderr
+    )
 
 
 RAW_FILES = [
@@ -28,8 +33,21 @@ RAW_FILES = [
 def test_extractor_default(ipal, filename):
     args = ["--ipal.input", ipal, "--state.output", "-", "default"]
     errno, stdout, stderr = extractor(args)
-    assert stderr == b"" or b"WARNING:asyncio:Unknown child process" in stderr
-    assert errno == 0
+
+    expected_stderr = [
+        b"",
+        r"WARNING:asyncio:Unknown child process pid \d+, will report returncode 255\n?",
+    ]
+
+    check_command_output(
+        errno,
+        args,
+        stdout,
+        stderr,
+        expectedcode=0,
+        expected_stderr=expected_stderr,
+        check_for=["ERROR"],
+    )
     check_with_validation_file(
         filename, stdout.decode("utf-8"), test_extractor_default.__name__
     )

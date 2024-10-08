@@ -1,2 +1,4 @@
 pyshark
 python-dateutil
+orjson
+zlib-ng

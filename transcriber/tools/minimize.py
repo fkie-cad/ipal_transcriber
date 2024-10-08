@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 import argparse
-import gzip
-import json
 import logging
 import os
 import random
 from itertools import product
 from multiprocessing import Pool
 
+import orjson
+
 import transcriber.settings as settings
+from transcriber.transcriber import open_file
 
 WORKER = 4
 
@@ -26,14 +27,6 @@ RETAIN = [
     "_iids-config",
     "_evaluation-config",
 ]
-
-
-# Wrapper for hiding .gz files
-def open_file(filename, mode):
-    if filename.endswith(".gz") or ".gz.tmp-" in filename:
-        return gzip.open(filename, mode=mode, compresslevel=settings.compresslevel)
-    else:
-        return open(filename, mode=mode, buffering=1)
 
 
 # Initialize logger
@@ -69,7 +62,7 @@ def prepare_arg_parser(parser):
         "--jobs",
         dest="jobs",
         metavar="INT",
-        help="Number of parallel workers (Default: {}).".format(WORKER),
+        help=f"Number of parallel workers (Default: {WORKER}).",
         default=4,
         required=False,
     )
@@ -107,14 +100,14 @@ def minimize(args):
     input, arguments = args
     initialize_logger(arguments)
 
-    # Generate temprary filename
-    tmp = "{}.tmp-{}".format(input, random.randint(1000, 9999))
+    # Generate temporary filename
+    tmp = f".tmp-{random.randint(1000, 9999)}-{input}"
 
     # Minimize to temporary file
     with open_file(input, "rt") as fin:
-        with open_file(tmp, "wt") as ftmp:
-            for line in fin.readlines():
-                js = json.loads(line)
+        with open_file(tmp, "wb") as ftmp:
+            for line in fin:
+                js = orjson.loads(line)
 
                 if "state" in js:
                     js["state"] = {}
@@ -125,12 +118,19 @@ def minimize(args):
                     for rm in [key for key in js if key not in RETAIN]:
                         del js[rm]
 
-                ftmp.write(json.dumps(js) + "\n")
+                ftmp.write(
+                    orjson.dumps(
+                        js,
+                        option=orjson.OPT_SERIALIZE_NUMPY
+                        | orjson.OPT_APPEND_NEWLINE
+                        | orjson.OPT_NON_STR_KEYS,
+                    )
+                )
 
     # Move temporary file to input
     os.replace(tmp, input)
 
-    settings.logger.info("Minimizing {} done.".format(input))
+    settings.logger.info(f"Minimizing {input} done.")
 
 
 def main():
@@ -141,12 +141,9 @@ def main():
     initialize_logger(args)
 
     # Parse arguments
-    if args.jobs:
-        WORKER = int(args.jobs)
+    WORKER = int(args.jobs)
 
-    settings.logger.info(
-        "Minimizing {} files with {} jobs.".format(len(args.files), WORKER)
-    )
+    settings.logger.info(f"Minimizing {len(args.files)} files with {WORKER} jobs.")
 
     # Run workers
     with Pool(WORKER) as p:

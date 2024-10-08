@@ -1,6 +1,7 @@
-import json
 import socket
 import time
+
+import orjson
 
 import transcriber.settings as settings
 from transcriber.request_queue import RequestQueue
@@ -15,7 +16,7 @@ class PacketProcessor:
         # counter that ensures uniqueness for all ids assigned to a transcriber message
         counter = IpalIdCounter()
 
-        # instantiate transcriberes for selected protocols
+        # instantiate transcribers for selected protocols
         self.transcribers = {}
         for protocol, transcriber in get_all_transcribers().items():
             if protocol in settings.protocols:
@@ -42,16 +43,14 @@ class PacketProcessor:
             if self.transcribers[protocol].matches_protocol(pkt):
                 break
         else:
-            settings.logger.debug("No parser for packet: {}".format(pkt))
+            settings.logger.debug(f"No parser for packet: {pkt}")
             return
 
         # now we can parse the packet
         ipal_messages = self.transcribers[protocol].parse_packet(pkt)
         if len(ipal_messages) == 0:
             settings.logger.debug(
-                "Transcriber of protocol {} did not return any IPAL messages for packet {}".format(
-                    protocol, pkt
-                )
+                f"Transcriber of protocol {protocol} did not return any IPAL messages for packet {pkt}"
             )
             return
 
@@ -94,9 +93,7 @@ class PacketProcessor:
         # output eval results in the form of time spent in the different steps of the pipeline, but for now only if exactly one message was parsed from a given packet.
         if settings.evalout and len(ipal_messages) == 1:
             t4 = time.time()
-            output = str(msg.activity) + " {:.15f} {:.15f} {:.15f} {:.15f}\n".format(
-                t1 - t0, t2 - t1, t3 - t2, t4 - t3
-            )
+            output = f"{str(msg.activity)} {t1 - t0:.15f} {t2 - t1:.15f} {t3 - t2:.15f} {t4 - t3:.15f}\n"
             settings.evaloutfd.write(output)
             settings.evaloutfd.flush()
 
@@ -137,7 +134,7 @@ class PacketProcessor:
 
         # Malicious by time range
         for start, end, mal in settings.malicious["time"]:
-            if start <= msg.timestamp and msg.timestamp <= end:
+            if start <= msg.timestamp <= end:
                 msg.malicious = mal
 
     def output_ipal_message(self, msg):
@@ -153,8 +150,18 @@ class PacketProcessor:
         if settings.hostname:
             output["hostname"] = socket.gethostname()
 
-        settings.ipaloutfd.write(json.dumps(output) + "\n")
-        settings.ipaloutfd.flush()
+        settings.ipaloutfd.write(
+            orjson.dumps(
+                output,
+                option=orjson.OPT_SERIALIZE_NUMPY
+                | orjson.OPT_APPEND_NEWLINE
+                | orjson.OPT_NON_STR_KEYS,
+            ).decode("utf-8")
+        )
+
+        # flushing for all output formats (not just pipes) results in performance losses, and larger file sizes
+        if settings.ipalout == "-" or settings.ipalout == "stdout":
+            settings.ipaloutfd.flush()
 
     def finalize(self):
         if settings.ipalout:

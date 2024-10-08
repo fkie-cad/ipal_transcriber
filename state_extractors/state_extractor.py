@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-import json
 import socket
+
+import orjson
 
 import transcriber.settings as settings
 from transcribers.transcriber import Transcriber
@@ -69,8 +70,18 @@ class StateExtractor:
         if settings.hostname:
             output["hostname"] = socket.gethostname()
 
-        settings.stateoutfd.write(json.dumps(output) + "\n")
-        settings.stateoutfd.flush()
+        settings.stateoutfd.write(
+            orjson.dumps(
+                output,
+                option=orjson.OPT_SERIALIZE_NUMPY
+                | orjson.OPT_APPEND_NEWLINE
+                | orjson.OPT_NON_STR_KEYS,
+            ).decode("utf-8")
+        )
+
+        # flushing for all output formats (not just pipes) results in performance losses, and larger file sizes
+        if settings.stateout == "-" or settings.stateout == "stdout":
+            settings.stateoutfd.flush()
 
     @classmethod
     def add_arguments_to_parser(cls, subparser):

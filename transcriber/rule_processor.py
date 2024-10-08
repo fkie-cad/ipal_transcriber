@@ -9,7 +9,9 @@ class RuleProcessor:
         self.rules = self.__parse_rules(config)
         self.rename = self.__parse_renaming(config)
 
-    def __parse_rules(self, config, fields=["src", "dest", "type"]):
+    def __parse_rules(self, config, fields=None):
+        if fields is None:
+            fields = ["src", "dest", "type"]
         self.fields = fields
 
         if "rules" not in config.JS:
@@ -24,13 +26,13 @@ class RuleProcessor:
                 settings.logger.warning(
                     "No attribute 'var' in rule or not of type list!"
                 )
-                settings.logger.warning("Ignoring rule: {}".format(rule))
+                settings.logger.warning(f"Ignoring rule: {rule}")
                 continue
 
             if bool("name" in rule) != bool("method" in rule):
                 # method <-> name
                 settings.logger.warning("Set method and name or none of both!")
-                settings.logger.warning("Ignoring rule: {}".format(rule))
+                settings.logger.warning(f"Ignoring rule: {rule}")
                 continue
 
             # Compile regex for filtering messages or default to True
@@ -77,9 +79,7 @@ class RuleProcessor:
                     vars = [msg.data[var] for var in rule["var"]]
                     msg.data[rule["name"]] = rule["method"](vars)
                 except KeyError:
-                    settings.logger.debug(
-                        "Rules: Key {} not found in msg".format(rule["var"])
-                    )
+                    settings.logger.debug(f"Rules: Key {rule['var']} not found in msg")
 
             # Remove old entries
             if "remove" in rule and rule["remove"]:
@@ -88,7 +88,7 @@ class RuleProcessor:
                         del msg.data[var]
                     except KeyError:
                         settings.logger.debug(
-                            "Rules: Key {} not found during removing".format(var)
+                            f"Rules: Key {var} not found during removing"
                         )
 
         # Rename src or dest
