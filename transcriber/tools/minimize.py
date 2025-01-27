@@ -101,7 +101,8 @@ def minimize(args):
     initialize_logger(arguments)
 
     # Generate temporary filename
-    tmp = f".tmp-{random.randint(1000, 9999)}-{input}"
+    path, filename = os.path.split(input)
+    tmp = os.path.join(path, f".tmp-{random.randint(1000, 9999)}-{filename}")
 
     # Minimize to temporary file
     with open_file(input, "rt") as fin:
