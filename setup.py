@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="ipal-transcriber",
-    version="1.4.1",
+    version="1.4.2",
     packages=find_packages(exclude="tests"),
     scripts=[
         "ipal-transcriber",
@@ -21,6 +21,7 @@ setup(
     keywords="industrial protocols networking security capture packets IDS CIP GOOSE Modbus S7 IEC 60870-5-104 NMEA0183 IEC 61162-450 DNP3",
     classifiers=[
         "License :: MIT License",
+        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",

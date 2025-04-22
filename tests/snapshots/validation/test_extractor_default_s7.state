@@ -4,6 +4,7 @@
         "compresslevel": 6,
         "filter": null,
         "hostname": false,
+        "initialstate": {},
         "ipalin": "misc/ipal/s7.ipal",
         "log": 30,
         "logfile": null,

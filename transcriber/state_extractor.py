@@ -47,6 +47,14 @@ def add_arguments_to_parser(parser):
         required=False,
     )
 
+    parser.add_argument(
+        "--initial_state",
+        dest="initialstate",
+        metavar="FILE",
+        help="a json file with the initial state of all variables",
+        required=False,
+    )
+
     # Add subparsers for available state-extractor methods
     subparsers = parser.add_subparsers(
         title="State Extractors",
@@ -94,6 +102,15 @@ def parse_arguments(args):
             settings.stateinmessage = False
         else:
             settings.logger.error("--state-in-message can be either 'true' or 'false'")
+
+    if args.initialstate:
+        try:
+            with transcriber.open_file(args.initialstate, "r") as f:
+                settings.initialstate = orjson.loads(f.read())
+
+        except Exception:
+            settings.logger.error("Option '--initial_state' must be a json file!")
+            exit(1)
 
     # Lookup and initialize selected state-extractor
     if args.state_extractor:

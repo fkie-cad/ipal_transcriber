@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import copy
 import socket
 
 import orjson
@@ -16,7 +17,7 @@ class StateExtractor:
     def __init__(self, args):
         self.transcribers = get_all_transcribers()
 
-        self._state = {}
+        self._state = copy.deepcopy(settings.initialstate)
         self._first = True
         self._warned_protocol = False
 
