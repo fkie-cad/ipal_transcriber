@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="ipal-transcriber",
-    version="1.4.2",
+    version="1.4.3",
     packages=find_packages(exclude="tests"),
     scripts=[
         "ipal-transcriber",
@@ -11,7 +11,7 @@ setup(
         "ipal-join",
     ],
     package_data={"": ["*.ipal", "*.pcapng"]},
-    install_requires=["pyshark", "python-dateutil", "orjson", "zlib-ng"],
+    install_requires=["pyshark", "python-dateutil", "orjson", "zlib-ng", "cantools"],
     tests_require=["pre-commit", "black", "flake8", "pytest", "pytest-cov", "isort"],
     url="https://github.com/fkie-cad/ipal_transcriber",
     author="Konrad Wolsing",

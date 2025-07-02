@@ -18,6 +18,7 @@ RAW_FILES = [
     ("misc/pcaps/ethercat.pcapng", "ethercat.state", "ethercat"),
     ("misc/pcaps/MAVLink.pcap", "MAVLink.state", "MAVLink"),
     ("misc/pcaps/BR24.pcap.gz", "BR24.state", "Navico-BR24"),
+    ("misc/pcaps/canbus.pcap", "canbus.state", "canbus"),
 ]
 
 

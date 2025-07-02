@@ -28,6 +28,7 @@ This software (`ipal-transcriber`) implements the automatic translation of indus
 | EtherCAT              | Rudimentary | TODO: add matching data                                                                                                       |
 | MavLink 2.0           | Rudimentary | Depends on the message definitions parsed                                                                                     |
 | Navico BR24           | Moderate    | REP, REG, IMG                                                                                                                 |
+| CAN Bus           | Rudimentary    | Depends on the frame structure                                                                                                                |
 
 ###### Publications
 
@@ -191,6 +192,7 @@ JS = {
     - `type`, `src`, `dst`: regular expression matching the type, source and destination field respectively of messages the rule should apply to. (All optional, default to matching any value when omitted).
     - `method`: method that should be applied to the fields specified in `var`, requires `name` to also be present (optional)
     - `name`: name of the new data field which will contain the result of `method`, requires `method` to be present (optional)
+    -  `flatten`: If flatten is set to true, we expect `method` to return a dictionary. Then `name` is not required and we copy the dictionary returned by `method` into the state. (optional)
     - `remove`: whether to remove the fields specified in `var` (optional, defaults to false if omitted)  
 - `rename`: a dictionary of key-value pairs describing renaming rules (optional). Each dictionary key-value pair should be of the form:
     - `key`: regular expression matching the message source or destination

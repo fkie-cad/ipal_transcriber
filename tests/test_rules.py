@@ -18,6 +18,7 @@ RAW_FILES = [
         "misc/rules/mavlink_common.py",
     ),
     ("misc/pcaps/BR24.pcap.gz", "BR24.ipal", "Navico-BR24", "misc/rules/br24.py"),
+    ("misc/pcaps/canbus.pcap", "canbus.ipal", "canbus", "misc/rules/canbus_rules.py"),
 ]
 
 

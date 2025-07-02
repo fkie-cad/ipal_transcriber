@@ -1,0 +1,83 @@
+{
+    "_transcriber-config": {
+        "compresslevel": 6,
+        "crc": "and",
+        "enip_port": 44818,
+        "hostname": false,
+        "ipalout": "-",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "malicious": null,
+        "maliciousdefault": null,
+        "mavlink_port": [
+            14550,
+            14580
+        ],
+        "mbtcp_port": 502,
+        "protocols": [
+            "canbus"
+        ],
+        "pyshark_options": [
+            "-o",
+            "udp.check_checksum:TRUE",
+            "-o",
+            "tcp.check_checksum:TRUE",
+            "-o",
+            "mbtcp.tcp.port:502"
+        ],
+        "rules": null,
+        "source": "misc/pcaps/canbus.pcap",
+        "timeout": 1.0,
+###IGNORE-LINE###
+    },
+    "activity": "inform",
+    "crc": null,
+    "data": {
+        "arbitration_id": 210,
+        "raw_data": "0000ffff00010909"
+    },
+    "dest": null,
+    "id": 0,
+    "length": 8,
+    "malicious": null,
+    "protocol": "canbus",
+    "responds to": [],
+    "src": null,
+    "timestamp": 1672531200.002574,
+    "type": 210
+}
+{
+    "activity": "inform",
+    "crc": null,
+    "data": {
+        "arbitration_id": 211,
+        "raw_data": "8005e00f00635e"
+    },
+    "dest": null,
+    "id": 1,
+    "length": 7,
+    "malicious": null,
+    "protocol": "canbus",
+    "responds to": [],
+    "src": null,
+    "timestamp": 1672531200.002803,
+    "type": 211
+}
+{
+    "activity": "inform",
+    "crc": null,
+    "data": {
+        "arbitration_id": 212,
+        "raw_data": "0000000000000000"
+    },
+    "dest": null,
+    "id": 2,
+    "length": 8,
+    "malicious": null,
+    "protocol": "canbus",
+    "responds to": [],
+    "src": null,
+    "timestamp": 1672531200.003014,
+    "type": 212
+}

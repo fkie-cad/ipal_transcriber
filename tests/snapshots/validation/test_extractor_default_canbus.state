@@ -1,0 +1,61 @@
+{
+    "_state_extractor-config": {
+        "completeonly": false,
+        "compresslevel": 6,
+        "filter": null,
+        "hostname": false,
+        "initialstate": {},
+        "ipalin": "misc/ipal/canbus.ipal",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "options": {},
+        "state_extractor": "default",
+        "stateinmessage": false,
+        "stateout": "-",
+###IGNORE-LINE###
+    },
+    "malicious": null,
+    "state": {
+        "None:Brake_Light": 0,
+        "None:Brake_Related": 0,
+        "None:Left_Brake": 9,
+        "None:Right_Brake": 9,
+        "None:arbitration_id": 210
+    },
+    "timestamp": 1672531200.002574
+}
+{
+    "malicious": null,
+    "state": {
+        "None:Brake_Cruise_On": 0,
+        "None:Brake_Light": 1,
+        "None:Brake_Pedal_On": 1,
+        "None:Brake_Related": 0,
+        "None:Counter": 94,
+        "None:Left_Brake": 9,
+        "None:Right_Brake": 9,
+        "None:Speed_Counter": 0,
+        "None:arbitration_id": 211
+    },
+    "timestamp": 1672531200.002803
+}
+{
+    "malicious": null,
+    "state": {
+        "None:Brake_Cruise_On": 0,
+        "None:Brake_Light": 1,
+        "None:Brake_Pedal_On": 1,
+        "None:Brake_Related": 0,
+        "None:Counter": 94,
+        "None:FL": 0.0,
+        "None:FR": 0.0,
+        "None:Left_Brake": 9,
+        "None:RL": 0.0,
+        "None:RR": 0.0,
+        "None:Right_Brake": 9,
+        "None:Speed_Counter": 0,
+        "None:arbitration_id": 212
+    },
+    "timestamp": 1672531200.003014
+}

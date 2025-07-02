@@ -29,11 +29,28 @@ class RuleProcessor:
                 settings.logger.warning(f"Ignoring rule: {rule}")
                 continue
 
-            if bool("name" in rule) != bool("method" in rule):
-                # method <-> name
+            if bool("name" in rule) != bool("method" in rule) and (
+                "flatten" not in rule or not rule["flatten"]
+            ):
+                # method <-> name (if flatten is not set)
                 settings.logger.warning("Set method and name or none of both!")
                 settings.logger.warning(f"Ignoring rule: {rule}")
                 continue
+
+            if "flatten" in rule and rule["flatten"]:
+                if "name" in rule:
+                    settings.logger.warning(
+                        "Rule with flatten=True does not require a 'name'"
+                    )
+                    settings.logger.warning(f"Ignoring rule: {rule}")
+                    continue
+
+                if "method" not in rule:
+                    settings.logger.warning(
+                        "Rule with flatten=True does require a 'method'"
+                    )
+                    settings.logger.warning(f"Ignoring rule: {rule}")
+                    continue
 
             # Compile regex for filtering messages or default to True
             for field in fields:
@@ -77,7 +94,13 @@ class RuleProcessor:
             if "method" in rule:
                 try:  # Try extract vars
                     vars = [msg.data[var] for var in rule["var"]]
-                    msg.data[rule["name"]] = rule["method"](vars)
+
+                    if "flatten" in rule and rule["flatten"]:
+                        for k, v in rule["method"](vars).items():
+                            msg.data[k] = v
+                    else:
+                        msg.data[rule["name"]] = rule["method"](vars)
+
                 except KeyError:
                     settings.logger.debug(f"Rules: Key {rule['var']} not found in msg")
 

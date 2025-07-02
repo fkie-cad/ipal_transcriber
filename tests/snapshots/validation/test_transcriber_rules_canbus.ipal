@@ -1,0 +1,93 @@
+{
+    "_transcriber-config": {
+        "compresslevel": 6,
+        "crc": "and",
+        "enip_port": 44818,
+        "hostname": false,
+        "ipalout": "-",
+        "log": 30,
+        "logfile": null,
+        "logformat": "%(levelname)s:%(name)s:%(message)s",
+        "malicious": null,
+        "maliciousdefault": null,
+        "mavlink_port": [
+            14550,
+            14580
+        ],
+        "mbtcp_port": 502,
+        "protocols": [
+            "canbus"
+        ],
+        "pyshark_options": [
+            "-o",
+            "udp.check_checksum:TRUE",
+            "-o",
+            "tcp.check_checksum:TRUE",
+            "-o",
+            "mbtcp.tcp.port:502"
+        ],
+        "rules": "misc/rules/canbus_rules.py",
+        "source": "misc/pcaps/canbus.pcap",
+        "timeout": 1.0,
+###IGNORE-LINE###
+    },
+    "activity": "inform",
+    "crc": null,
+    "data": {
+        "Brake_Light": 0,
+        "Brake_Related": 0,
+        "Left_Brake": 9,
+        "Right_Brake": 9,
+        "arbitration_id": 210
+    },
+    "dest": null,
+    "id": 0,
+    "length": 8,
+    "malicious": null,
+    "protocol": "canbus",
+    "responds to": [],
+    "src": null,
+    "timestamp": 1672531200.002574,
+    "type": 210
+}
+{
+    "activity": "inform",
+    "crc": null,
+    "data": {
+        "Brake_Cruise_On": 0,
+        "Brake_Light": 1,
+        "Brake_Pedal_On": 1,
+        "Counter": 94,
+        "Speed_Counter": 0,
+        "arbitration_id": 211
+    },
+    "dest": null,
+    "id": 1,
+    "length": 7,
+    "malicious": null,
+    "protocol": "canbus",
+    "responds to": [],
+    "src": null,
+    "timestamp": 1672531200.002803,
+    "type": 211
+}
+{
+    "activity": "inform",
+    "crc": null,
+    "data": {
+        "FL": 0.0,
+        "FR": 0.0,
+        "RL": 0.0,
+        "RR": 0.0,
+        "arbitration_id": 212
+    },
+    "dest": null,
+    "id": 2,
+    "length": 8,
+    "malicious": null,
+    "protocol": "canbus",
+    "responds to": [],
+    "src": null,
+    "timestamp": 1672531200.003014,
+    "type": 212
+}
