@@ -38,6 +38,12 @@ class PacketProcessor:
 
         # 1st pipeline step: Transform packets request/response packets into an abstract form
 
+        # print warning if we find an IPv6 packet
+        if "ipv6" in pkt:
+            settings.logger.warning(
+                "Transcriber is not guaranteed to be IPv6 compatible!"
+            )
+
         # check if the current packet can be handled by any of the selected transcribers and ignore it otherwise
         for protocol in settings.protocols:
             if self.transcribers[protocol].matches_protocol(pkt):

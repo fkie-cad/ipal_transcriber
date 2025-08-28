@@ -140,3 +140,22 @@ def test_transcriber_all_other_protocols(pcap, protocol):
         expected_stderr=expected_stderr,
         check_for=["ERROR"],
     )
+
+
+@pytest.mark.parametrize("protocol", [x[2] for x in RAW_FILES])
+def test_transcriber_ipv6_warning(protocol):
+    expected_stderr = [
+        "WARNING:ipal-transcriber:Transcriber is not guaranteed to be IPv6 compatible!"
+    ]
+    args = [
+        "--pcap",
+        "misc/pcaps/ipv6-test.pcap",
+        "--protocols",
+        protocol,
+        "--log",
+        "info",
+    ]
+    errno, stdout, stderr = transcriber(args)
+    check_command_output(
+        errno, args, stdout, stderr, expectedcode=0, expected_stderr=expected_stderr
+    )

@@ -67,7 +67,7 @@ class BR24Transcriber(Transcriber):
         return None
 
     def matches_protocol(self, pkt: Packet) -> bool:
-        if "UDP" not in pkt:
+        if "ip" not in pkt or "UDP" not in pkt:
             return False
 
         if self._match_packet_type(pkt) is not None:
