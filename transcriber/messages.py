@@ -97,7 +97,7 @@ class IpalMessage:
             option=orjson.OPT_SERIALIZE_NUMPY
             | orjson.OPT_INDENT_2
             | orjson.OPT_NON_STR_KEYS,
-        )
+        ).decode("utf-8")
 
     @classmethod
     def from_json(cls, js):
