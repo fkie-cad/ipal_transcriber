@@ -1,3 +1,6 @@
+import transcriber.settings as settings
+
+
 class Transcriber:
     # A transcriber handles the transcription from network packets to
     # abstract messages. Optimally a Transcriber should be implemented
@@ -17,7 +20,10 @@ class Transcriber:
         # Default is source and variable name separated by ':'.
 
         # INFO Same ip+port+key for different protocols unlikely
-        return f"{msg.src}:{key}"
+        if settings.shortstatekeys:
+            return f"{key}"
+        else:
+            return f"{msg.src}:{key}"
 
     def matches_protocol(self, pkt):
         # Returns true if a packet can be handled by this transcriber

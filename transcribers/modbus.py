@@ -20,6 +20,9 @@ class ModbusTranscriber(Transcriber):
 
     @classmethod
     def state_identifier(cls, msg, key):
+        if settings.shortstatekeys:
+            return f"{key}"
+
         if msg.activity in [Activity.INTERROGATE, Activity.COMMAND]:
             return f"{msg.dest}:{key}"
         elif msg.activity in [Activity.INFORM, Activity.ACTION]:

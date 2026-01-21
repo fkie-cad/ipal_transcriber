@@ -354,11 +354,17 @@ def main():
     try:
         if args.pcap:
             settings.source = args.pcap
+            import asyncio
+
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+
             capture = pyshark.FileCapture(
                 input_file=args.pcap,
                 keep_packets=False,
                 custom_parameters=settings.pyshark_options,
                 decode_as=settings.pyshark_decode_as,
+                eventloop=loop,
             )
             capture.apply_on_packets(pkt_processor.process_packet)
 

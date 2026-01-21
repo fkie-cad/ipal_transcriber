@@ -1,3 +1,4 @@
+import asyncio
 from pathlib import Path
 
 import pyshark
@@ -8,12 +9,15 @@ from transcribers.utils import IpalIdCounter
 
 
 def get_dhcp_packet():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     capture = pyshark.FileCapture(
         input_file=str(
             Path(__file__).parent.parent.parent / "misc/pcaps/dhcp-single.pcapng"
         ),
         keep_packets=False,
         custom_parameters=settings.pyshark_options,
+        eventloop=loop,
     )
     capture.load_packets()
     packet = capture.next_packet()

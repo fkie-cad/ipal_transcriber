@@ -1,4 +1,5 @@
 pyshark
+asyncio
 python-dateutil
 orjson
 zlib-ng

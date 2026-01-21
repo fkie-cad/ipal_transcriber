@@ -48,10 +48,18 @@ def add_arguments_to_parser(parser):
     )
 
     parser.add_argument(
-        "--initial_state",
+        "--initial-state",
         dest="initialstate",
         metavar="FILE",
         help="a json file with the initial state of all variables",
+        required=False,
+    )
+
+    parser.add_argument(
+        "--short-state-keys",
+        dest="shortstatekeys",
+        help="generate short state names (removes IP address in front of it)",
+        action="store_true",
         required=False,
     )
 
@@ -111,6 +119,9 @@ def parse_arguments(args):
         except Exception:
             settings.logger.error("Option '--initial_state' must be a json file!")
             exit(1)
+
+    if args.shortstatekeys:
+        settings.shortstatekeys = True
 
     # Lookup and initialize selected state-extractor
     if args.state_extractor:

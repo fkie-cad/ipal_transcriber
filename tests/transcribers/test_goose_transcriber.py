@@ -1,3 +1,4 @@
+import asyncio
 import json
 from pathlib import Path
 
@@ -17,12 +18,15 @@ from transcribers.utils import IpalIdCounter
 
 
 def get_goose_packet(pcapfile):
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     capture = pyshark.FileCapture(
         input_file=str(
             Path(__file__).parent.parent.parent / "misc" / "pcaps" / pcapfile
         ),
         keep_packets=False,
         custom_parameters=settings.pyshark_options,
+        eventloop=loop,
     )
     capture.load_packets()
     packet = capture.next_packet()

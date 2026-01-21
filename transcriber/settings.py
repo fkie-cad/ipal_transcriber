@@ -1,6 +1,6 @@
 import logging
 
-version = "v1.4.3"
+version = "v1.4.4"
 
 # Gzip options
 compresslevel = 6  # 0 no compress, 1 large/fast, 9 small/slow
@@ -56,6 +56,7 @@ filter = None
 completeonly = False
 stateinmessage = False
 initialstate = {}
+shortstatekeys = False
 
 
 def transcriber_settings_to_dict():
@@ -92,6 +93,7 @@ def state_extractor_settings_to_dict():
         "completeonly": completeonly,
         "stateinmessage": stateinmessage,
         "initialstate": initialstate,
+        "shortstatekeys": shortstatekeys,
         "hostname": hostname,
         "log": log,
         "logformat": logformat,
