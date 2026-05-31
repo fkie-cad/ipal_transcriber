@@ -2,7 +2,7 @@
 
 <img src="./misc/Logo.png" alt="Logo" width="100" height="auto" align="right">
 
-This repository is part of [IPAL](https://github.com/fkie-cad/ipal) - an Industrial Protocol Abstraction Layer. IPAL aims to establish an abstract representation of industrial network traffic for subsequent unified and protocol-independent industrial intrusion detection. IPAL consists of a [transcriber](https://github.com/fkie-cad/ipal_transcriber) to automatically translate industrial traffic into the IPAL representation, an [IDS Framework](https://github.com/fkie-cad/ipal_ids_framework) implementing various industrial intrusion detection systems (IIDSs), and a collection of evaluation [datasets](https://github.com/fkie-cad/ipal_datasets). For details about IPAL, please refer to our publications listed down below.
+This repository is part of [IPAL](https://github.com/ipal-ids/ipal) - an Industrial Protocol Abstraction Layer. IPAL aims to establish an abstract representation of industrial network traffic for subsequent unified and protocol-independent industrial intrusion detection. IPAL consists of a [transcriber](https://github.com/ipal-ids/ipal_transcriber) to automatically translate industrial traffic into the IPAL representation, an [IDS Framework](https://github.com/ipal-ids/ipal_ids_framework) implementing various industrial intrusion detection systems (IIDSs), and a collection of evaluation [datasets](https://github.com/ipal-ids/ipal_datasets). For details about IPAL, please refer to our publications listed down below.
 
 Cyber-physical systems are increasingly threatened by sophisticated attackers, also attacking the physical aspect of systems. Supplementing protective measures, industrial intrusion detection systems promise to detect such attacks. However, due to industrial protocol diversity and lack of standard interfaces, great efforts are required to adapt these technologies to a large number of different protocols. To address this issue, we propose the Industrial Protocol Abstraction Layer (IPAL) - a common representation of industrial communication as input for industrial intrusion detection systems.
 
@@ -37,7 +37,7 @@ This software (`ipal-transcriber`) implements the automatic translation of indus
 
 ## Getting started
 
-If you are new to IPAL and want to learn about the general idea or try out our tutorials, please refer to IPAL's main repository: [https://github.com/fkie-cad/ipal](https://github.com/fkie-cad/ipal).
+If you are new to IPAL and want to learn about the general idea or try out our tutorials, please refer to IPAL's main repository: [https://github.com/ipal-ids/ipal](https://github.com/ipal-ids/ipal).
 
 ###### Prerequisites
 
@@ -281,7 +281,7 @@ options:
 
 #### Combining IPAL messages
 
-The `ipal-join` tool can be used to merge different IPAL dataset files from different IIDSs. Currently, the IDS outputs are ORed. For more sophisticated methods, especially to combine different IDS outputs, refer to the `combiner` feature of the IPAL [IDS Framework](https://github.com/fkie-cad/ipal_ids_framework).
+The `ipal-join` tool can be used to merge different IPAL dataset files from different IIDSs. Currently, the IDS outputs are ORed. For more sophisticated methods, especially to combine different IDS outputs, refer to the `combiner` feature of the IPAL [IDS Framework](https://github.com/ipal-ids/ipal_ids_framework).
 
 ```bash
 ipal-join -h

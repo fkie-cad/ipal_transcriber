@@ -13,7 +13,7 @@ setup(
     package_data={"": ["*.ipal", "*.pcapng"]},
     install_requires=["pyshark", "python-dateutil", "orjson", "zlib-ng", "cantools"],
     tests_require=["pre-commit", "black", "flake8", "pytest", "pytest-cov", "isort"],
-    url="https://github.com/fkie-cad/ipal_transcriber",
+    url="https://github.com/ipal-ids/ipal_transcriber",
     author="Konrad Wolsing",
     author_email="wolsing@comsys.rwth-aachen.de",
     long_description="Cyber-physical systems are increasingly threatened by sophisticated attackers, also attacking the physical aspect of systems. Supplementing protective measures, industrial intrusion detection systems promise to detect such attacks. However, due to industrial protocol diversity and lack of standard interfaces, great efforts are required to adapt these technologies to a large number of different protocols. To address this issue, we propose IPAL - a common representation of industrial communication as input for industrial intrusion detection systems.  This software (transcriber) implements the automatic translation of industrial network traffic into IPAL for a variety of industrial protocols.",
